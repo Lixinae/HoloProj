@@ -86,15 +86,15 @@ public class UpdatePosOrient : MonoBehaviour {
         // Touches pour le calibrage
         KeyBoardControlsInput();
         // Si l'on desactive l'option du decallage
-        if (decallageByGazeStart == false) {
-            decallageByGazeDone = true;
-        }
-        else {
-            if (moveByGaze.IsSelected) {
+        /*if (decallageByGazeStart == false) {
+        //    decallageByGazeDone = true;
+        //}
+        //else {
+            //if (moveByGaze.IsSelected) {
                 // garder en mémoire la dernière position de l'objet pour pouvoir appliquer un decallage après coup
-                decallageByGaze = transform.position;
-                selectedOnce = true;
-            }
+                //decallageByGaze = transform.position;
+                //selectedOnce = true;
+            //}
             else {
                 if (selectedOnce) {
                     //Debug.Log("Decallage done");
@@ -103,54 +103,54 @@ public class UpdatePosOrient : MonoBehaviour {
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                 }
             }
-        }
+        }*/
 
-        if (decallageByGazeDone) {
-            if (plStream != null) {
-                if (plStream.isActive) {
-                    if (plStream.active[0]) {
+        //if (decallageByGazeDone) {
+        if (plStream != null) {
+            if (plStream.isActive) {
+                if (plStream.active[0]) {
 
-                        // Le positionnement au regard ne touche pas l'orientation
-                        Vector4 pol_rotation = plStream.orientations[0];
-                        Vector3 unity_position = new Vector3(0, 0, 0);
+                    // Le positionnement au regard ne touche pas l'orientation
+                    Vector4 pol_rotation = plStream.orientations[0];
+                    Vector3 unity_position = new Vector3(0, 0, 0);
 
-                        // doing crude (90 degree) rotations into frame
+                    // doing crude (90 degree) rotations into frame
 
-                        // Dans le doute on desactive les objet pour le move by gaze
-                        deactivateMoveByGaze.DeactivateElements(this.gameObject);
-                        Vector3 pol_position = plStream.positions[0];// Les valeurs sont en inch !
-                        //pol_position = InchToCm(pol_position);
+                    // Dans le doute on desactive les objet pour le move by gaze
+                    deactivateMoveByGaze.DeactivateElements(this.gameObject);
+                    Vector3 pol_position = plStream.positions[0];// Les valeurs sont en inch !
+                                                                 //pol_position = InchToCm(pol_position);
 
-                        // Recupère les bonne positions = renommage des axes
-                        unity_position = GetCorrectAxis(pol_position);
+                    // Recupère les bonne positions = renommage des axes
+                    unity_position = GetCorrectAxis(pol_position);
 
-                        // Application des correctifs des angles trouvé
-                        unity_position = ApplyRotationMatrix(unity_position);
+                    // Application des correctifs des angles trouvé
+                    unity_position = ApplyRotationMatrix(unity_position);
 
 
 
-                        unity_position += decallageByCalibragePos * signe;// Surement devoir ajouter un coef multiplicateur
+                    unity_position += decallageByCalibragePos * signe;// Surement devoir ajouter un coef multiplicateur
 
-                        // On applique les decallage au clavier et celui du regard
-                        unity_position = ApplyDecallage(unity_position);
+                    // On applique les decallage au clavier et celui du regard
+                    unity_position = ApplyDecallage(unity_position);
 
-                        // Il faut enlever la position initial du au capteur;
-                        //unity_position += initialPos;
+                    // Il faut enlever la position initial du au capteur;
+                    //unity_position += initialPos;
 
-                        Quaternion unity_rotation;
-                        unity_rotation.w = pol_rotation[0];
-                        unity_rotation.x = -pol_rotation[2];
-                        unity_rotation.y = pol_rotation[3];
-                        unity_rotation.z = -pol_rotation[1];
+                    Quaternion unity_rotation;
+                    unity_rotation.w = pol_rotation[0];
+                    unity_rotation.x = -pol_rotation[2];
+                    unity_rotation.y = pol_rotation[3];
+                    unity_rotation.z = -pol_rotation[1];
 
-                        posUnityOuput = unity_position;
-                        transform.position = unity_position * signe * reduceMovementCoef;
-                        transform.rotation = unity_rotation;
+                    posUnityOuput = unity_position;
+                    transform.position = unity_position * signe * reduceMovementCoef;
+                    transform.rotation = unity_rotation;
 
-                    }
                 }
             }
         }
+        //}
 
         totalDecallage = decallageByCalibragePos + decallageClavier;
         debugText.text =
@@ -195,21 +195,6 @@ public class UpdatePosOrient : MonoBehaviour {
         float sinPsy = Mathf.Sin(psy);
 
 
-        // TODO -> mettre a jour avec la correction
-        // Z > Y > X
-        //        Vector3 unity_position = new Vector3(0, 0, 0) {
-        //            x = posBeforeRotat.x * cosTheta * cosPhi + posBeforeRotat.y * (sinPsy * sinTheta * sinPhi - cosPsy * sinPhi) + posBeforeRotat.z * (cosPsy * sinTheta * cosPhi + sinPsy * sinPhi),
-        //            y = posBeforeRotat.x * cosTheta * sinPhi + posBeforeRotat.y * sinPhi * sinPsy * sinTheta + posBeforeRotat.z * (cosPsy * sinTheta * sinPhi - sinPsy * cosPhi),
-        //            z = -posBeforeRotat.x * sinTheta + posBeforeRotat.y * sinPsy * cosTheta + posBeforeRotat.z * cosPsy * cosTheta
-        //        };
-
-        // X > Y > Z
-        /*Vector3 unity_position = new Vector3(0, 0, 0) {
-            x = posBeforeRotat.x * (cosPhi * cosPsy) - posBeforeRotat.y * (cosPhi * sinPsy) + posBeforeRotat.z * (sinPsy),
-            y = posBeforeRotat.x * (sinPhi * cosTheta - cosPsy * sinPhi * sinTheta) + posBeforeRotat.y * (sinPsy * sinPhi * sinTheta + cosPsy * cosTheta) - posBeforeRotat.z * (cosPhi * sinTheta),
-            z = posBeforeRotat.x * (cosPsy * cosPhi * cosTheta + sinPsy * sinTheta) + posBeforeRotat.y * (cosPsy * sinTheta - sinPsy * cosPhi * cosTheta) + posBeforeRotat.z * (cosPhi * cosTheta),
-        };*/
-
         // Rotation autour de Y
         Vector3 unity_positionRotationY = new Vector3(0, 0, 0) {
             x = posBeforeRotat.x * cosPhi + posBeforeRotat.z * sinPhi,
@@ -247,7 +232,7 @@ public class UpdatePosOrient : MonoBehaviour {
 
     private Vector3 ApplyDecallage(Vector3 unity_position) {
         unity_position = DecallageClavier(unity_position);
-        unity_position += decallageByGaze * signe * 100;
+        //unity_position += decallageByGaze * signe * 100;
 
         return unity_position;
     }

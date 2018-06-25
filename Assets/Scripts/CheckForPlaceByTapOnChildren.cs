@@ -22,11 +22,13 @@ public class CheckForPlaceByTapOnChildren : MonoBehaviour {
                     child.gameObject.AddComponent<BoxCollider>();
                 }
             }
-            if (GetComponentInChildren<TapToPlace>() == null) {
+            TapToPlace tapToPlace = GetComponentInChildren<TapToPlace>();
+            if (tapToPlace == null) {
                 foreach (Transform child in transform) {
                     child.gameObject.AddComponent<TapToPlace>();
                 }
             }
+            tapToPlace.AllowMeshVisualizationControl = false;
         }
         
 

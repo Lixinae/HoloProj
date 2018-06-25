@@ -7,7 +7,7 @@ using HoloToolkit.Unity;
 // https://dzone.com/articles/dragging-and-placing-holograms
 
 public class MoveByGaze : MonoBehaviour {
-    public float MaxDistance = 1f;
+    /*public float MaxDistance = 1f;
     //public bool IsActive = true;
 
     public float DistanceTrigger = 0f;
@@ -139,5 +139,5 @@ public class MoveByGaze : MonoBehaviour {
         return Stabilizer != null
             ? Stabilizer.StableRay.origin + Stabilizer.StableRay.direction.normalized * distance
             : Camera.main.transform.position + Camera.main.transform.forward.normalized * distance;
-    }
+    }*/
 }
