@@ -29,6 +29,7 @@ public class CheckForPlaceByTapOnChildren : MonoBehaviour {
                 }
             }
             tapToPlace.AllowMeshVisualizationControl = false;
+            tapToPlace.DefaultGazeDistance = 1f;
         }
         
 

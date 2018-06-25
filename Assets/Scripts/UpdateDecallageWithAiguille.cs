@@ -44,7 +44,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
         // On regarde l'objet et si on appuie sur L , ça verrouille sa position avec un world anchor
         if (gaze.HitObject == gameObject) {
-            Debug.Log("Bla bla blablalblalzalreiuhgrj");
+            //Debug.Log("Bla bla blablalblalzalreiuhgrj");
             if (Input.GetKeyDown("l")) {
                 Debug.Log(gameObject.name + ": Locked");
                 LockTransform();

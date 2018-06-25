@@ -14,8 +14,12 @@ public class UITriggers : MonoBehaviour {
     public GameObject aiguille = null;
     public GameObject debugText = null;
 
+    public GameObject spatialMapping = null;
+
     bool isMenuShowing = false;
     bool isDebugTextShowing = false;
+    bool isSpatialMappingActive = true;
+    
     // Use this for initialization
     void Awake() {
         if (menuFull == null) {
@@ -39,6 +43,10 @@ public class UITriggers : MonoBehaviour {
         }
         if(debugText == null) {
             debugText = GameObject.Find("UITextPrefab");
+        }
+
+        if(spatialMapping == null) {
+            spatialMapping = GameObject.Find("SpatialMapping");
         }
 
         menuFull.SetActive(isMenuShowing);
@@ -95,7 +103,7 @@ public class UITriggers : MonoBehaviour {
     public void InvertAxesValues() {
         UpdatePosOrient updPO = aiguille.GetComponent<UpdatePosOrient>();
         updPO.invertCoef();
-        Debug.Log("Coef inversé !");
+        //Debug.Log("Coef inversé !");
     }
 
     public void ExitProgram() {
@@ -114,5 +122,10 @@ public class UITriggers : MonoBehaviour {
 
     public void DisplayExitConfirm() {
         exitConfirmMenu.SetActive(true);
+    }
+
+    public void DeActivateSpatialMapping() {
+        isSpatialMappingActive = !isSpatialMappingActive;
+        spatialMapping.SetActive(isSpatialMappingActive);
     }
 }

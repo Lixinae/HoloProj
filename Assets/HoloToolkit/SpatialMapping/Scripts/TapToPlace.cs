@@ -36,7 +36,7 @@ namespace HoloToolkit.Unity.SpatialMapping
         public bool IsBeingPlaced;
 
         [Tooltip("Setting this to true will allow this behavior to control the DrawMesh property on the spatial mapping.")]
-        public bool AllowMeshVisualizationControl = true;
+        public bool AllowMeshVisualizationControl = false;
 
         [Tooltip("Should the center of the Collider be used instead of the gameObjects world transform.")]
         public bool UseColliderCenter;
