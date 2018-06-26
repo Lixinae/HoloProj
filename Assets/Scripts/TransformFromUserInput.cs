@@ -40,6 +40,9 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
 
     public Boolean devBuild = true; // TODO !!!! Changer à false à la fin du dev , decallage du a l'input de la camera dans unity
 
+    private GameObject spatialMapping;
+    private bool locked = false;
+
     //public Boolean isLocked = false;
     // Use this for initialization
     void Awake() {
@@ -53,7 +56,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         initialRotation = Vector3.zero;
         initialScale = transform.localScale;
         gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
-        //tapToPlace = GetComponent<TapToPlace>();
+        spatialMapping = GameObject.Find("SpatialMapping");
     }
 
     public override void OnSourceLost(SourceStateEventData eventData) {
@@ -273,11 +276,31 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         }
     }
 
+    // Pas bonne methode
     public void LockTransform() {
-        if (gameObject.GetComponent<WorldAnchor>() != null) {
-            // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
+        if (locked) {
+            locked = false;
             WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+        }
+        else {
+            locked = true;
             WorldAnchorManager.Instance.AttachAnchor(gameObject);
+        }
+
+        if (gameObject.GetComponent<WorldAnchor>() != null) {
+            if (!spatialMapping.activeInHierarchy) {
+                // On reactive le spatial mapping pour pouvoir remettre les anchor
+                spatialMapping.SetActive(true);
+                // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
+                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+                WorldAnchorManager.Instance.AttachAnchor(gameObject);
+                spatialMapping.SetActive(false);
+            }
+            else {
+                // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
+                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+                WorldAnchorManager.Instance.AttachAnchor(gameObject);
+            }
         }
         else {
             WorldAnchorManager.Instance.AttachAnchor(gameObject);

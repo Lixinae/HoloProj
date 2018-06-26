@@ -16,6 +16,9 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
     private Vector3 previousPosition;
     private Vector3 actualPosition;
     private GazeManager gaze;
+    private GameObject spatialMapping;
+
+    private bool locked = false;
 
     // Use this for initialization
     void Start() {
@@ -24,6 +27,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
             updatePosOrient = Aiguille.GetComponent<UpdatePosOrient>();
         }
         gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
+        spatialMapping = GameObject.Find("SpatialMapping");
     }
 
     // Update is called once per frame
@@ -43,13 +47,13 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         }*/
 
         // On regarde l'objet et si on appuie sur L , ça verrouille sa position avec un world anchor
-        if (gaze.HitObject == gameObject) {
+        /*if (gaze.HitObject == gameObject) {
             //Debug.Log("Bla bla blablalblalzalreiuhgrj");
             if (Input.GetKeyDown("l")) {
                 Debug.Log(gameObject.name + ": Locked");
                 LockTransform();
             }
-        }
+        }*/
 
 
         transform.position = updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
@@ -58,14 +62,33 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         transform.rotation = quaternion;
     }
 
-    private void LockTransform() {
-        if (gameObject.GetComponent<WorldAnchor>() != null) {
-            // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
+    public void LockTransform() {
+        if (locked) {
+            locked = false;
             WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+        }
+        else {
+            locked = true;
             WorldAnchorManager.Instance.AttachAnchor(gameObject);
+        }
+        /*if (gameObject.GetComponent<WorldAnchor>() != null) {
+            if (!spatialMapping.activeInHierarchy) {
+                // On reactive le spatial mapping pour pouvoir remettre les anchor
+                spatialMapping.SetActive(true);            
+                // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
+                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+                WorldAnchorManager.Instance.AttachAnchor(gameObject);
+                spatialMapping.SetActive(false);
+            }
+            else {
+                // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
+                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+                WorldAnchorManager.Instance.AttachAnchor(gameObject);
+            }
+
         }
         else {
             WorldAnchorManager.Instance.AttachAnchor(gameObject);
-        }
+        }*/
     }
 }
