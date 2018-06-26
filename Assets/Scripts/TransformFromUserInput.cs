@@ -41,7 +41,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     public Boolean devBuild = true; // TODO !!!! Changer à false à la fin du dev , decallage du a l'input de la camera dans unity
 
     private GameObject spatialMapping;
-    private bool locked = false;
+    private bool locked = true;
 
     //public Boolean isLocked = false;
     // Use this for initialization
@@ -57,6 +57,8 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         initialScale = transform.localScale;
         gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
         spatialMapping = GameObject.Find("SpatialMapping");
+
+        // Pas besoin de faire un World Manager . AttacheAnchor, le tap to place le fait déjà
     }
 
     public override void OnSourceLost(SourceStateEventData eventData) {
@@ -90,13 +92,13 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         // Si on a appuie sur la touche "l"
         // Place un anchor à la position de l'objet
         //if (!tapToPlace.IsBeingPlaced) { // Todo -> peut etre des bug du au mouvement avec le regard, mais 
-        if (gaze.HitObject == gameObject) {
+        /*if (gaze.HitObject == gameObject) {
             Debug.Log("Bla bla");
             if (Input.GetKeyDown("l")) {
                 Debug.Log(gameObject.name + ": Locked");
                 LockTransform();
             }
-        }
+        }*/
         //}
 
 
@@ -279,15 +281,21 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     // Pas bonne methode
     public void LockTransform() {
         if (locked) {
-            locked = false;
-            WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+            if (WorldAnchorManager.Instance != null) {
+                locked = false;
+                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+            }
+
         }
         else {
-            locked = true;
-            WorldAnchorManager.Instance.AttachAnchor(gameObject);
+            if (WorldAnchorManager.Instance != null) {
+                locked = true;
+                WorldAnchorManager.Instance.AttachAnchor(gameObject);
+            }
+
         }
 
-        if (gameObject.GetComponent<WorldAnchor>() != null) {
+        /*if (gameObject.GetComponent<WorldAnchor>() != null) {
             if (!spatialMapping.activeInHierarchy) {
                 // On reactive le spatial mapping pour pouvoir remettre les anchor
                 spatialMapping.SetActive(true);
@@ -304,7 +312,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         }
         else {
             WorldAnchorManager.Instance.AttachAnchor(gameObject);
-        }
+        }*/
 
     }
 }

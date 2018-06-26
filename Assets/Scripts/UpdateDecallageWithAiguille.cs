@@ -28,6 +28,13 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         }
         gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
         spatialMapping = GameObject.Find("SpatialMapping");
+        if (!locked) {
+            if(WorldAnchorManager.Instance != null) {
+                locked = true;
+                WorldAnchorManager.Instance.AttachAnchor(gameObject); // Permet de charger l'anchor stocker en mémoire
+            }
+            
+        }
     }
 
     // Update is called once per frame
@@ -64,12 +71,18 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
     public void LockTransform() {
         if (locked) {
-            locked = false;
-            WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+            if(WorldAnchorManager.Instance != null) {
+                locked = false;
+                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+            }
+            
         }
         else {
-            locked = true;
-            WorldAnchorManager.Instance.AttachAnchor(gameObject);
+            if(WorldAnchorManager.Instance != null) {
+                locked = true;
+                WorldAnchorManager.Instance.AttachAnchor(gameObject);
+            }
+            
         }
         /*if (gameObject.GetComponent<WorldAnchor>() != null) {
             if (!spatialMapping.activeInHierarchy) {

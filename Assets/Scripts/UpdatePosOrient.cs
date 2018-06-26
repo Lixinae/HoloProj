@@ -152,6 +152,8 @@ public class UpdatePosOrient : MonoBehaviour {
         }
         //}
 
+        // Si l'axis viewer est verrouillé, les valeurs de decallage bougeront mais lui restera fixe
+        // Il faut le deverouiller avant !
         totalDecallage = decallageByCalibragePos + decallageClavier;
         debugText.text =
                 string.Format(
@@ -163,12 +165,14 @@ public class UpdatePosOrient : MonoBehaviour {
                     "Decallage polhemus:{5}\n" +
                     "Decallage clavier:({6})\n" +
                     "Position de base:{7}\n",
+                    //"AxisViewerLock : {8}",
                     "Aiguille",
                     angleX, angleY, angleZ,
                     posUnityOuput,
                     decallageByCalibragePos,
                     decallageClavier,
                     initialPos
+                    
                     );
     }
 
