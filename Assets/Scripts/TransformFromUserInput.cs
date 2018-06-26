@@ -278,19 +278,23 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         }
     }
 
-    // Pas bonne methode
+    // Logique que ça marche pas -> le game object est l'enfant, pas le parent, donc forcément le fait de detacher anchor ne fait rien.... 
     public void LockTransform() {
         if (locked) {
             if (WorldAnchorManager.Instance != null) {
-                locked = false;
-                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+                foreach (Transform child in transform) { // 1 seul enfant à tout moment
+                    locked = false;
+                    WorldAnchorManager.Instance.RemoveAnchor(child.gameObject);
+                }
             }
 
         }
         else {
             if (WorldAnchorManager.Instance != null) {
-                locked = true;
-                WorldAnchorManager.Instance.AttachAnchor(gameObject);
+                foreach (Transform child in transform) { // 1 seul enfant à tout moment
+                    locked = true;
+                    WorldAnchorManager.Instance.AttachAnchor(child.gameObject);
+                }
             }
 
         }
