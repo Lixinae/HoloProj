@@ -436,7 +436,7 @@ Transform:
   - {fileID: 850809429}
   - {fileID: 256315472}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &140232941
 Transform:
@@ -722,7 +722,7 @@ Transform:
   - {fileID: 2121104435}
   - {fileID: 603796339}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &208828856
 MonoBehaviour:
@@ -1081,7 +1081,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010560871102, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 20000013304850028, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
         type: 2}
@@ -1305,7 +1305,7 @@ Transform:
   - {fileID: 1667286744}
   - {fileID: 1159216363}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &423456784
 MonoBehaviour:
@@ -1579,6 +1579,7 @@ GameObject:
   - component: {fileID: 603796340}
   - component: {fileID: 603796343}
   - component: {fileID: 603796344}
+  - component: {fileID: 603796345}
   m_Layer: 0
   m_Name: Cube_2_test
   m_TagString: Untagged
@@ -1761,6 +1762,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!362 &603796345
+WorldAnchor:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 603796338}
+  serializedVersion: 2
 --- !u!1001 &685055496
 Prefab:
   m_ObjectHideFlags: 0
@@ -2369,7 +2377,7 @@ Transform:
   m_Children:
   - {fileID: 717893094}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &970070106
 MonoBehaviour:
@@ -4161,7 +4169,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -4192,8 +4200,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 23436152}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1643772022
 GameObject:
@@ -5692,6 +5700,7 @@ GameObject:
   - component: {fileID: 2121104436}
   - component: {fileID: 2121104439}
   - component: {fileID: 2121104440}
+  - component: {fileID: 2121104441}
   m_Layer: 0
   m_Name: Cube_test
   m_TagString: Untagged
@@ -5874,3 +5883,10 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!362 &2121104441
+WorldAnchor:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2121104434}
+  serializedVersion: 2

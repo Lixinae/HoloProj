@@ -296,7 +296,6 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
                     WorldAnchorManager.Instance.AttachAnchor(child.gameObject);
                 }
             }
-
         }
 
         /*if (gameObject.GetComponent<WorldAnchor>() != null) {
