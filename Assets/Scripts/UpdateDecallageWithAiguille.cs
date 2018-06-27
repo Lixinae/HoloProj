@@ -28,18 +28,17 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         }
         gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
         spatialMapping = GameObject.Find("SpatialMapping");
-
-    }
-
-    // Update is called once per frame
-    void Update() {
         if (!locked) {
             if (WorldAnchorManager.Instance != null) {
                 locked = true;
                 WorldAnchorManager.Instance.AttachAnchor(gameObject); // Permet de charger l'anchor stocker en mémoire
             }
-
         }
+    }
+
+    // Update is called once per frame
+    void Update() {
+
         /*previousPosition = transform.position;
         actualPosition = updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
 
@@ -62,7 +61,8 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
             }
         }*/
 
-
+        // += bouge par accoup ( en gros quand on enlève puis remet l'anchor -> bouge
+        // juste le = -> position a 0,0,0 dès qu'on enlève l'anchor ( logique en soit )
         transform.position += updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
 
         Quaternion quaternion = Quaternion.Euler(updatePosOrient.angleX, updatePosOrient.angleY, 0);
