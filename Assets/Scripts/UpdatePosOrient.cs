@@ -104,7 +104,7 @@ public class UpdatePosOrient : MonoBehaviour {
                 }
             }
         }*/
-
+        totalDecallage = new Vector3(0, 0, 0);
         //if (decallageByGazeDone) {
         if (plStream != null) {
             if (plStream.isActive) {
@@ -328,6 +328,7 @@ public class UpdatePosOrient : MonoBehaviour {
         }
     }
 
+    // A voir si encore utile
     private static Vector3 InchToCm(Vector3 pol_position) {
         pol_position.x = pol_position.x * 2.54f;
         pol_position.y = pol_position.y * 2.54f;

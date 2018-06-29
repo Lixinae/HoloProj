@@ -40,12 +40,12 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
 
     public Boolean devBuild = true; // TODO !!!! Changer à false à la fin du dev , decallage du a l'input de la camera dans unity
 
-    private GameObject spatialMapping;
+    //private GameObject spatialMapping;
     private bool locked = true;
 
     //public Boolean isLocked = false;
     // Use this for initialization
-    void Awake() {
+    void Start() {
         if (Camera == null) {
             Camera = GameObject.Find("HoloLensCamera");
         }
@@ -56,7 +56,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         initialRotation = Vector3.zero;
         initialScale = transform.localScale;
         gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
-        spatialMapping = GameObject.Find("SpatialMapping");
+        //spatialMapping = GameObject.Find("SpatialMapping");
 
         // Pas besoin de faire un World Manager . AttacheAnchor, le tap to place le fait déjà
     }

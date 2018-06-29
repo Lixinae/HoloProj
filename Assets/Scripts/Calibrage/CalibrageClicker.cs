@@ -17,7 +17,7 @@ public class CalibrageClicker : MonoBehaviour {
     private Vector3 PosCapteur1 = new Vector3(0, 0, 0);
     private Vector3 PosCapteur2 = new Vector3(0, 0, 0);
 
-    private Vector3 PosCube1= new Vector3(0, 0, 0);
+    private Vector3 PosCube1 = new Vector3(0, 0, 0);
     private Vector3 PosCube2 = new Vector3(0, 0, 0);
     private CalibrageClickAnnex cube1CalibrageClick;
     private CalibrageClickAnnex cube2CalibrageClick;
@@ -196,8 +196,10 @@ public class CalibrageClicker : MonoBehaviour {
         float powDiv = 1 + ((Mathf.Pow(t5 - t2, 2) * t1t2t4t5) / (t1t5pow * t1t3t4t6));
 
         float Azfe = (Yz - Xz) / (t1t3t4t6 * powDiv);
-        float zfe = (((t6 - t3) * (Xy + Yy) + Yx - Xx) / ((t1 - t4) * (t1t5pow) * t1t3t4t6 * powDiv)) + Azfe;
-        float xfe = ((t5 - t2) * t1t2t4t5 * zfe + (t6 - t3) * (Xy + Yy) + Yx - Xx)  / ((t1 - t4) * (t1t5pow));
+        float zfe = ((((t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) * (t2 - t5)) / ((t1 - t4) * (t1t5pow) * t1t3t4t6 * powDiv)) + Azfe;
+
+
+        float xfe = ((t5 - t2) * t1t2t4t5 * zfe + (t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) / ((t1 - t4) * (t1t5pow));
         float yfe = ((t6 - t3) * xfe - Xy + Yy) / (t1t2t4t5);
 
 
@@ -222,7 +224,7 @@ public class CalibrageClicker : MonoBehaviour {
         // TODO -> attention aux angles -> angle X = rotation autour de l'axe Y
         // Angle Y autour de l'axe X
         // Angle Z autour de l'axe Y
-        float angleX = Vector3.Angle(axisX, FE); 
+        float angleX = Vector3.Angle(axisX, FE);
         float angleY = Vector3.Angle(axisY, VE);
         float angleZ = Vector3.Angle(axisZ, UE);
         updatePosOrient.angleX = angleX;
@@ -232,6 +234,6 @@ public class CalibrageClicker : MonoBehaviour {
 
         axisViewer.SetActive(true);
         axisViewer.transform.position = posEmetteur;
-        axisViewer.transform.rotation = new Quaternion(0,angleY,angleX,angleZ);
+        axisViewer.transform.rotation = new Quaternion(0, angleY, angleX, angleZ);
     }
 }

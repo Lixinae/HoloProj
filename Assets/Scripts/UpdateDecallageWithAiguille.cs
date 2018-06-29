@@ -61,8 +61,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
             }
         }*/
 
-        // += bouge par accoup ( en gros quand on enlève puis remet l'anchor -> bouge
-        // juste le = -> position a 0,0,0 dès qu'on enlève l'anchor ( logique en soit )
+        // Se déplace de manière infinie pour le moment
         transform.position += updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
 
         Quaternion quaternion = Quaternion.Euler(updatePosOrient.angleX, updatePosOrient.angleY, 0);

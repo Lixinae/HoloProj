@@ -22,7 +22,7 @@ public class GLTFComponentPerso : Singleton<GLTFComponentPerso> {
 
     public bool IsLoaded { get; set; }
 
-    private void Start() {
+    private void Awake() {
         GLTFStandard = Shader.Find("GLTF/GLTFStandard");
         GLTFStandardSpecular = Shader.Find("GLTF/GLTFStandard");
         GLTFConstant = Shader.Find("GLTF/GLTFConstant");

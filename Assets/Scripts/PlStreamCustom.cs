@@ -64,7 +64,7 @@ public class PlStreamCustom : MonoBehaviour {
     /////////////////////////////////////////////////////////////////////////////
 
     // Use this for initialization
-    void Awake() {
+    void Start() {
         Connect(host, port);
     }
 

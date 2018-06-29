@@ -6,7 +6,7 @@ public class KeepObjectFacingCamera : MonoBehaviour {
 
     GameObject camera;
     // Use this for initialization
-    void Awake() {
+    void Start() {
         camera = GameObject.Find("HoloLensCamera");
     }
 
