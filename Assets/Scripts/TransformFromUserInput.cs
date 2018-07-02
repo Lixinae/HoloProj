@@ -240,8 +240,8 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
 
         base.OnXboxInputUpdate(eventData);
         //if (isLocked) {
-            //Debug.Log("Transform is locked");
-           // return;
+        //Debug.Log("Transform is locked");
+        // return;
         //}
         newPosition = Vector3.zero;
         newScale = transform.localScale;

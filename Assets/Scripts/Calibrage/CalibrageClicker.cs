@@ -48,7 +48,7 @@ public class CalibrageClicker : MonoBehaviour {
         }
 
         axisViewer = GameObject.Find("AxisViewer");
-        
+
 
         HideScene();
         //ObjectToShow.SetActive(false);
@@ -240,7 +240,7 @@ public class CalibrageClicker : MonoBehaviour {
         // On doit enlever l'anchor pour déplacer l'objet et on la remet après
         UpdateDecallageWithAiguille updateDecallage = axisViewer.GetComponent<UpdateDecallageWithAiguille>();
         updateDecallage.RemoveAnchor();
-    
+
         axisViewer.transform.position = posEmetteur;
         axisViewer.transform.rotation = new Quaternion(0, angleY, angleX, angleZ);
 

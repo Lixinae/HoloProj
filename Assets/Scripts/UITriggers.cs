@@ -7,7 +7,7 @@ using UnityEngine;
 public class UITriggers : MonoBehaviour {
 
     public GameObject menuFull = null;
-    public GameObject modelsMenu = null; 
+    public GameObject modelsMenu = null;
     public GameObject mainMenu = null;
     public GameObject exitConfirmMenu = null;
     public GameObject gltf = null;
@@ -19,7 +19,7 @@ public class UITriggers : MonoBehaviour {
     bool isMenuShowing = false;
     bool isDebugTextShowing = false;
     bool isSpatialMappingActive = true;
-    
+
     // Use this for initialization
     void Awake() {
         if (menuFull == null) {
@@ -31,21 +31,21 @@ public class UITriggers : MonoBehaviour {
         if (mainMenu == null) {
             mainMenu = GameObject.Find("MainMenu");
         }
-        if(exitConfirmMenu == null) {
+        if (exitConfirmMenu == null) {
             exitConfirmMenu = GameObject.Find("ExitConfirmMenu");
         }
 
-        if(gltf == null) {
+        if (gltf == null) {
             gltf = GameObject.Find("GLTF");
         }
-        if(aiguille == null) {
+        if (aiguille == null) {
             aiguille = GameObject.Find("Aiguille");
         }
-        if(debugText == null) {
+        if (debugText == null) {
             debugText = GameObject.Find("UITextPrefab");
         }
 
-        if(spatialMapping == null) {
+        if (spatialMapping == null) {
             spatialMapping = GameObject.Find("SpatialMapping");
         }
 
@@ -54,7 +54,7 @@ public class UITriggers : MonoBehaviour {
         mainMenu.SetActive(true);
         exitConfirmMenu.SetActive(false);
         debugText.SetActive(false);
-        
+
     }
 
     // Update is called once per frame
@@ -62,7 +62,7 @@ public class UITriggers : MonoBehaviour {
         if (Input.GetKeyDown("escape")) { // Eventuellement se servir du pad xbox pour afficher / cacher le menu, via le bouton start ou autre
             isMenuShowing = !isMenuShowing;
             menuFull.SetActive(isMenuShowing);
-            
+
         }
         if (Input.GetKeyDown("p")) {
             isDebugTextShowing = !isDebugTextShowing;
@@ -89,7 +89,7 @@ public class UITriggers : MonoBehaviour {
     }
 
     public void CleanWindowFromModels() {
-        
+
         foreach (Transform child in gltf.transform) {
             GameObject.Destroy(child.gameObject);
         }
@@ -112,7 +112,7 @@ public class UITriggers : MonoBehaviour {
         // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-         Application.Quit();
+        Application.Quit();
 #endif
     }
 

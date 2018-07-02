@@ -84,18 +84,18 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
     public void LockTransform() {
         if (locked) {
-            if(WorldAnchorManager.Instance != null) {
+            if (WorldAnchorManager.Instance != null) {
                 locked = false;
                 WorldAnchorManager.Instance.RemoveAnchor(gameObject);
             }
-            
+
         }
         else {
-            if(WorldAnchorManager.Instance != null) {
+            if (WorldAnchorManager.Instance != null) {
                 locked = true;
                 WorldAnchorManager.Instance.AttachAnchor(gameObject);
             }
-            
+
         }
         /*if (gameObject.GetComponent<WorldAnchor>() != null) {
             if (!spatialMapping.activeInHierarchy) {

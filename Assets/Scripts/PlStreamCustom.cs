@@ -9,7 +9,7 @@ using System.Threading;
 using System.IO;
 
 #if !UNITY_EDITOR
-using System.Threading.Tasks;  
+using System.Threading.Tasks;
 #endif
 
 public enum PlTrackerCustom {
@@ -115,13 +115,13 @@ public class PlStreamCustom : MonoBehaviour {
                     conThread.Start();
 #else
                     isActive = true;
-                    exchangeTask = Task.Run(()=> Read_liberty());
+                    exchangeTask = Task.Run(() => Read_liberty());
 #endif
                     break;
                 default:
                     throw new Exception("[polhemus] Unknown Tracker selected in PlStream::Awake().");
             }
-            
+
 
         }
         catch (Exception e) {
@@ -142,8 +142,7 @@ public class PlStreamCustom : MonoBehaviour {
 #if UNITY_EDITOR
         Debug.Log("UWP TCP client used in Unity!");
 #else
-        try
-        {
+        try {
             socket = new Windows.Networking.Sockets.StreamSocket();
             Windows.Networking.HostName serverHost = new Windows.Networking.HostName(host);
             await socket.ConnectAsync(serverHost, port);
@@ -152,8 +151,7 @@ public class PlStreamCustom : MonoBehaviour {
             initialize();
             Debug.Log("Connected!");
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             Debug.Log(e.ToString());
         }
 #endif
@@ -270,7 +268,7 @@ public class PlStreamCustom : MonoBehaviour {
                 stream.Close();
             }
 #else
-            if(exchangeTask != null){
+            if (exchangeTask != null) {
                 exchangeTask.Wait();
                 socket.Dispose();
                 stream.Close();
