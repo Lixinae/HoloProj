@@ -19,7 +19,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
     private GameObject spatialMapping;
 
     private bool locked = false;
-
+    private Vector3 prevDecallage = new Vector3(0, 0, 0);
     // Use this for initialization
     void Start() {
         if (Aiguille == null) {
@@ -61,8 +61,13 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
             }
         }*/
 
+       
         // Se déplace de manière infinie pour le moment
-        transform.position += updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
+        if(updatePosOrient.totalDecallage != prevDecallage) {
+            prevDecallage = updatePosOrient.totalDecallage;
+            transform.position += updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
+        }
+        
 
         Quaternion quaternion = Quaternion.Euler(updatePosOrient.angleX, updatePosOrient.angleY, 0);
         transform.rotation = quaternion;

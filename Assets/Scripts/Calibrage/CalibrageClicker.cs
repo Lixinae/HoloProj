@@ -63,7 +63,7 @@ public class CalibrageClicker : MonoBehaviour {
 
                 Calibrage();
                 calibrageDone = true;
-                
+                HideCubeAndShowScene();
             }
         }
     }
@@ -146,8 +146,9 @@ public class CalibrageClicker : MonoBehaviour {
 
         // 3 vecteurs composant le repère du capteur polhemus
         Vector3 FE = new Vector3(xfe, yfe, zfe); // orientation sur l'axe X
-        Vector3 UE = new Vector3(zfe, yfe, -xfe); // orientation sur l'axe Z
         Vector3 VE = new Vector3(-yfe, xfe, zfe); // orientation sur l'axe Y
+        Vector3 UE = new Vector3(zfe, yfe, -xfe); // orientation sur l'axe Z
+        
 
         Vector3 axisX = new Vector3(1, 0, 0);
         Vector3 axisY = new Vector3(0, 1, 0);
@@ -160,10 +161,22 @@ public class CalibrageClicker : MonoBehaviour {
         float angleY = Vector3.Angle(axisY, VE);
         float angleZ = Vector3.Angle(axisZ, UE);
 
+        Debug.Log("Pos emetteur: " + posEmetteur);
+
+        Debug.Log("FE:" +FE);
+        Debug.Log("UE:" +UE);
+        Debug.Log("VE:" +VE);
+
+        Debug.Log("angleX:" + angleX);
+        Debug.Log("angleY:" + angleY);
+        Debug.Log("angleZ:" + angleZ);
+
+
         // AngleX -> Rotation autour de l'axe X et donc c'est l'angle Y qu'on determine au dessus
         updatePosOrient.angleX = angleY;
         // Angle Y -> Rotation autour de l'axe Y et donc c'est l'angle X determiné au dessus ( ou l'angle Z, les 2 étant normalement égaux)
         updatePosOrient.angleY = angleX;
+        updatePosOrient.angleZ = angleZ;
         updatePosOrient.decallageByCalibragePos = posEmetteur;
 
         axisViewer.SetActive(true);
@@ -173,8 +186,10 @@ public class CalibrageClicker : MonoBehaviour {
         updateDecallage.RemoveAnchor();
 
         axisViewer.transform.position = posEmetteur;
-        axisViewer.transform.rotation = new Quaternion(0, angleY, angleX, angleZ);
+        axisViewer.transform.rotation = new Quaternion(0, angleX, angleY, angleZ);
 
         updateDecallage.SetAnchor();
+
+        
     }
 }

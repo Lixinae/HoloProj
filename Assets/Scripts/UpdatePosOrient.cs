@@ -185,7 +185,9 @@ public class UpdatePosOrient : MonoBehaviour {
         // Angle Z autour de l'axe Y
         float theta = angleX * Mathf.Deg2Rad; // Rotation autour de X
         float phi = angleY * Mathf.Deg2Rad; // Rotation autour de Y
-        float psy = angleZ * Mathf.Deg2Rad; // Rotation autour de Z
+        //float psy = angleZ * Mathf.Deg2Rad; // Rotation autour de Z
+        // On evite juste les rotation autour de l'axe Z car inutile
+        float psy = 0; // Rotation autour de Z
         //float psy = 0;// Rotation autour de Z
 
         float cosTheta = Mathf.Cos(theta);
