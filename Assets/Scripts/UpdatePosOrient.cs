@@ -67,18 +67,14 @@ public class UpdatePosOrient : MonoBehaviour {
                     //pol_position = InchToCm(pol_position);
 
                     // Recupère les bonne positions
-                    unity_position.x = pol_position.y;
-                    unity_position.y = -pol_position.z;
-                    unity_position.z = pol_position.x;
+                    unity_position = GetCorrectAxis(pol_position);
+                    //unity_position = pol_position;
 
                     initialPos = unity_position;
                     Debug.Log("Pos init :" + initialPos);
                 }
             }
         }
-        //if(debugText == null) {
-        //    debugText = GameObject.FindObjectOfType(Text);
-        //}
     }
 
     // Update is called once per frame
@@ -124,6 +120,8 @@ public class UpdatePosOrient : MonoBehaviour {
 
                     // Recupère les bonne positions = renommage des axes
                     unity_position = GetCorrectAxis(pol_position);
+                    //unity_position = pol_position;
+
 
                     // Application des correctifs des angles trouvé
                     unity_position = ApplyRotationMatrix(unity_position);

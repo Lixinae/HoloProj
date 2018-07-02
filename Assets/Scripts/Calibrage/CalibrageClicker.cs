@@ -125,7 +125,7 @@ public class CalibrageClicker : MonoBehaviour {
         float t1t5pow = t1t2t4t5 + (Mathf.Pow(t3 - t6, 2) / (t1 - t4));
         float t1t3t4t6 = t1 + t3 - t4 - t6;
 
-        float powDiv = 1 + ((Mathf.Pow(t5 - t2, 2) * t1t2t4t5) / (t1t5pow * t1t3t4t6));
+        float powDiv = 1 + ((Mathf.Pow(t5 - t2, 2) * t1t2t4t5) / ((t1-t4)*(t1t5pow * t1t3t4t6)));
 
         float Azfe = (Yz - Xz) / (t1t3t4t6 * powDiv);
         float zfe = ((((t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) * (t2 - t5)) / ((t1 - t4) * (t1t5pow) * t1t3t4t6 * powDiv)) + Azfe;
@@ -185,7 +185,7 @@ public class CalibrageClicker : MonoBehaviour {
         UpdateDecallageWithAiguille updateDecallage = axisViewer.GetComponent<UpdateDecallageWithAiguille>();
         updateDecallage.RemoveAnchor();
 
-        axisViewer.transform.position = posEmetteur;
+        axisViewer.transform.position = posEmetteur * 0.01f;
         axisViewer.transform.rotation = new Quaternion(0, angleX, angleY, angleZ);
 
         updateDecallage.SetAnchor();
