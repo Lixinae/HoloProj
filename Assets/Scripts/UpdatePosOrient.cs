@@ -35,8 +35,8 @@ public class UpdatePosOrient : MonoBehaviour {
 
     private Vector3 decallageByGaze = new Vector3(0, 0, 0);
 
-    private MoveByGaze moveByGaze = null;
-    private DeactivateMoveByGaze deactivateMoveByGaze = null;
+    //private MoveByGaze moveByGaze = null;
+    //private DeactivateMoveByGaze deactivateMoveByGaze = null;
 
     private bool decallageByGazeDone = false;
     private bool selectedOnce = false;
@@ -51,12 +51,12 @@ public class UpdatePosOrient : MonoBehaviour {
             plStream = GetComponent<PlStreamCustom>();
         }
 
-        if (moveByGaze == null) {
-            moveByGaze = GetComponent<MoveByGaze>();
-        }
-        if (deactivateMoveByGaze == null) {
-            deactivateMoveByGaze = new DeactivateMoveByGaze();
-        }
+        //if (moveByGaze == null) {
+        //    moveByGaze = GetComponent<MoveByGaze>();
+        //}
+        //if (deactivateMoveByGaze == null) {
+        //    deactivateMoveByGaze = new DeactivateMoveByGaze();
+        //}
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
         if (plStream != null) {
@@ -117,9 +117,10 @@ public class UpdatePosOrient : MonoBehaviour {
                     // doing crude (90 degree) rotations into frame
 
                     // Dans le doute on desactive les objet pour le move by gaze
-                    deactivateMoveByGaze.DeactivateElements(this.gameObject);
-                    Vector3 pol_position = plStream.positions[0];// Les valeurs sont en inch !
-                                                                 //pol_position = InchToCm(pol_position);
+                    //deactivateMoveByGaze.DeactivateElements(this.gameObject); // move by gaze plus utilisé -> on vire
+                    Vector3 pol_position = plStream.positions[0];
+                    // Les valeurs sont en inch !
+                    //pol_position = InchToCm(pol_position);
 
                     // Recupère les bonne positions = renommage des axes
                     unity_position = GetCorrectAxis(pol_position);

@@ -63,76 +63,7 @@ public class CalibrageClicker : MonoBehaviour {
 
                 Calibrage();
                 calibrageDone = true;
-                // TODO  -> Changer les calculs, besoin de 3D
-
-
-                //Vector3 angles = MathCalcul.GetAngle(firstPos, secondPos);
-
-                // todo Faire les calcul
-
-                // Nommage pour coller aux calculs sur la feuille
-                // zU1 = YuA sur la feuille
-                /*float zUA = firstPosCube.z; 
-                float yUA = firstPosCube.y; 
-                float xUA = firstPosCube.x;
-
-                float zTA = firstPosCapteur.z;
-                float yTA = firstPosCapteur.y;
-                float xTA = firstPosCapteur.x;
-
-                float zUB = secondPosCube.z;
-                float yUB = secondPosCube.y;
-                float xUB = secondPosCube.x;
-
-                float zTB = secondPosCapteur.z;
-                float yTB = secondPosCapteur.y;
-                float xTB = secondPosCapteur.x;
-
-                Debug.Log("zUA = " +zUA);
-                Debug.Log("xUA = " +xUA);
-
-                Debug.Log("zTA = " +zTA);
-                Debug.Log("xTA = " +xTA);
-
-                Debug.Log("zUB = " +zUB);
-                Debug.Log("xUB = " +xUB);
-
-                Debug.Log("zTB = " +zTB);
-                Debug.Log("xTB = " +xTB);
-
-                float offSetXt = (((zUB - zUA) * xTB - xUB * zTB) * xTA - xUA * zTA * xTB) / (zTA * xTB - zTB * xTA);
-                float offSetZt = (((offSetXt - xUB) * zTB) / xTB) + zUB;
-
-                Vector3 resultatCalculPosAvecAngle = new Vector3(offSetXt, 0, offSetZt);
-                Debug.Log("XU1:" + xUA);
-                Debug.Log("XT1:" + xTA);
-                Debug.Log("OffsetX :" + offSetXt);
-                Debug.Log("OffsetZ :" + offSetZt);
-                float valTmp = ((xUA - offSetXt) / xTA);
-                Debug.Log("Val tmp :" + valTmp);
-                // On passe de degré à radians si necessaire
-                if (valTmp > 1 || valTmp < -1) {
-                    valTmp *= Mathf.Deg2Rad;
-                }
-                //float valTmpRad = ((xUA - offSetXt) / xTA) * Mathf.Deg2Rad;
-                // Debug.Log("Val tmp Rad :" + valTmpRad);
-
-                // Modification sont faites ici car ça évite de les recalculer à chaque tour de boucle du update -> optimisation de calcul
-                updatePosOrient.angle = Mathf.Acos(valTmp);
-                updatePosOrient.rapport = valTmp;
-                //updatePosOrient.reduceMovementCoef = 0.01f / Mathf.Cos(updatePosOrient.angle); Pas forcément la meilleur idée
-                // updatePosOrient.angle -= (Mathf.PI / 2f); -> Theorie foireuse , marche pas
-                //Debug.Log("Angle :" + updatePosOrient.angle * Mathf.Rad2Deg);
-
-
-
-
-                updatePosOrient.decallageByCalibragePos = resultatCalculPosAvecAngle;
-                Debug.Log("Calibrage :" + resultatCalculPosAvecAngle);
-                calibrageDone = true;
-
-                HideCubeAndShowScene();
-                */
+                
             }
         }
     }
