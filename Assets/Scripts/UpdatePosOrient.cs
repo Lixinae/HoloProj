@@ -127,8 +127,6 @@ public class UpdatePosOrient : MonoBehaviour {
                     // Application des correctifs des angles trouvé
                     unity_position = ApplyRotationMatrix(unity_position);
 
-
-
                     unity_position += decallageByCalibragePos * signe;// Surement devoir ajouter un coef multiplicateur
 
                     // On applique les decallage au clavier et celui du regard
@@ -184,8 +182,8 @@ public class UpdatePosOrient : MonoBehaviour {
         // TODO -> attention aux angles -> angle X = rotation autour de l'axe Y
         // Angle Y autour de l'axe X
         // Angle Z autour de l'axe Y
-        float theta = angleX * Mathf.Deg2Rad; // Rotation autour de Y
-        float phi = angleY * Mathf.Deg2Rad; // Rotation autour de X
+        float theta = angleX * Mathf.Deg2Rad; // Rotation autour de X
+        float phi = angleY * Mathf.Deg2Rad; // Rotation autour de Y
         float psy = angleZ * Mathf.Deg2Rad; // Rotation autour de Z
         //float psy = 0;// Rotation autour de Z
 

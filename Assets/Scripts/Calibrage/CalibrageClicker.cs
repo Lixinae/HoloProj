@@ -48,7 +48,7 @@ public class CalibrageClicker : MonoBehaviour {
         }
 
         axisViewer = GameObject.Find("AxisViewer");
-        axisViewer.SetActive(false);
+        
 
         HideScene();
         //ObjectToShow.SetActive(false);
@@ -145,11 +145,13 @@ public class CalibrageClicker : MonoBehaviour {
 
     private void HideScene() {
         //sceneItems.SetActive(false);
+        axisViewer.SetActive(false);
         gltf.SetActive(false);
     }
 
     private void ShowScene() {
         //sceneItems.SetActive(true);
+        axisViewer.SetActive(true);
         gltf.SetActive(true);
     }
 
@@ -188,7 +190,6 @@ public class CalibrageClicker : MonoBehaviour {
         float Yy = PosCube2.y;
         float Yz = PosCube2.z;
 
-        // TODO -> ecrire les calcul fait sur feuille ici
         float t1t2t4t5 = t1 + t2 - t4 - t5;
         float t1t5pow = t1t2t4t5 + (Mathf.Pow(t3 - t6, 2) / (t1 - t4));
         float t1t3t4t6 = t1 + t3 - t4 - t6;
@@ -227,13 +228,22 @@ public class CalibrageClicker : MonoBehaviour {
         float angleX = Vector3.Angle(axisX, FE);
         float angleY = Vector3.Angle(axisY, VE);
         float angleZ = Vector3.Angle(axisZ, UE);
-        updatePosOrient.angleX = angleX;
-        updatePosOrient.angleY = angleY;
-        //updatePosOrient.angleZ = angleZ;
+
+        // AngleX -> Rotation autour de l'axe X et donc c'est l'angle Y qu'on determine au dessus
+        updatePosOrient.angleX = angleY;
+        // Angle Y -> Rotation autour de l'axe Y et donc c'est l'angle X determiné au dessus ( ou l'angle Z, les 2 étant normalement égaux)
+        updatePosOrient.angleY = angleX;
         updatePosOrient.decallageByCalibragePos = posEmetteur;
 
         axisViewer.SetActive(true);
+
+        // On doit enlever l'anchor pour déplacer l'objet et on la remet après
+        UpdateDecallageWithAiguille updateDecallage = axisViewer.GetComponent<UpdateDecallageWithAiguille>();
+        updateDecallage.RemoveAnchor();
+    
         axisViewer.transform.position = posEmetteur;
         axisViewer.transform.rotation = new Quaternion(0, angleY, angleX, angleZ);
+
+        updateDecallage.SetAnchor();
     }
 }

@@ -68,6 +68,20 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         transform.rotation = quaternion;
     }
 
+    public void RemoveAnchor() {
+        if (WorldAnchorManager.Instance != null) {
+            locked = false;
+            WorldAnchorManager.Instance.RemoveAnchor(gameObject);
+        }
+    }
+
+    public void SetAnchor() {
+        if (WorldAnchorManager.Instance != null) {
+            locked = true;
+            WorldAnchorManager.Instance.AttachAnchor(gameObject);
+        }
+    }
+
     public void LockTransform() {
         if (locked) {
             if(WorldAnchorManager.Instance != null) {
