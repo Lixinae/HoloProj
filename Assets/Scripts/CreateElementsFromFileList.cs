@@ -17,6 +17,7 @@ public class CreateElementsFromFileList : MonoBehaviour {
     void Start() {
         var files = new ShowFileInFolder();
         var fileList = files.GetFileList();
+
         if (modelsMenu == null) {
             modelsMenu = GameObject.Find("ModelsMenu");
         }
@@ -112,7 +113,7 @@ public class CreateElementsFromFileList : MonoBehaviour {
                 if (fileList.Count != previousCount) {
                     SetupToggles(fileList);
                 }
-               
+
             }
             yield return new WaitForSeconds(timer);
         }
