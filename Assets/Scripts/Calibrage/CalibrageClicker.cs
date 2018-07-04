@@ -31,12 +31,22 @@ public class CalibrageClicker : MonoBehaviour {
 
     private void Awake() {
 
-        cube1 = GameObject.Find("Cube_test");
-        cube1CalibrageClick = cube1.GetComponent<CalibrageClickAnnex>();
-        cube2 = GameObject.Find("Cube_2_test");
-        cube2CalibrageClick = cube2.GetComponent<CalibrageClickAnnex>();
+        if (cube1 == null) {
+            cube1 = GameObject.Find("Cube_test");
+            if (cube1 != null) {
+                cube1CalibrageClick = cube1.GetComponent<CalibrageClickAnnex>();
+            }
+        }
+        if (cube1 == null) {
+            cube2 = GameObject.Find("Cube_2_test");
+            if (cube2 != null) {
+                cube1CalibrageClick = cube2.GetComponent<CalibrageClickAnnex>();
+            }
+        }
+
         updatePosOrient = GameObject.Find("Aiguille").GetComponent<UpdatePosOrient>();
-        float coef = (1f / (0.1f * 0.25f));
+
+        float coef = (1f / (0.1f * 0.25f)); // On adapte avec les scales utilisé dans les éléments
         PosCube1 = cube1.transform.position * coef; // *40 ramène a un scale de 1
         PosCube2 = cube2.transform.position * coef;
 
@@ -46,8 +56,10 @@ public class CalibrageClicker : MonoBehaviour {
         if (gltf == null) {
             gltf = GameObject.Find("GLTF");
         }
+        if (axisViewer == null) {
+            axisViewer = GameObject.Find("AxisViewer");
+        }
 
-        axisViewer = GameObject.Find("AxisViewer");
 
 
         HideScene();
@@ -125,7 +137,7 @@ public class CalibrageClicker : MonoBehaviour {
         float t1t5pow = t1t2t4t5 + (Mathf.Pow(t3 - t6, 2) / (t1 - t4));
         float t1t3t4t6 = t1 + t3 - t4 - t6;
 
-        float powDiv = 1 + ((Mathf.Pow(t5 - t2, 2) * t1t2t4t5) / ((t1-t4)*(t1t5pow * t1t3t4t6)));
+        float powDiv = 1 + ((Mathf.Pow(t5 - t2, 2) * t1t2t4t5) / ((t1 - t4) * (t1t5pow * t1t3t4t6)));
 
         float Azfe = (Yz - Xz) / (t1t3t4t6 * powDiv);
         float zfe = ((((t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) * (t2 - t5)) / ((t1 - t4) * (t1t5pow) * t1t3t4t6 * powDiv)) + Azfe;
@@ -148,7 +160,7 @@ public class CalibrageClicker : MonoBehaviour {
         Vector3 FE = new Vector3(xfe, yfe, zfe); // orientation sur l'axe X
         Vector3 VE = new Vector3(-yfe, xfe, zfe); // orientation sur l'axe Y
         Vector3 UE = new Vector3(zfe, yfe, -xfe); // orientation sur l'axe Z
-        
+
 
         Vector3 axisX = new Vector3(1, 0, 0);
         Vector3 axisY = new Vector3(0, 1, 0);
@@ -163,9 +175,9 @@ public class CalibrageClicker : MonoBehaviour {
 
         Debug.Log("Pos emetteur: " + posEmetteur);
 
-        Debug.Log("FE:" +FE);
-        Debug.Log("UE:" +UE);
-        Debug.Log("VE:" +VE);
+        Debug.Log("FE:" + FE);
+        Debug.Log("UE:" + UE);
+        Debug.Log("VE:" + VE);
 
         Debug.Log("angleX:" + angleX);
         Debug.Log("angleY:" + angleY);
@@ -190,6 +202,6 @@ public class CalibrageClicker : MonoBehaviour {
 
         updateDecallage.SetAnchor();
 
-        
+
     }
 }

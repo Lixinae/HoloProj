@@ -29,10 +29,6 @@ public class UpdatePosOrient : MonoBehaviour {
     public Vector3 posUnityOuput;
 
     public Vector3 orientation = new Vector3(0, 0, 0);
-    //public float angleX = 0;
-    //public float angleY = 0;
-    //public float angleZ = 0;
-
 
 
     private Vector3 decallageByGaze = new Vector3(0, 0, 0);
@@ -42,9 +38,6 @@ public class UpdatePosOrient : MonoBehaviour {
 
     private bool decallageByGazeDone = false;
     private bool selectedOnce = false;
-
-
-    public Text debugText = null;
 
     //public double rapport = 1;
     // Use this for initialization
@@ -154,8 +147,9 @@ public class UpdatePosOrient : MonoBehaviour {
         // Si l'axis viewer est verrouillé, les valeurs de decallage bougeront mais lui restera fixe
         // Il faut le deverouiller avant !
         totalDecallage = decallageByCalibragePos + decallageClavier;
-        debugText.text =
-                string.Format(
+
+        
+        string text = string.Format(
                     "{0}\n" +
                     "Rotation sur X: {1:0.000}°\n" +
                     "Rotation sur Y: {2:0.000}°\n" +
@@ -171,12 +165,12 @@ public class UpdatePosOrient : MonoBehaviour {
                     decallageByCalibragePos,
                     decallageClavier,
                     initialPos
-
                     );
+        DebugHelper.Instance.AddDebugText(text, 0);
     }
 
     private Vector3 ApplyRotationMatrix(Vector3 posBeforeRotat) {
-        if (orientation == new Vector3(0,0,0)) {
+        if (orientation == new Vector3(0, 0, 0)) {
             return posBeforeRotat;
         }
 

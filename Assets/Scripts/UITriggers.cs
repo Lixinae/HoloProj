@@ -13,12 +13,11 @@ public class UITriggers : MonoBehaviour {
     public GameObject gltf = null;
     public GameObject aiguille = null;
     public GameObject debugText = null;
-
-    public GameObject spatialMapping = null;
+    public GameObject cursorVisual = null;
 
     bool isMenuShowing = false;
     bool isDebugTextShowing = false;
-    bool isSpatialMappingActive = true;
+    bool isCursorVisualShowing = true;
 
     // Use this for initialization
     void Awake() {
@@ -45,8 +44,8 @@ public class UITriggers : MonoBehaviour {
             debugText = GameObject.Find("UITextPrefab");
         }
 
-        if (spatialMapping == null) {
-            spatialMapping = GameObject.Find("SpatialMapping");
+        if (cursorVisual == null) {
+            cursorVisual = GameObject.Find("CursorVisual");
         }
 
         menuFull.SetActive(isMenuShowing);
@@ -59,51 +58,57 @@ public class UITriggers : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown("escape")) { // Eventuellement se servir du pad xbox pour afficher / cacher le menu, via le bouton start ou autre
+        // Eventuellement se servir du pad xbox pour afficher / cacher le menu, via le bouton start ou autre
+        if (Input.GetKeyDown("escape")) { 
             isMenuShowing = !isMenuShowing;
             menuFull.SetActive(isMenuShowing);
 
         }
+        // Affiche le texte de debug
         if (Input.GetKeyDown("p")) {
             isDebugTextShowing = !isDebugTextShowing;
             debugText.SetActive(isDebugTextShowing);
         }
+
+        if (Input.GetKeyDown("n")) {
+            isCursorVisualShowing = !isCursorVisualShowing;
+            cursorVisual.SetActive(isCursorVisualShowing);
+        }
     }
 
+    // Affiche le menu des modeles 3D et cache le menu principal
     public void Show3DModelsMenu() {
         modelsMenu.SetActive(true);
         HideMainMenu();
     }
 
+    // Cache le menu des modeles 3D
     public void Hide3DModelsMenu() {
         modelsMenu.SetActive(false);
     }
 
+    // Affiche le menu principal et cache le menu des modeles 3D
     public void ShowMainMenu() {
         mainMenu.SetActive(true);
         Hide3DModelsMenu();
     }
 
+    // Cache le menu principal
     public void HideMainMenu() {
         mainMenu.SetActive(false);
     }
 
+    // Enlève tous les modèles 3D de la fenetre ( concerne uniquement l'objet GLTF
     public void CleanWindowFromModels() {
-
         foreach (Transform child in gltf.transform) {
             GameObject.Destroy(child.gameObject);
         }
-        //GCSettings.GCLargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce; ;
-        //GC.Collect();
-        //GC.WaitForPendingFinalizers();
-        //GC.Collect();
-        //GC.WaitForPendingFinalizers();
     }
 
+    // Permet d'inverser les axes sur le polhemus ( il a parfois, très rarement des soucis de signe et cette fonction permet de palier à ça )
     public void InvertAxesValues() {
         UpdatePosOrient updPO = aiguille.GetComponent<UpdatePosOrient>();
         updPO.invertCoef();
-        //Debug.Log("Coef inversé !");
     }
 
     public void ExitProgram() {
@@ -124,8 +129,4 @@ public class UITriggers : MonoBehaviour {
         exitConfirmMenu.SetActive(true);
     }
 
-    public void DeActivateSpatialMapping() {
-        isSpatialMappingActive = !isSpatialMappingActive;
-        spatialMapping.SetActive(isSpatialMappingActive);
-    }
 }
