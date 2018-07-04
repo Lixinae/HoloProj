@@ -47,7 +47,7 @@ public class ShowFileInFolder {
                                 // Print the name of the file.
                                 if (file.Name.EndsWith("*.gltf")) {
                                     string fileName = localFolder.Name + "/" + folder3D.Name + "/" + folder.Name + "/" + file.Name;
-                                    DebugHelper.Instance.AddDebugText(fileName, 1);
+                                    DebugHelper.Instance.AddDebugText("FileName : "+ fileName, 1);
                                     allfiles.Add(fileName);
 
 

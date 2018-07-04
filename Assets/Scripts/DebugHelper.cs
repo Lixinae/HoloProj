@@ -9,8 +9,7 @@ public class DebugHelper : Singleton<DebugHelper> {
 
     public Text debugText = null;
 
-    private Dictionary<int,string> dictionary;
-    private List<string> debugTexts;
+    private Dictionary<int,string> dictionary = new Dictionary<int, string>();
     // Use this for initialization
     void Start() {
         if (debugText == null) {
@@ -41,7 +40,7 @@ public class DebugHelper : Singleton<DebugHelper> {
     private string ConcatDico() {
         string output = "";
         foreach (KeyValuePair<int, string> entry in dictionary) {
-            output +="\n"+ entry.Value;
+            output +="\n"+entry.Value;
         }
         return output;
     }

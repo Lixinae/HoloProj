@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityGLTF;
 
 public class GLTFComponentPerso : Singleton<GLTFComponentPerso> {
-    public string Url = "";
+    //public string Url = "";
     public bool Multithreaded = false;
     public bool UseStream = true;
 
@@ -31,12 +31,13 @@ public class GLTFComponentPerso : Singleton<GLTFComponentPerso> {
 
     public IEnumerator CreateComponentFromFile(string filename, GameObject parent) {
         GLTFSceneImporter loader = null;
-        Url = filename;
+        string Url = filename;
         if (UseStream) {
             string fullPath = "";
 
             if (GLTFStream == null) {
-                fullPath = Path.Combine(Application.streamingAssetsPath, Url);
+                fullPath = Url; //Path.Combine(Application.streamingAssetsPath, Url);
+                Debug.Log("FullPath : " + fullPath);
                 GLTFStream = File.OpenRead(fullPath);
             }
             loader = new GLTFSceneImporter(

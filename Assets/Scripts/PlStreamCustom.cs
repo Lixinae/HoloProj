@@ -38,6 +38,9 @@ public class PlStreamCustom : MonoBehaviour {
     // Partie de base dans le plstream
 
     public string host = "192.168.137.1"; // Attention l'adresse peut changer selon la machine et le port du dongle wifi
+    // TODO Pas moyen de passer via un argument de ligne de commande
+    // Peut etre via un fichier
+
     //public string host = "169.254.97.91";
     /////////////////////////////////////////////////////////////////////////////
 
