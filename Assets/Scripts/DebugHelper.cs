@@ -41,7 +41,7 @@ public class DebugHelper : Singleton<DebugHelper> {
     private string ConcatDico() {
         string output = "";
         foreach (KeyValuePair<int, string> entry in dictionary) {
-            output += entry.Value;
+            output +="\n"+ entry.Value;
         }
         return output;
     }
