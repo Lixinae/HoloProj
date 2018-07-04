@@ -173,10 +173,10 @@ public class CalibrageClicker : MonoBehaviour {
 
 
         // AngleX -> Rotation autour de l'axe X et donc c'est l'angle Y qu'on determine au dessus
-        updatePosOrient.angleX = angleY;
+        updatePosOrient.orientation.x = angleY;
         // Angle Y -> Rotation autour de l'axe Y et donc c'est l'angle X determiné au dessus ( ou l'angle Z, les 2 étant normalement égaux)
-        updatePosOrient.angleY = angleX;
-        updatePosOrient.angleZ = angleZ;
+        updatePosOrient.orientation.y = angleX;
+        updatePosOrient.orientation.z = angleZ; // utile uniquement pour le debug, la rotation sur Z n'est pas appliqué lors de la transformation
         updatePosOrient.decallageByCalibragePos = posEmetteur;
 
         axisViewer.SetActive(true);

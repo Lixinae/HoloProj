@@ -245,6 +245,7 @@ public class PlStreamCustom : MonoBehaviour {
         finally {
 #if UNITY_EDITOR
             tcpClient.Close();
+            tcpClient = null;
 #endif
             //udpClient.Close();
             //udpClient = null;

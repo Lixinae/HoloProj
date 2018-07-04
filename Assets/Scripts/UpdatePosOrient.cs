@@ -271,18 +271,18 @@ public class UpdatePosOrient : MonoBehaviour {
 
                 // Rotation sur l'axe X
                 if (Input.GetKey("u")) {
-                    angleX += vitesseRotation;
+                    orientation.x += vitesseRotation;
                 }
                 if (Input.GetKey("j")) {
-                    angleX -= vitesseRotation;
+                    orientation.x -= vitesseRotation;
                 }
 
                 // Rotation sur l'axe Y
                 if (Input.GetKey("r")) {
-                    angleY += vitesseRotation;
+                    orientation.y += vitesseRotation;
                 }
                 if (Input.GetKey("y")) {
-                    angleY -= vitesseRotation;
+                    orientation.y -= vitesseRotation;
                 }
 
             }
@@ -312,18 +312,18 @@ public class UpdatePosOrient : MonoBehaviour {
                 }
                 // Rotation sur l'axe X
                 if (Input.GetKey("r")) {
-                    angleX += vitesseRotation;
+                    orientation.x += vitesseRotation;
                 }
                 if (Input.GetKey("f")) {
-                    angleX -= vitesseRotation;
+                    orientation.x -= vitesseRotation;
                 }
 
                 // Rotation sur l'axe Y
                 if (Input.GetKey("a")) {
-                    angleY += vitesseRotation;
+                    orientation.y += vitesseRotation;
                 }
                 if (Input.GetKey("e")) {
-                    angleY -= vitesseRotation;
+                    orientation.y -= vitesseRotation;
                 }
             }
         }

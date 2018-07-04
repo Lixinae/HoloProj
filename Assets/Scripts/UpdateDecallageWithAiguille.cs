@@ -22,7 +22,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
     private Vector3 prevDecallage = new Vector3(0, 0, 0);
     private Vector3 prevOrientation = new Vector3(0, 0, 0);
     private Vector3 posBase = new Vector3(0, 0, 0);
-    private Quaternion orientBase = new Quaternion(0, 0, 0, 0);
+    private Vector3 orientBase = new Vector3(0, 0, 0);
     // Use this for initialization
     void Start() {
         if (Aiguille == null) {
@@ -36,7 +36,9 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
                 locked = true;
                 WorldAnchorManager.Instance.AttachAnchor(gameObject); // Permet de charger l'anchor stocker en mémoire
                 posBase = transform.position;
-                orientBase = transform.rotation;
+                orientBase.x = transform.rotation.x;
+                orientBase.y = transform.rotation.y;
+                orientBase.z = transform.rotation.z;
             }
         }
     }
@@ -67,7 +69,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         }*/
 
        
-        // Se déplace de manière infinie pour le moment
+        // Pour eviter les déplacement infini
         if(updatePosOrient.totalDecallage != prevDecallage) {
             prevDecallage = updatePosOrient.totalDecallage;
             transform.position = posBase + updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
@@ -81,6 +83,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
     }
 
+    // Deverouille et enlève l'anchor
     public void RemoveAnchor() {
         if (WorldAnchorManager.Instance != null) {
             locked = false;
@@ -88,6 +91,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         }
     }
 
+    // Verrouille l'objet et met un anchor
     public void SetAnchor() {
         if (WorldAnchorManager.Instance != null) {
             locked = true;
@@ -95,39 +99,14 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         }
     }
 
+    // Trigger pour verrouiller ou deverouiller l'objet via un bouton
     public void LockTransform() {
         if (locked) {
-            if (WorldAnchorManager.Instance != null) {
-                locked = false;
-                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
-            }
+            RemoveAnchor();
 
         }
         else {
-            if (WorldAnchorManager.Instance != null) {
-                locked = true;
-                WorldAnchorManager.Instance.AttachAnchor(gameObject);
-            }
-
+            SetAnchor();
         }
-        /*if (gameObject.GetComponent<WorldAnchor>() != null) {
-            if (!spatialMapping.activeInHierarchy) {
-                // On reactive le spatial mapping pour pouvoir remettre les anchor
-                spatialMapping.SetActive(true);            
-                // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
-                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
-                WorldAnchorManager.Instance.AttachAnchor(gameObject);
-                spatialMapping.SetActive(false);
-            }
-            else {
-                // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
-                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
-                WorldAnchorManager.Instance.AttachAnchor(gameObject);
-            }
-
-        }
-        else {
-            WorldAnchorManager.Instance.AttachAnchor(gameObject);
-        }*/
     }
 }
