@@ -20,6 +20,9 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
     private bool locked = false;
     private Vector3 prevDecallage = new Vector3(0, 0, 0);
+    private Vector3 prevOrientation = new Vector3(0, 0, 0);
+    private Vector3 posBase = new Vector3(0, 0, 0);
+    private Quaternion orientBase = new Quaternion(0, 0, 0, 0);
     // Use this for initialization
     void Start() {
         if (Aiguille == null) {
@@ -32,6 +35,8 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
             if (WorldAnchorManager.Instance != null) {
                 locked = true;
                 WorldAnchorManager.Instance.AttachAnchor(gameObject); // Permet de charger l'anchor stocker en mémoire
+                posBase = transform.position;
+                orientBase = transform.rotation;
             }
         }
     }
@@ -65,12 +70,15 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         // Se déplace de manière infinie pour le moment
         if(updatePosOrient.totalDecallage != prevDecallage) {
             prevDecallage = updatePosOrient.totalDecallage;
-            transform.position += updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
+            transform.position = posBase + updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
         }
         
+        if(updatePosOrient.orientation != prevOrientation) {
+            prevOrientation = updatePosOrient.orientation;
+            Quaternion quaternion = Quaternion.Euler(orientBase.x + updatePosOrient.orientation.x, orientBase.y + updatePosOrient.orientation.y, 0);
+            transform.rotation = quaternion;
+        }
 
-        Quaternion quaternion = Quaternion.Euler(updatePosOrient.angleX, updatePosOrient.angleY, 0);
-        transform.rotation = quaternion;
     }
 
     public void RemoveAnchor() {

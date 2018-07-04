@@ -27,9 +27,11 @@ public class UpdatePosOrient : MonoBehaviour {
 
     public Vector3 initialPos = new Vector3(0, 0, 0);
     public Vector3 posUnityOuput;
-    public float angleX = 0;
-    public float angleY = 0;
-    public float angleZ = 0;
+
+    public Vector3 orientation = new Vector3(0, 0, 0);
+    //public float angleX = 0;
+    //public float angleY = 0;
+    //public float angleZ = 0;
 
 
 
@@ -164,7 +166,7 @@ public class UpdatePosOrient : MonoBehaviour {
                     "Position de base:{7}\n",
                     //"AxisViewerLock : {8}",
                     "Aiguille",
-                    angleX, angleY, angleZ,
+                    orientation.x, orientation.y, orientation.z,
                     posUnityOuput,
                     decallageByCalibragePos,
                     decallageClavier,
@@ -174,15 +176,15 @@ public class UpdatePosOrient : MonoBehaviour {
     }
 
     private Vector3 ApplyRotationMatrix(Vector3 posBeforeRotat) {
-        if (angleX == 0 && angleY == 0 && angleZ == 0) {
+        if (orientation == new Vector3(0,0,0)) {
             return posBeforeRotat;
         }
 
         // TODO -> attention aux angles -> angle X = rotation autour de l'axe Y
         // Angle Y autour de l'axe X
         // Angle Z autour de l'axe Y
-        float theta = angleX * Mathf.Deg2Rad; // Rotation autour de X
-        float phi = angleY * Mathf.Deg2Rad; // Rotation autour de Y
+        float theta = orientation.x * Mathf.Deg2Rad; // Rotation autour de X
+        float phi = orientation.y * Mathf.Deg2Rad; // Rotation autour de Y
         //float psy = angleZ * Mathf.Deg2Rad; // Rotation autour de Z
         // On evite juste les rotation autour de l'axe Z car inutile
         float psy = 0; // Rotation autour de Z
