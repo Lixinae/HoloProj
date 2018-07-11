@@ -12,7 +12,7 @@ public class CreateElementsFromFileList : MonoBehaviour {
     private GameObject modelsMenu = null;
     private GameObject gltf = null;
 
-    private float timer = 60f;
+    private readonly float timer = 60f;
     // Use this for initialization
     void Start() {
         var files = new ShowFileInFolder();
@@ -118,14 +118,5 @@ public class CreateElementsFromFileList : MonoBehaviour {
             }
             yield return new WaitForSeconds(timer);
         }
-    }
-
-    public void FixedUpdate() {
-        //var files = new ShowFileInFolder();
-        //var fileList = files.GetFileList();
-        //if (fileList.Count != previousCount) {
-        //    SetupToggles(fileList);
-        //}
-
     }
 }
