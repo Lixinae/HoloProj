@@ -1,5 +1,14 @@
 import bpy
 
+import mathutils
+
+#filename = "/full/path/to/myscript.py"
+#exec(compile(open(filename).read(), filename, 'exec'))
+
+# Todo -> Trouver comment deplacer les differents objects pour faire coincider
+# les points de repère
+# Assemble tous les objets de la scene pour n'en faire plus qu'un
+
 for ob in bpy.context.scene.objects:
     if ob.type == 'MESH':
         ob.select = True
