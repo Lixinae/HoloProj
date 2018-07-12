@@ -12,7 +12,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     public GameObject Part2_button = null;
     public GameObject Part3_button = null;
     public GameObject Part4_button = null;
-    public GameObject Port_Button = null;
+    public GameObject Port_button = null;
 
     // Use this for initialization
     void Start() {
@@ -32,8 +32,8 @@ public class IpConfiguratorTriggers : MonoBehaviour {
             Part4_button = GameObject.Find("Part4_button");
         }
 
-        if (Port_Button == null) {
-            Port_Button = GameObject.Find("Port_Button");
+        if (Port_button == null) {
+            Port_button = GameObject.Find("Port_Button");
         }
     }
 
@@ -51,7 +51,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
                 Part2_button.GetComponent<LabelTheme>().Default, ".",
                 Part3_button.GetComponent<LabelTheme>().Default, ".",
                 Part4_button.GetComponent<LabelTheme>().Default,":",
-                Port_Button.GetComponent<LabelTheme>().Default);
+                Port_button.GetComponent<LabelTheme>().Default);
             await Windows.Storage.FileIO.WriteTextAsync(sampleFile, toWrite);
         });
         task.Start();
@@ -61,7 +61,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
                 Part2_button.GetComponent<LabelTheme>().Default, ".",
                 Part3_button.GetComponent<LabelTheme>().Default, ".",
                 Part4_button.GetComponent<LabelTheme>().Default, ":",
-                Port_Button.GetComponent<LabelTheme>().Default);
+                Port_button.GetComponent<LabelTheme>().Default);
         File.WriteAllText(Application.streamingAssetsPath + "/ip.txt",toWrite);
 #endif
     }
@@ -392,4 +392,107 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         theme.Default = string.Concat(text[0], text[1], x.ToString());
     }
 
+    // Port triggers
+    public void ShowModifiersPartPort() {
+        throw new NotImplementedException();
+    }
+
+    public void HideModifiersPartPort() {
+        throw new NotImplementedException();
+    }
+
+    public void UpMilliersPort() {
+        LabelTheme theme = Port_button.GetComponent<LabelTheme>();
+        string text = theme.Default;
+        int x = 0;
+        int.TryParse(text[0].ToString(), out x);
+        x++;
+        if (x > 9 || x < 0) {
+            x = 0;
+        }
+        theme.Default = string.Concat(x.ToString(), text[1], text[2],text[3]);
+    }
+
+    public void DownMilliersPort() {
+        LabelTheme theme = Port_button.GetComponent<LabelTheme>();
+        string text = theme.Default;
+        int x = 0;
+        int.TryParse(text[0].ToString(), out x);
+        x--;
+        if (x > 9 || x < 0) {
+            x = 0;
+        }
+        theme.Default = string.Concat(x.ToString(), text[1], text[2], text[3]);
+    }
+
+    public void UpCentainePort() {
+        LabelTheme theme = Port_button.GetComponent<LabelTheme>();
+        string text = theme.Default;
+        int x = 0;
+        int.TryParse(text[1].ToString(), out x);
+        x++;
+        if (x > 9 || x < 0) {
+            x = 0;
+        }
+        theme.Default = string.Concat(text[0],x.ToString(), text[2], text[3]);
+    }
+
+    public void DownCentainePort() {
+        LabelTheme theme = Port_button.GetComponent<LabelTheme>();
+        string text = theme.Default;
+        int x = 0;
+        int.TryParse(text[1].ToString(), out x);
+        x--;
+        if (x > 9 || x < 0) {
+            x = 0;
+        }
+        theme.Default = string.Concat(text[0], x.ToString(), text[2], text[3]); 
+    }
+    public void UpDizainePort() {
+        LabelTheme theme = Port_button.GetComponent<LabelTheme>();
+        string text = theme.Default;
+        int x = 0;
+        int.TryParse(text[2].ToString(), out x);
+        x++;
+        if (x > 9 || x < 0) {
+            x = 0;
+        }
+        theme.Default = string.Concat(text[0],text[1], x.ToString(), text[3]);
+    }
+
+    public void DownDizainePort() {
+        LabelTheme theme = Port_button.GetComponent<LabelTheme>();
+        string text = theme.Default;
+        int x = 0;
+        int.TryParse(text[2].ToString(), out x);
+        x--;
+        if (x > 9 || x < 0) {
+            x = 0;
+        }
+        theme.Default = string.Concat(text[0], text[1], x.ToString(), text[3]);
+    }
+    public void UpUnitePort() {
+        LabelTheme theme = Port_button.GetComponent<LabelTheme>();
+        string text = theme.Default;
+        int x = 0;
+        int.TryParse(text[3].ToString(), out x);
+        x++;
+        if (x > 9 || x < 0) {
+            x = 0;
+        }
+        theme.Default = string.Concat(text[0], text[1],text[2], x.ToString());
+    }
+
+    public void DownUnitePort() {
+        LabelTheme theme = Port_button.GetComponent<LabelTheme>();
+        string text = theme.Default;
+        Debug.Log(text);
+        int x = 0;
+        int.TryParse(text[3].ToString(), out x);
+        x--;
+        if (x > 9 || x < 0) {
+            x = 0;
+        }
+        theme.Default = string.Concat(text[0], text[1], text[2], x.ToString());
+    }
 }
