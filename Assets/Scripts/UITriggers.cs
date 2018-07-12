@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoloToolkit.Examples.InteractiveElements;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime;
@@ -18,6 +19,10 @@ public class UITriggers : MonoBehaviour {
     bool isMenuShowing = false;
     bool isDebugTextShowing = false;
     bool isCursorVisualShowing = true;
+    public GameObject startMenu = null;
+    public GameObject IpConfigurator = null;
+
+
 
     // Use this for initialization
     void Awake() {
@@ -30,6 +35,7 @@ public class UITriggers : MonoBehaviour {
         if (mainMenu == null) {
             mainMenu = GameObject.Find("MainMenu");
         }
+
         if (exitConfirmMenu == null) {
             exitConfirmMenu = GameObject.Find("ExitConfirmMenu");
         }
@@ -48,6 +54,15 @@ public class UITriggers : MonoBehaviour {
             cursorVisual = GameObject.Find("CursorVisual");
         }
 
+        // TODO
+        if (startMenu == null) {
+            startMenu = GameObject.Find("StartMenu");
+        }
+        if (IpConfigurator == null) {
+            IpConfigurator = GameObject.Find("IpConfigurator");
+        }
+
+
         menuFull.SetActive(isMenuShowing);
         //modelsMenu.SetActive(false);
         mainMenu.SetActive(true);
@@ -59,7 +74,7 @@ public class UITriggers : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         // Eventuellement se servir du pad xbox pour afficher / cacher le menu, via le bouton start ou autre
-        if (Input.GetKeyDown("escape")) { 
+        if (Input.GetKeyDown("escape")) {
             isMenuShowing = !isMenuShowing;
             menuFull.SetActive(isMenuShowing);
 
@@ -129,4 +144,14 @@ public class UITriggers : MonoBehaviour {
         exitConfirmMenu.SetActive(true);
     }
 
+    // Affiche l'ip configurator
+    public void ShowIpConfigurator() {
+        IpConfigurator.SetActive(true);
+    }
+
+    public void HideIpConfigurator() {
+        IpConfigurator.SetActive(false);
+    }
+
+    
 }
