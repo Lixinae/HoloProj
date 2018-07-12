@@ -72,21 +72,25 @@ public class PlStreamCustom : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-#if!UNITY_EDITOR
+
+    }
+    
+    // Appeler la fonction une fois config terminé via le menu
+    public void StartPlStreamCustom() {
+        // TODO changer ça
+#if !UNITY_EDITOR
         string info = null;
         info = ReadHostFromFileAsync().Result;
-        
-        while (info == null) ;
-        host = info.Split(':')[0];
-        port = info.Split(':')[1];
+
 #else
         string info = null;
         info = File.ReadAllText(Application.streamingAssetsPath+"/ip.txt");
         
+
+#endif
         while (info == null) ;
         host = info.Split(':')[0];
         port = info.Split(':')[1];
-#endif
         Debug.Log("host : " + host + ":" + port);
         DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 7);
         Connect(host, port);
