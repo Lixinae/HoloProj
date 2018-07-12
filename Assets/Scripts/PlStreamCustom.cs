@@ -38,6 +38,10 @@ public class PlStreamCustom : MonoBehaviour {
     // Partie de base dans le plstream
 
     public string host = "192.168.137.1"; // Attention l'adresse peut changer selon la machine et le port du dongle wifi
+    // Prendre en parametre avec un fichier txt ou autre
+
+
+
     // TODO Pas moyen de passer via un argument de ligne de commande
     // Peut etre via un fichier
 
@@ -68,8 +72,33 @@ public class PlStreamCustom : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+#if!UNITY_EDITOR
+        string info = null;
+        info = ReadHostFromFileAsync().Result;
+        
+        while (info == null) ;
+        host = info.Split(':')[0];
+        port = info.Split(':')[1];
+#else
+        string info = null;
+        info = File.ReadAllText(Application.streamingAssetsPath+"/ip.txt");
+        
+        while (info == null) ;
+        host = info.Split(':')[0];
+        port = info.Split(':')[1];
+#endif
+        Debug.Log("host : " + host + ":" + port);
+        DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 7);
         Connect(host, port);
     }
+
+#if!UNITY_EDITOR
+    private async Task<string> ReadHostFromFileAsync() {
+        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
+        return await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
+    }
+#endif
 
     public void Connect(string host, string port) {
         if (_useUWP) {
