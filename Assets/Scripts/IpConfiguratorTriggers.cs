@@ -117,24 +117,25 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     public void DownDizaine1() {
         LabelTheme theme = Part1_button.GetComponent<LabelTheme>();
         string text = theme.Default;
-        int x = 0;
-        int.TryParse(text[1].ToString(), out x);
-        x--;
-        if (x > 9 || x < 0) {
-            x = 0;
-        }
+        int x = parseText(1, text);
         theme.Default = string.Concat(text[0], x.ToString(), text[2]);
     }
     public void UpUnite1() {
         LabelTheme theme = Part1_button.GetComponent<LabelTheme>();
         string text = theme.Default;
+        int x = parseText(2,text);
+        theme.Default = string.Concat(text[0], text[1], x.ToString());
+    }
+
+    private int parseText(int pos,string text) {
         int x = 0;
-        int.TryParse(text[2].ToString(), out x);
+        int.TryParse(text[pos].ToString(), out x);
         x++;
         if (x > 9 || x < 0) {
             x = 0;
         }
-        theme.Default = string.Concat(text[0], text[1], x.ToString());
+
+        return x;
     }
 
     public void DownUnite1() {
