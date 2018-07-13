@@ -22,10 +22,11 @@ public class UITriggers : MonoBehaviour {
     bool wasIpConfiguratorShowing = false;
 
     public GameObject startMenu = null;
-    public GameObject IpConfigurator = null;
-    public GameObject IPbutton = null;
+    public GameObject ipConfigurator = null;
+    public GameObject ipButton = null;
+    public GameObject startAppButton = null;
 
-
+    public GameObject calibrationCubes = null;
 
     // Use this for initialization
     void Awake() {
@@ -62,12 +63,18 @@ public class UITriggers : MonoBehaviour {
         if (startMenu == null) {
             startMenu = GameObject.Find("StartMenu");
         }
-        if (IpConfigurator == null) {
-            IpConfigurator = GameObject.Find("IpConfigurator");
+        if (ipConfigurator == null) {
+            ipConfigurator = GameObject.Find("IpConfigurator");
         }
 
-        if(IPbutton == null) {
-            IPbutton = GameObject.Find("IPbutton");
+        if (ipButton == null) {
+            ipButton = GameObject.Find("IPButton");
+        }
+        if (startAppButton == null) {
+            startAppButton = GameObject.Find("StartAppButton");
+        }
+        if (calibrationCubes == null) {
+            calibrationCubes = GameObject.Find("CalibrationCubes");
         }
 
         menuFull.SetActive(isMenuShowing);
@@ -75,7 +82,7 @@ public class UITriggers : MonoBehaviour {
         mainMenu.SetActive(true);
         exitConfirmMenu.SetActive(false);
         debugText.SetActive(false);
-
+        ipConfigurator.SetActive(false);
     }
 
     // Update is called once per frame
@@ -84,11 +91,11 @@ public class UITriggers : MonoBehaviour {
         if (Input.GetKeyDown("escape")) {
             isMenuShowing = !isMenuShowing;
             menuFull.SetActive(isMenuShowing);
-            if (isMenuShowing && IpConfigurator.activeInHierarchy) {
+            if (isMenuShowing && ipConfigurator.activeInHierarchy) {
                 wasIpConfiguratorShowing = true;
                 HideIpConfigurator();
             }
-            else if(!isMenuShowing && wasIpConfiguratorShowing ) {
+            else if (!isMenuShowing && wasIpConfiguratorShowing) {
                 ShowIpConfigurator();
             }
         }
@@ -159,13 +166,24 @@ public class UITriggers : MonoBehaviour {
 
     // Affiche l'ip configurator
     public void ShowIpConfigurator() {
-        IPbutton.setActive(false);
-        IpConfigurator.SetActive(true);
+        ipButton.SetActive(false);
+        ipConfigurator.SetActive(true);
+        startAppButton.SetActive(false);
     }
 
     public void HideIpConfigurator() {
-        IpConfigurator.SetActive(false);
+        ipConfigurator.SetActive(false);
     }
 
-    
+    public void HideStartMenu() {
+        startMenu.SetActive(false);
+    }
+
+    public void StartApp() {
+        HideStartMenu();
+        // todo remettre une fois calibration fini
+        // CalibrationsCubes.setActive(true);
+        // Demarrage du plStream après avoir réglé l'ip
+        PlStreamCustom.Instance.StartPlStreamCustom();
+    }
 }

@@ -26,8 +26,14 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     private GameObject BottomButtons_part4 = null;
     private GameObject BottomButtons_port = null;
 
+    public GameObject IpConfigurator = null;
+
     // Use this for initialization
     void Start() {
+        if (IpConfigurator == null) {
+            IpConfigurator = GameObject.Find("IpConfigurator");
+        }
+
         if (Part1_button == null) {
             Part1_button = GameObject.Find("Part1_button");
         }
@@ -79,7 +85,72 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         if (BottomButtons_port == null) {
             BottomButtons_port = GameObject.Find("BottomButtons_port");
         }
+
+        loadIpConfig();
     }
+
+    private void loadIpConfig() {
+        bool error = false;
+        string info = null;
+#if !UNITY_EDITOR
+        try {
+
+            info = ReadHostFromFileAsync().Result;
+        }
+        catch (FileNotFoundException fnfe) {
+            Debug.Log(fnfe);
+            error = true;
+        }
+#else
+        try {
+            info = File.ReadAllText(Application.streamingAssetsPath + "/ip.txt");
+        }
+        catch (FileNotFoundException fnfe) {
+            Debug.Log(fnfe);
+            error = true;
+        }
+#endif
+        string host;
+        string port;
+        // Si on a pas pu lire le fichier , on met des valeurs par defaut
+        if (error) {
+            host = "192.168.137.1";
+            port = "5124";
+        }
+        else {
+            host = info.Split(':')[0];
+            port = info.Split(':')[1];
+        }
+        //while (info == null) ;
+
+        WriteLabelThemesOnButtons(host, port);
+    }
+
+    private void WriteLabelThemesOnButtons(string host, string port) {
+        string[] hostParts = host.Split('.');
+        LabelTheme part1Theme = Part1_button.GetComponent<LabelTheme>();
+        part1Theme.Default = hostParts[0];
+
+        LabelTheme part2Theme = Part2_button.GetComponent<LabelTheme>();
+        part1Theme.Default = hostParts[1];
+
+        LabelTheme part3Theme = Part3_button.GetComponent<LabelTheme>();
+        part1Theme.Default = hostParts[2];
+
+        LabelTheme part4Theme = Part4_button.GetComponent<LabelTheme>();
+        part1Theme.Default = hostParts[3];
+
+        LabelTheme portTheme = Port_button.GetComponent<LabelTheme>();
+        portTheme.Default = port;
+    }
+
+#if !UNITY_EDITOR
+    private async Task<string> ReadHostFromFileAsync() {
+        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
+        return await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
+    }
+#endif
 
     // Sauvegarde la configuration IP dans un fichier
     public void SaveIpConfig() {

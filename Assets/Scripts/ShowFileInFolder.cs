@@ -86,6 +86,7 @@ public class ShowFileInFolder {
 
         // Voir si pas moyen de repliquer le code au dessus plutot que l'espèce de purge en dessous
 
+        // todo -> erreurs pour le moment
         Task task = new Task(
             () => {
                 String path = Application.streamingAssetsPath + "\\3DModels";
