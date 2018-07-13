@@ -2056,7 +2056,12 @@ Prefab:
         type: 2}
       propertyPath: OnDownEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 423456784}
+      objectReference: {fileID: 1431976033}
+    - target: {fileID: 114450361412339778, guid: 9dbe189c9df347d479a0b13552d88f9d,
+        type: 2}
+      propertyPath: OnDownEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CancelIpConfig
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9dbe189c9df347d479a0b13552d88f9d, type: 2}
   m_IsPrefabParent: 0
@@ -3161,6 +3166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09eb86fc2b4b6194ca7301dac537d95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1431976033 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114204029583521152, guid: 9dbe189c9df347d479a0b13552d88f9d,
+    type: 2}
+  m_PrefabInternal: {fileID: 851055152}
+  m_Script: {fileID: 11500000, guid: 7dcdcb6994a61ed42b729e7cef96efbb, type: 3}
 --- !u!1 &1473366912
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,7 +58,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
             TopButtons_part3 = GameObject.Find("TopButtons_part3");
         }
         if (TopButtons_part4 == null) {
-            TopButtons_part4 = GameObject.Find("TopButtons_part1");
+            TopButtons_part4 = GameObject.Find("TopButtons_part4");
         }
         if (TopButtons_port == null) {
             TopButtons_port = GameObject.Find("TopButtons_port");
@@ -166,15 +166,10 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         return x;
     }
 
-    // Modificateurs partie 1
-    public void ShowModifiersPart1() {
-        throw new NotImplementedException();
-    }
-
-    public void HideModifiersPart1() {
-        throw new NotImplementedException();
-    }
-
+    /// <summary>
+    /// Modificateurs partie 1
+    /// </summary>
+    /// 
     public void UpCentaine1() {
         LabelTheme theme = Part1_button.GetComponent<LabelTheme>();
         string text = theme.Default;
@@ -218,15 +213,10 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         theme.Default = string.Concat(text[0], text[1], x.ToString());
     }
 
-    // Modificateurs partie 2
-    public void ShowModifiersPart2() {
-        throw new NotImplementedException();
-    }
-
-    public void HideModifiersPart2() {
-        throw new NotImplementedException();
-    }
-
+    /// <summary>
+    /// Modificateurs partie 2
+    /// </summary>
+    /// 
     public void UpCentaine2() {
         LabelTheme theme = Part2_button.GetComponent<LabelTheme>();
         string text = theme.Default;
@@ -274,13 +264,6 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     /// Modificateurs partie 3
     /// </summary>
     /// 
-    public void ShowModifiersPart3() {
-        throw new NotImplementedException();
-    }
-
-    public void HideModifiersPart3() {
-        throw new NotImplementedException();
-    }
 
     public void UpCentaine3() {
         LabelTheme theme = Part3_button.GetComponent<LabelTheme>();
@@ -330,14 +313,6 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     /// </summary>
     /// 
 
-    public void ShowModifiersPart4() {
-        throw new NotImplementedException();
-    }
-
-    public void HideModifiersPart4() {
-        throw new NotImplementedException();
-    }
-
     public void UpCentaine4() {
         LabelTheme theme = Part4_button.GetComponent<LabelTheme>();
         string text = theme.Default;
@@ -382,13 +357,6 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     }
 
     // Port triggers
-    public void ShowModifiersPartPort() {
-        throw new NotImplementedException();
-    }
-
-    public void HideModifiersPartPort() {
-        throw new NotImplementedException();
-    }
 
     public void UpMilliersPort() {
         LabelTheme theme = Port_button.GetComponent<LabelTheme>();

@@ -19,8 +19,11 @@ public class UITriggers : MonoBehaviour {
     bool isMenuShowing = false;
     bool isDebugTextShowing = false;
     bool isCursorVisualShowing = true;
+    bool wasIpConfiguratorShowing = false;
+
     public GameObject startMenu = null;
     public GameObject IpConfigurator = null;
+    public GameObject IPbutton = null;
 
 
 
@@ -55,6 +58,7 @@ public class UITriggers : MonoBehaviour {
         }
 
         // TODO
+        // Start menu active only once
         if (startMenu == null) {
             startMenu = GameObject.Find("StartMenu");
         }
@@ -62,6 +66,9 @@ public class UITriggers : MonoBehaviour {
             IpConfigurator = GameObject.Find("IpConfigurator");
         }
 
+        if(IPbutton == null) {
+            IPbutton = GameObject.Find("IPbutton");
+        }
 
         menuFull.SetActive(isMenuShowing);
         //modelsMenu.SetActive(false);
@@ -77,7 +84,13 @@ public class UITriggers : MonoBehaviour {
         if (Input.GetKeyDown("escape")) {
             isMenuShowing = !isMenuShowing;
             menuFull.SetActive(isMenuShowing);
-
+            if (isMenuShowing && IpConfigurator.activeInHierarchy) {
+                wasIpConfiguratorShowing = true;
+                HideIpConfigurator();
+            }
+            else if(!isMenuShowing && wasIpConfiguratorShowing ) {
+                ShowIpConfigurator();
+            }
         }
         // Affiche le texte de debug
         if (Input.GetKeyDown("p")) {
@@ -146,6 +159,7 @@ public class UITriggers : MonoBehaviour {
 
     // Affiche l'ip configurator
     public void ShowIpConfigurator() {
+        IPbutton.setActive(false);
         IpConfigurator.SetActive(true);
     }
 
