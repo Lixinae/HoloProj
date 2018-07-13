@@ -7,6 +7,7 @@ using System.Text;
 using System.Net;
 using System.Threading;
 using System.IO;
+using HoloToolkit.Unity;
 
 #if !UNITY_EDITOR
 using System.Threading.Tasks;
@@ -16,11 +17,11 @@ public enum PlTrackerCustom {
     Patriot,
 };
 
-public class PlStreamCustom : MonoBehaviour {
+public class PlStreamCustom : Singleton<PlStreamCustom> {
     // Ajout pour le client tcp UWP
     /////////////////////////////////////////////////////////////////////////////
 #if !UNITY_EDITOR
-    private bool _useUWP = true;
+private bool _useUWP = true;
     private Windows.Networking.Sockets.StreamSocket socket;
     private Task exchangeTask;
     private Stream stream;
@@ -77,7 +78,7 @@ public class PlStreamCustom : MonoBehaviour {
     
     // Appeler la fonction une fois config terminé via le menu
     public void StartPlStreamCustom() {
-        // TODO changer ça
+
 #if !UNITY_EDITOR
         string info = null;
         info = ReadHostFromFileAsync().Result;
