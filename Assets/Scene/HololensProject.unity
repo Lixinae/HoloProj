@@ -1857,8 +1857,6 @@ GameObject:
   - component: {fileID: 423456784}
   - component: {fileID: 423456787}
   - component: {fileID: 423456786}
-  - component: {fileID: 423456789}
-  - component: {fileID: 423456785}
   - component: {fileID: 423456788}
   - component: {fileID: 423456790}
   m_Layer: 5
@@ -1907,17 +1905,6 @@ MonoBehaviour:
   ipButton: {fileID: 0}
   startAppButton: {fileID: 128291911}
   calibrationCubes: {fileID: 208828854}
---- !u!114 &423456785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 423456782}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4213e69334731bb409ca5993a4373d25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &423456786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1961,22 +1948,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8d5b128a1d8204fb76c86f47b75912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &423456789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 423456782}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2be8bd2ebd8277c448d6d81c75517fee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TagalongDistance: 2
-  EnforceDistance: 1
-  PositionUpdateSpeed: 15
-  SmoothMotion: 1
-  SmoothingFactor: 0.4
 --- !u!114 &423456790
 MonoBehaviour:
   m_ObjectHideFlags: 0
