@@ -184,6 +184,10 @@ public class UITriggers : MonoBehaviour {
         // todo remettre une fois calibration fini
         // CalibrationsCubes.setActive(true);
         // Demarrage du plStream après avoir réglé l'ip
-        PlStreamCustom.Instance.StartPlStreamCustom();
+        IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
+        string host = ipConfiguratorTriggers.IpAdress;
+        string port = ipConfiguratorTriggers.Port;
+
+        PlStreamCustom.Instance.StartPlStreamCustom(host, port);
     }
 }

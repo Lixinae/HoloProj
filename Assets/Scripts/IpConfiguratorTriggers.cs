@@ -28,6 +28,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
 
     public GameObject IpConfigurator = null;
 
+    public string IpAdress = null;
+    public string Port = null;
+
     // Use this for initialization
     void Start() {
         if (IpConfigurator == null) {
@@ -86,10 +89,10 @@ public class IpConfiguratorTriggers : MonoBehaviour {
             BottomButtons_port = GameObject.Find("BottomButtons_port");
         }
 
-        loadIpConfig();
+        LoadIpConfig();
     }
 
-    private void loadIpConfig() {
+    private void LoadIpConfig() {
         bool error = false;
         string info = null;
 #if !UNITY_EDITOR
@@ -122,7 +125,8 @@ public class IpConfiguratorTriggers : MonoBehaviour {
             port = info.Split(':')[1];
         }
         //while (info == null) ;
-
+        IpAdress = host;
+        Port = port;
         WriteLabelThemesOnButtons(host, port);
     }
 
@@ -158,23 +162,33 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         Task task = new Task(async () => {
             Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
             Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
-            string toWrite = string.Concat(Part1_button.GetComponent<LabelTheme>().Default, ".",
+            string host = string.Concat(Part1_button.GetComponent<LabelTheme>().Default, ".",
                 Part2_button.GetComponent<LabelTheme>().Default, ".",
                 Part3_button.GetComponent<LabelTheme>().Default, ".",
-                Part4_button.GetComponent<LabelTheme>().Default, ":",
-                Port_button.GetComponent<LabelTheme>().Default);
+                Part4_button.GetComponent<LabelTheme>().Default);
+            string port = Port_button.GetComponent<LabelTheme>().Default;
+            string toWrite = string.Concat(host, ":", port);
+
+            IpAdress = host;
+            Port = port;
             await Windows.Storage.FileIO.WriteTextAsync(sampleFile, toWrite);
         });
         task.Start();
         task.Wait();
 #else
-        string toWrite = string.Concat(Part1_button.GetComponent<LabelTheme>().Default, ".",
+        string host = string.Concat(Part1_button.GetComponent<LabelTheme>().Default, ".",
                 Part2_button.GetComponent<LabelTheme>().Default, ".",
                 Part3_button.GetComponent<LabelTheme>().Default, ".",
-                Part4_button.GetComponent<LabelTheme>().Default, ":",
-                Port_button.GetComponent<LabelTheme>().Default);
+                Part4_button.GetComponent<LabelTheme>().Default);
+        string port = Port_button.GetComponent<LabelTheme>().Default;
+        string toWrite = string.Concat(host, ":", port);
+                
+        IpAdress = host;
+        Port = port;
         File.WriteAllText(Application.streamingAssetsPath + "/ip.txt",toWrite);
 #endif
+
+
     }
 
     public void CancelIpConfig() {

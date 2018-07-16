@@ -77,6 +77,13 @@ private bool _useUWP = true;
     }
     
     // Appeler la fonction une fois config terminé via le menu
+    public void StartPlStreamCustom(string host,string port) {
+        Debug.Log("host : " + host + ":" + port);
+        DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 7);
+        Connect(host, port);
+    }
+
+
     public void StartPlStreamCustom() {
 
 #if !UNITY_EDITOR
@@ -90,12 +97,13 @@ private bool _useUWP = true;
 
 #endif
         while (info == null) ;
-        host = info.Split(':')[0];
-        port = info.Split(':')[1];
+        this.host = info.Split(':')[0];
+        this.port = info.Split(':')[1];
         Debug.Log("host : " + host + ":" + port);
         DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 7);
         Connect(host, port);
     }
+
 
 #if!UNITY_EDITOR
     private async Task<string> ReadHostFromFileAsync() {
