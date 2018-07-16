@@ -1959,7 +1959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c655338633f4544180b3d90a593ac17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TagalongDistance: 2
+  TagalongDistance: 2.5
   EnforceDistance: 1
   PositionUpdateSpeed: 9.8
   SmoothMotion: 1
@@ -1970,7 +1970,7 @@ MonoBehaviour:
   TargetVerticalOverlap: 1
   HorizontalRayCount: 3
   VerticalRayCount: 3
-  MinimumTagalongDistance: 1
+  MinimumTagalongDistance: 1.2
   MaintainFixedSize: 1
   DepthUpdateSpeed: 4
   DebugDrawLines: 0
@@ -2798,7 +2798,7 @@ Prefab:
         type: 2}
       propertyPath: OnDownEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1431976033}
+      objectReference: {fileID: 423456784}
     - target: {fileID: 114450361412339778, guid: 9dbe189c9df347d479a0b13552d88f9d,
         type: 2}
       propertyPath: OnDownEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -4245,7 +4245,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1329932712}
-  - component: {fileID: 1329932713}
   m_Layer: 5
   m_Name: StartMenu
   m_TagString: UIElement
@@ -4260,8 +4259,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1329932711}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12.5, y: 12.5, z: 12.5}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 1954498768}
   - {fileID: 128291912}
@@ -4269,17 +4268,6 @@ Transform:
   m_Father: {fileID: 1667286744}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1329932713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1329932711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09eb86fc2b4b6194ca7301dac537d95b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1399780733
 GameObject:
   m_ObjectHideFlags: 0
@@ -4418,12 +4406,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4512501903056626, guid: 9dbe189c9df347d479a0b13552d88f9d,
     type: 2}
   m_PrefabInternal: {fileID: 851055152}
---- !u!114 &1431976033 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114204029583521152, guid: 9dbe189c9df347d479a0b13552d88f9d,
-    type: 2}
-  m_PrefabInternal: {fileID: 851055152}
-  m_Script: {fileID: 11500000, guid: 7dcdcb6994a61ed42b729e7cef96efbb, type: 3}
 --- !u!1 &1433375816
 GameObject:
   m_ObjectHideFlags: 0

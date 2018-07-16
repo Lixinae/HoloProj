@@ -27,7 +27,7 @@ public class UITriggers : MonoBehaviour {
     public GameObject startAppButton = null;
 
     public GameObject calibrationCubes = null;
-
+    private GameObject axisViewer = null;
     // Use this for initialization
     void Awake() {
         if (menuFull == null) {
@@ -58,8 +58,6 @@ public class UITriggers : MonoBehaviour {
             cursorVisual = GameObject.Find("CursorVisual");
         }
 
-        // TODO
-        // Start menu active only once
         if (startMenu == null) {
             startMenu = GameObject.Find("StartMenu");
         }
@@ -77,6 +75,9 @@ public class UITriggers : MonoBehaviour {
             calibrationCubes = GameObject.Find("CalibrationCubes");
         }
 
+        if (axisViewer == null) {
+            axisViewer = GameObject.Find("AxisViewer");
+        }
         menuFull.SetActive(isMenuShowing);
         //modelsMenu.SetActive(false);
         mainMenu.SetActive(true);
@@ -171,6 +172,12 @@ public class UITriggers : MonoBehaviour {
         startAppButton.SetActive(false);
     }
 
+    public void CancelIpConfig() {
+        ipButton.SetActive(true);
+        ipConfigurator.SetActive(false);
+        startAppButton.SetActive(true);
+    }
+
     public void HideIpConfigurator() {
         ipConfigurator.SetActive(false);
     }
@@ -182,12 +189,24 @@ public class UITriggers : MonoBehaviour {
     public void StartApp() {
         HideStartMenu();
         // todo remettre une fois calibration fini
-        // CalibrationsCubes.setActive(true);
+        // CalibrationsCubes.setActive(true); // -> Les autres éléments sont affiché après le calibrage
         // Demarrage du plStream après avoir réglé l'ip
         IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
         string host = ipConfiguratorTriggers.IpAdress;
         string port = ipConfiguratorTriggers.Port;
-
+        
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
+    }
+
+    private void HideScene() {
+        //sceneItems.SetActive(false);
+        axisViewer.SetActive(false);
+        gltf.SetActive(false);
+    }
+
+    private void ShowScene() {
+        //sceneItems.SetActive(true);
+        axisViewer.SetActive(true);
+        gltf.SetActive(true);
     }
 }

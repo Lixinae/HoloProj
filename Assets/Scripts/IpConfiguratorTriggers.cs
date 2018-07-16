@@ -129,26 +129,34 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         Port = port;
         WriteLabelThemesOnButtons(host, port);
     }
-
+    /// <summary>
+    /// Ecrit l'hote et le port sur les boutons correspondant
+    /// </summary>
+    /// <param name="host"> Hôte à écrire sur les boutons</param>
+    /// <param name="port"> Port à écrire sur le bouton </param>
     private void WriteLabelThemesOnButtons(string host, string port) {
         string[] hostParts = host.Split('.');
         LabelTheme part1Theme = Part1_button.GetComponent<LabelTheme>();
         part1Theme.Default = hostParts[0];
 
         LabelTheme part2Theme = Part2_button.GetComponent<LabelTheme>();
-        part1Theme.Default = hostParts[1];
+        part2Theme.Default = hostParts[1];
 
         LabelTheme part3Theme = Part3_button.GetComponent<LabelTheme>();
-        part1Theme.Default = hostParts[2];
+        part3Theme.Default = hostParts[2];
 
         LabelTheme part4Theme = Part4_button.GetComponent<LabelTheme>();
-        part1Theme.Default = hostParts[3];
+        part4Theme.Default = hostParts[3];
 
         LabelTheme portTheme = Port_button.GetComponent<LabelTheme>();
         portTheme.Default = port;
     }
 
 #if !UNITY_EDITOR
+    /// <summary>
+    /// Lis l'adresse IP dans un fichier en utilisant une methode async
+    /// </summary>
+    /// <returns></returns>
     private async Task<string> ReadHostFromFileAsync() {
         Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
@@ -156,7 +164,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     }
 #endif
 
-    // Sauvegarde la configuration IP dans un fichier
+    /// <summary>
+    /// Sauvegarde la configuration IP dans un fichier
+    /// </summary>
     public void SaveIpConfig() {
 #if !UNITY_EDITOR
         Task task = new Task(async () => {
@@ -191,9 +201,6 @@ public class IpConfiguratorTriggers : MonoBehaviour {
 
     }
 
-    public void CancelIpConfig() {
-
-    }
 
     /// <summary>
     /// Si on clique sur les boutons avec l'adresse IP on peut afficher ou cacher les bouttons de réglage

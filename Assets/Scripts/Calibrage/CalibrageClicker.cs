@@ -59,10 +59,7 @@ public class CalibrageClicker : MonoBehaviour {
         if (axisViewer == null) {
             axisViewer = GameObject.Find("AxisViewer");
         }
-
-
-
-        HideScene();
+        
         //ObjectToShow.SetActive(false);
     }
 
@@ -86,6 +83,16 @@ public class CalibrageClicker : MonoBehaviour {
         ShowScene();
     }
 
+
+
+    // TODO -> Trouver une touche pour dire de reset le calibrage
+    public void RestartCalibrage() {
+        firstPosSet = false;
+        secondPosSet = false;
+        calibrageDone = false;
+        HideScene();
+    }
+
     private void HideScene() {
         //sceneItems.SetActive(false);
         axisViewer.SetActive(false);
@@ -97,15 +104,6 @@ public class CalibrageClicker : MonoBehaviour {
         axisViewer.SetActive(true);
         gltf.SetActive(true);
     }
-
-    // TODO -> Trouver une touche pour dire de reset le calibrage
-    public void RestartCalibrage() {
-        firstPosSet = false;
-        secondPosSet = false;
-        calibrageDone = false;
-        HideScene();
-    }
-
     // Calibrage avec le formule determiner sur feuilles
     private void Calibrage() {
 
@@ -204,4 +202,6 @@ public class CalibrageClicker : MonoBehaviour {
 
 
     }
+
+
 }
