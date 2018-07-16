@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityGLTF;
 
 public class GLTFComponentPerso : Singleton<GLTFComponentPerso> {
-    //public string Url = "";
+
     public bool Multithreaded = false;
     public bool UseStream = true;
 
@@ -22,16 +22,24 @@ public class GLTFComponentPerso : Singleton<GLTFComponentPerso> {
 
     public bool IsLoaded { get; set; }
 
+    /// <summary>
+    /// Initialise les shaders au lancement
+    /// </summary>
     private void Awake() {
         GLTFStandard = Shader.Find("GLTF/GLTFStandard");
         GLTFStandardSpecular = Shader.Find("GLTF/GLTFStandard");
         GLTFConstant = Shader.Find("GLTF/GLTFConstant");
     }
 
-
-    public IEnumerator CreateComponentFromFile(string filename, GameObject parent) {
+    /// <summary>
+    /// Permet de charger le fichier GLTF voulue
+    /// </summary>
+    /// <param name="filePath"> Chemin fichier à charger</param>
+    /// <param name="parent"> Object parent auquel rattaché l'objet gltf chargé</param>
+    /// <returns></returns>
+    public IEnumerator CreateComponentFromFile(string filePath, GameObject parent) {
         GLTFSceneImporter loader = null;
-        string Url = filename;
+        string Url = filePath;
         if (UseStream) {
             string fullPath = "";
 

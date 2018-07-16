@@ -75,15 +75,20 @@ private bool _useUWP = true;
     void Start() {
 
     }
-    
-    // Appeler la fonction une fois config terminé via le menu
+
+
+    /// <summary>
+    /// Permet de lancer la reception des données de l'appareil vers le programme
+    /// </summary>
+    /// <param name="host"> Hote sur lequel se connecter </param>
+    /// <param name="port"> Port de connection à la machine </param>
     public void StartPlStreamCustom(string host,string port) {
         Debug.Log("host : " + host + ":" + port);
-        DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 7);
+        DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 8);
         Connect(host, port);
     }
 
-
+    // 
     public void StartPlStreamCustom() {
 
 #if !UNITY_EDITOR
@@ -112,7 +117,13 @@ private bool _useUWP = true;
         return await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
     }
 #endif
-
+    /// <summary>
+    /// Fonction permettant la connection entre l'appareil de 3D et le programme
+    /// Lance ConnectUWP si l'ont est sur l'hololens
+    /// ConnectUnity si on lance le programme via unity
+    /// </summary>
+    /// <param name="host"> Hote sur lequel se connecter </param>
+    /// <param name="port"> Port de connection à la machine </param>
     public void Connect(string host, string port) {
         if (_useUWP) {
             ConnectUWP(host, port);
@@ -122,7 +133,7 @@ private bool _useUWP = true;
         }
     }
 
-    void initialize() {
+    void Initialize() {
         try {
             // there are some constraints between tracking systems
             switch (tracker_type) {
@@ -193,7 +204,7 @@ private bool _useUWP = true;
             await socket.ConnectAsync(serverHost, port);
 
             stream = socket.InputStream.AsStreamForRead();
-            initialize();
+            Initialize();
             Debug.Log("Connected!");
         }
         catch (Exception e) {
@@ -209,7 +220,7 @@ private bool _useUWP = true;
         try {
             tcpClient = new System.Net.Sockets.TcpClient(host, Int32.Parse(port));
             stream = tcpClient.GetStream();
-            initialize();
+            Initialize();
             Debug.Log("Connected!");
         }
         catch (Exception e) {
@@ -220,8 +231,9 @@ private bool _useUWP = true;
 
 
 
-    // PC Modif pour coller au specs necessaire au projet , utilisation de TCP plutot que UDP
-    // read thread
+    /// <summary>
+    /// Lecture des informations du capteur
+    /// </summary>
     private void Read_liberty() {
         stopListening = false;
         try {
@@ -297,7 +309,9 @@ private bool _useUWP = true;
         }
     }
 
-    // cleanup
+    /// <summary>
+    /// Permet de déconnecter le client du serveur
+    /// </summary>
     private void OnApplicationQuit() {
         try {
             // signal shutdown

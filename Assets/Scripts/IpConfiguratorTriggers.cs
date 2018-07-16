@@ -251,17 +251,21 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         return x;
     }
 
+    #region Modificateur partie 1
+
+
     /// <summary>
-    /// Modificateurs partie 1
+    /// Augmente le chiffre de centaine
     /// </summary>
-    /// 
     public void UpCentaine1() {
         LabelTheme theme = Part1_button.GetComponent<LabelTheme>();
         string text = theme.Default;
         int x = ParseTextPlus(text[0]);
         theme.Default = string.Concat(x.ToString(), text[1], text[2]);
     }
-
+    /// <summary>
+    /// Diminue le chiffre de centaine
+    /// </summary>
     public void DownCentaine1() {
         LabelTheme theme = Part1_button.GetComponent<LabelTheme>();
         string text = theme.Default;
@@ -297,11 +301,10 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         int x = ParseTextMoins(text[2]);
         theme.Default = string.Concat(text[0], text[1], x.ToString());
     }
+    #endregion
 
-    /// <summary>
-    /// Modificateurs partie 2
-    /// </summary>
-    /// 
+    #region Modificateur partie 2
+
     public void UpCentaine2() {
         LabelTheme theme = Part2_button.GetComponent<LabelTheme>();
         string text = theme.Default;
@@ -345,10 +348,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         theme.Default = string.Concat(text[0], text[1], x.ToString());
     }
 
-    /// <summary>
-    /// Modificateurs partie 3
-    /// </summary>
-    /// 
+    #endregion
+
+    #region Modificateur partie 3
 
     public void UpCentaine3() {
         LabelTheme theme = Part3_button.GetComponent<LabelTheme>();
@@ -393,10 +395,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         theme.Default = string.Concat(text[0], text[1], x.ToString());
     }
 
-    /// <summary>
-    /// Modificateurs partie 4
-    /// </summary>
-    /// 
+    #endregion
+
+    #region Modificateur partie 4
 
     public void UpCentaine4() {
         LabelTheme theme = Part4_button.GetComponent<LabelTheme>();
@@ -441,7 +442,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         theme.Default = string.Concat(text[0], text[1], x.ToString());
     }
 
-    // Port triggers
+    #endregion
+
+    #region Modificateur partie port
 
     public void UpMilliersPort() {
         LabelTheme theme = Port_button.GetComponent<LabelTheme>();
@@ -499,5 +502,5 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         int x = ParseTextMoins(text[3]);
         theme.Default = string.Concat(text[0], text[1], text[2], x.ToString());
     }
-
+    #endregion
 }

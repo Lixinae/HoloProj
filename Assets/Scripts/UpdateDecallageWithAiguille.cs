@@ -24,6 +24,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
     private Vector3 posBase = new Vector3(0, 0, 0);
     private Vector3 orientBase = new Vector3(0, 0, 0);
     // Use this for initialization
+
     void Start() {
         if (Aiguille == null) {
             Aiguille = GameObject.Find("Aiguille");
@@ -83,7 +84,9 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
     }
 
-    // Deverouille et enlève l'anchor
+    /// <summary>
+    /// Deverouille l'objet et enlève l'anchor pour permettre le déplacement
+    /// </summary>
     public void RemoveAnchor() {
         if (WorldAnchorManager.Instance != null) {
             locked = false;
@@ -91,7 +94,9 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         }
     }
 
-    // Verrouille l'objet et met un anchor
+    /// <summary>
+    /// Verrouille l'objet et met un anchor pour empecher le déplacement
+    /// </summary>
     public void SetAnchor() {
         if (WorldAnchorManager.Instance != null) {
             locked = true;
@@ -99,7 +104,9 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
         }
     }
 
-    // Trigger pour verrouiller ou deverouiller l'objet via un bouton
+    /// <summary>
+    /// Trigger pour verrouiller ou deverouiller l'objet via un bouton
+    /// </summary>
     public void LockTransform() {
         if (locked) {
             RemoveAnchor();
