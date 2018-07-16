@@ -67,19 +67,34 @@ public class CalibrageClicker : MonoBehaviour {
 
         if (!calibrageDone) {
             firstPosSet = cube1CalibrageClick.posSet;
+            if (firstPosSet) {
+                HideCube1();
+            }
             secondPosSet = cube2CalibrageClick.posSet;
+            if (secondPosSet) {
+                HideCube2();
+            }
             if (firstPosSet && secondPosSet) {
 
                 Calibrage();
                 calibrageDone = true;
-                HideCubeAndShowScene();
+                ShowScene();
+                //HideCubeAndShowScene();
             }
         }
     }
 
-    private void HideCubeAndShowScene() {
+    private void HideCube1() {
         cube1.SetActive(false);
+    }
+
+    private void HideCube2() {
         cube2.SetActive(false);
+    }
+
+    private void HideCubeAndShowScene() {
+        //HideCube1();
+        //HideCube2();
         ShowScene();
     }
 
