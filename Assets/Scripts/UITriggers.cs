@@ -106,6 +106,7 @@ public class UITriggers : MonoBehaviour {
             debugText.SetActive(isDebugTextShowing);
         }
 
+        // Cache le curseur
         if (Input.GetKeyDown("n")) {
             isCursorVisualShowing = !isCursorVisualShowing;
             cursorVisual.SetActive(isCursorVisualShowing);
@@ -134,14 +135,18 @@ public class UITriggers : MonoBehaviour {
         mainMenu.SetActive(false);
     }
 
-    // Enlève tous les modèles 3D de la fenetre ( concerne uniquement l'objet GLTF
+    /// <summary>
+    /// Supprime l'objet gltf de la fenetre pour pouvoir en mettre un nouveau
+    /// </summary>
     public void CleanWindowFromModels() {
         foreach (Transform child in gltf.transform) {
             GameObject.Destroy(child.gameObject);
         }
     }
 
-    // Permet d'inverser les axes sur le polhemus ( il a parfois, très rarement des soucis de signe et cette fonction permet de palier à ça )
+    /// <summary>
+    /// Permet d'inverser les axes sur le capteur de position 3D
+    /// </summary>
     public void InvertAxesValues() {
         UpdatePosOrient updPO = aiguille.GetComponent<UpdatePosOrient>();
         updPO.invertCoef();
@@ -164,31 +169,45 @@ public class UITriggers : MonoBehaviour {
     public void DisplayExitConfirm() {
         exitConfirmMenu.SetActive(true);
     }
-
-    // Affiche l'ip configurator
+ 
+    /// <summary>
+    /// Affiche l'ip configurator et cache le menu de départ
+    /// </summary>
     public void ShowIpConfigurator() {
         ipButton.SetActive(false);
         ipConfigurator.SetActive(true);
         startAppButton.SetActive(false);
     }
 
+    /// <summary>
+    /// Cache l'ip configurator et affiche le menu de départ
+    /// </summary>
     public void CancelIpConfig() {
         ipButton.SetActive(true);
         ipConfigurator.SetActive(false);
         startAppButton.SetActive(true);
     }
 
+    /// <summary>
+    /// Cache l'ip configurator
+    /// </summary>
     public void HideIpConfigurator() {
         ipConfigurator.SetActive(false);
     }
 
+    /// <summary>
+    /// Cache le menu de demarrage
+    /// </summary>
     public void HideStartMenu() {
         startMenu.SetActive(false);
     }
 
+    /// <summary>
+    /// Démarre l'application
+    /// </summary>
     public void StartApp() {
         HideStartMenu();
-        // todo remettre une fois calibration fini
+        // TODO remettre une fois calibration fini
         // CalibrationsCubes.setActive(true); // -> Les autres éléments sont affiché après le calibrage
         // Demarrage du plStream après avoir réglé l'ip
         IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
@@ -197,13 +216,19 @@ public class UITriggers : MonoBehaviour {
         
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
     }
-
+    
+    /// <summary>
+    /// Cache la scène
+    /// </summary>
     private void HideScene() {
         //sceneItems.SetActive(false);
         axisViewer.SetActive(false);
         gltf.SetActive(false);
     }
 
+    /// <summary>
+    /// Montre la scène
+    /// </summary>
     private void ShowScene() {
         //sceneItems.SetActive(true);
         axisViewer.SetActive(true);
