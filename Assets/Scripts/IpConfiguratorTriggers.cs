@@ -31,8 +31,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     public string IpAdress = null;
     public string Port = null;
 
+    private bool Loaded = false;
     // Use this for initialization
-    void Start() {
+    void Awake() {
         if (IpConfigurator == null) {
             IpConfigurator = GameObject.Find("IpConfigurator");
         }
@@ -92,6 +93,10 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         LoadIpConfig();
     }
 
+    public bool IsLoaded() {
+        return Loaded;
+    }
+
     private void LoadIpConfig() {
         bool error = false;
         string info = null;
@@ -128,6 +133,45 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         IpAdress = host;
         Port = port;
         WriteLabelThemesOnButtons(host, port);
+        Loaded = true;
+    }
+
+    /// <summary>
+    /// Ajout des zero au debut de la chaine pour la manipulation avec les bouttons
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <returns></returns>
+    private string FillMissingZeroIP(string entry) {
+
+        string output;
+        if (entry.Length == 2) {
+            output = string.Concat('0', entry);
+        }
+        if (entry.Length == 1) {
+            output = string.Concat('0', '0', entry);
+        }
+        else {
+            output = entry;
+        }
+        return output;
+    }
+
+    private string FillMissingZeroPort(string entry) {
+
+        string output;
+        if (entry.Length == 3) {
+            output = string.Concat('0', entry);
+        }
+        if (entry.Length == 2) {
+            output = string.Concat('0', '0', entry);
+        }
+        if (entry.Length == 1) {
+            output = string.Concat('0', '0', '0', entry);
+        }
+        else {
+            output = entry;
+        }
+        return output;
     }
     /// <summary>
     /// Ecrit l'hote et le port sur les boutons correspondant
@@ -137,19 +181,19 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     private void WriteLabelThemesOnButtons(string host, string port) {
         string[] hostParts = host.Split('.');
         LabelTheme part1Theme = Part1_button.GetComponent<LabelTheme>();
-        part1Theme.Default = hostParts[0];
+        part1Theme.Default = FillMissingZeroIP(hostParts[0]);
 
         LabelTheme part2Theme = Part2_button.GetComponent<LabelTheme>();
-        part2Theme.Default = hostParts[1];
+        part2Theme.Default = FillMissingZeroIP(hostParts[1]);
 
         LabelTheme part3Theme = Part3_button.GetComponent<LabelTheme>();
-        part3Theme.Default = hostParts[2];
+        part3Theme.Default = FillMissingZeroIP(hostParts[2]);
 
         LabelTheme part4Theme = Part4_button.GetComponent<LabelTheme>();
-        part4Theme.Default = hostParts[3];
+        part4Theme.Default = FillMissingZeroIP(hostParts[3]);
 
         LabelTheme portTheme = Port_button.GetComponent<LabelTheme>();
-        portTheme.Default = port;
+        portTheme.Default = FillMissingZeroPort(port);
     }
 
 #if !UNITY_EDITOR
@@ -162,7 +206,44 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
         return await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
     }
+
 #endif
+
+    public string GetIpAdress() {
+        string part1 = Part1_button.GetComponent<LabelTheme>().Default;
+        string part2 = Part2_button.GetComponent<LabelTheme>().Default;
+        string part3 = Part3_button.GetComponent<LabelTheme>().Default;
+        string part4 = Part4_button.GetComponent<LabelTheme>().Default;
+        string hostTrimed = string.Concat(TrimValFromLeftZero(part1), ".",
+                    TrimValFromLeftZero(part2), ".",
+                    TrimValFromLeftZero(part3), ".",
+                    TrimValFromLeftZero(part4));
+        return hostTrimed;
+    }
+
+    public string GetPort() {
+        return TrimValFromLeftZero(Port);
+    }
+
+    // Supprime les zero a gauche
+    private string TrimValFromLeftZero(string entry) {
+        string output;
+        int x = 0;
+        var count = 0;
+        // Lis de gauche à droite
+        foreach (var c in entry) {
+            int.TryParse(c.ToString(), out x);
+            if (x != 0) {
+                break;
+            }
+
+            if (x == 0) {
+                count++;
+            }
+        }
+        output = entry.Substring(count);
+        return output;
+    }
 
     /// <summary>
     /// Sauvegarde la configuration IP dans un fichier
@@ -172,29 +253,52 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         Task task = new Task(async () => {
             Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
             Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
-            string host = string.Concat(Part1_button.GetComponent<LabelTheme>().Default, ".",
-                Part2_button.GetComponent<LabelTheme>().Default, ".",
-                Part3_button.GetComponent<LabelTheme>().Default, ".",
-                Part4_button.GetComponent<LabelTheme>().Default);
+
+            string part1 = Part1_button.GetComponent<LabelTheme>().Default;
+            string part2 = Part2_button.GetComponent<LabelTheme>().Default;
+            string part3 = Part3_button.GetComponent<LabelTheme>().Default;
+            string part4 = Part4_button.GetComponent<LabelTheme>().Default;
+            string host = string.Concat(part1, ".",
+                    part2, ".",
+                    part3, ".",
+                    part4);
             string port = Port_button.GetComponent<LabelTheme>().Default;
             string toWrite = string.Concat(host, ":", port);
 
-            IpAdress = host;
-            Port = port;
+
+            string hostTrimed = string.Concat(TrimValFromLeftZero(part1), ".",
+                    TrimValFromLeftZero(part2), ".",
+                    TrimValFromLeftZero(part3), ".",
+                    TrimValFromLeftZero(part4));
+            string portTrimed = TrimValFromLeftZero(Port_button.GetComponent<LabelTheme>().Default);
+
+            IpAdress = hostTrimed;
+            Port = portTrimed;
+
             await Windows.Storage.FileIO.WriteTextAsync(sampleFile, toWrite);
         });
         task.Start();
         task.Wait();
 #else
-        string host = string.Concat(Part1_button.GetComponent<LabelTheme>().Default, ".",
-                Part2_button.GetComponent<LabelTheme>().Default, ".",
-                Part3_button.GetComponent<LabelTheme>().Default, ".",
-                Part4_button.GetComponent<LabelTheme>().Default);
+        string part1= Part1_button.GetComponent<LabelTheme>().Default;
+        string part2= Part2_button.GetComponent<LabelTheme>().Default;
+        string part3= Part3_button.GetComponent<LabelTheme>().Default;
+        string part4= Part4_button.GetComponent<LabelTheme>().Default;
+        string host = string.Concat(part1, ".",
+                part2, ".",
+                part3, ".",
+                part4);
         string port = Port_button.GetComponent<LabelTheme>().Default;
         string toWrite = string.Concat(host, ":", port);
-                
-        IpAdress = host;
-        Port = port;
+
+
+        string hostTrimed = string.Concat(TrimValFromLeftZero(part1), ".",
+                    TrimValFromLeftZero(part2), ".",
+                    TrimValFromLeftZero(part3), ".",
+                    TrimValFromLeftZero(part4));
+        string portTrimed = TrimValFromLeftZero(Port_button.GetComponent<LabelTheme>().Default);       
+        IpAdress = hostTrimed;
+        Port = portTrimed;
         File.WriteAllText(Application.streamingAssetsPath + "/ip.txt",toWrite);
 #endif
 
@@ -414,7 +518,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     /// <summary>
     /// Partie 4
     /// </summary>
-    
+
 
     public void UpCentaine4() {
         LabelTheme theme = Part4_button.GetComponent<LabelTheme>();

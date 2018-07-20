@@ -206,14 +206,21 @@ public class UITriggers : MonoBehaviour {
     /// Démarre l'application
     /// </summary>
     public void StartApp() {
+        IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
+        if (!ipConfiguratorTriggers.IsLoaded()) {
+            Debug.Log("Ip config not loaded !!!");
+            return;
+        }
+
         HideStartMenu();
         // TODO remettre une fois calibration fini
         // CalibrationsCubes.setActive(true); // -> Les autres éléments sont affiché après le calibrage
         // Demarrage du plStream après avoir réglé l'ip
-        IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
-        string host = ipConfiguratorTriggers.IpAdress;
-        string port = ipConfiguratorTriggers.Port;
+
+        //IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
         
+        string host = ipConfiguratorTriggers.GetIpAdress();
+        string port = ipConfiguratorTriggers.GetPort();
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
     }
     

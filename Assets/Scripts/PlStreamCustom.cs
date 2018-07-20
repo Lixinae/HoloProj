@@ -73,7 +73,7 @@ private bool _useUWP = true;
 
     // Use this for initialization
     void Start() {
-
+        //Connect(host, port);
     }
 
 
