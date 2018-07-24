@@ -78,6 +78,7 @@ public class UITriggers : MonoBehaviour {
         if (axisViewer == null) {
             axisViewer = GameObject.Find("AxisViewer");
         }
+        calibrationCubes.SetActive(false);
         menuFull.SetActive(isMenuShowing);
         //modelsMenu.SetActive(false);
         mainMenu.SetActive(true);
@@ -213,17 +214,19 @@ public class UITriggers : MonoBehaviour {
         }
 
         HideStartMenu();
-        // TODO remettre une fois calibration fini
-        // CalibrationsCubes.setActive(true); // -> Les autres éléments sont affiché après le calibrage
-        // Demarrage du plStream après avoir réglé l'ip
+
 
         //IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
         
         string host = ipConfiguratorTriggers.GetIpAdress();
         string port = ipConfiguratorTriggers.GetPort();
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
+
+        // TODO remettre une fois calibration fini
+        calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
+        // Demarrage du plStream après avoir réglé l'ip
     }
-    
+
     /// <summary>
     /// Cache la scène
     /// </summary>

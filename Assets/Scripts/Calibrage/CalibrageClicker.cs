@@ -37,10 +37,10 @@ public class CalibrageClicker : MonoBehaviour {
                 cube1CalibrageClick = cube1.GetComponent<CalibrageClickAnnex>();
             }
         }
-        if (cube1 == null) {
+        if (cube2 == null) {
             cube2 = GameObject.Find("Cube_2_test");
             if (cube2 != null) {
-                cube1CalibrageClick = cube2.GetComponent<CalibrageClickAnnex>();
+                cube2CalibrageClick = cube2.GetComponent<CalibrageClickAnnex>();
             }
         }
 
@@ -59,7 +59,7 @@ public class CalibrageClicker : MonoBehaviour {
         if (axisViewer == null) {
             axisViewer = GameObject.Find("AxisViewer");
         }
-        
+        HideScene();
         //ObjectToShow.SetActive(false);
     }
 
@@ -122,7 +122,6 @@ public class CalibrageClicker : MonoBehaviour {
     // Calibrage avec le formule determiner sur feuilles
     private void Calibrage() {
 
-        // TODO 
         /////////////////////////////////////////
         /// /!\ Gaffe aux arrondi d'unity /!\ ///
         /////////////////////////////////////////
@@ -130,49 +129,50 @@ public class CalibrageClicker : MonoBehaviour {
         PosCapteur1 = cube1CalibrageClick.posCapteur;
         PosCapteur2 = cube2CalibrageClick.posCapteur;
 
-        float t1 = PosCapteur1.x;
-        float t2 = PosCapteur1.z;
-        float t3 = PosCapteur1.y;
+        double t1 = PosCapteur1.x;
+        double t2 = PosCapteur1.y;
+        double t3 = PosCapteur1.z;
 
-        float t4 = PosCapteur2.x;
-        float t5 = PosCapteur2.z;
-        float t6 = PosCapteur2.y;
+        double t4 = PosCapteur2.x;
+        double t5 = PosCapteur2.y;
+        double t6 = PosCapteur2.z;
 
-        float Xx = PosCube1.x;
-        float Xy = PosCube1.y;
-        float Xz = PosCube1.z;
+        double Xx = PosCube1.x;
+        double Xy = PosCube1.y;
+        double Xz = PosCube1.z;
 
-        float Yx = PosCube2.x;
-        float Yy = PosCube2.y;
-        float Yz = PosCube2.z;
+        double Yx = PosCube2.x;
+        double Yy = PosCube2.y;
+        double Yz = PosCube2.z;
 
-        float t1t2t4t5 = t1 + t2 - t4 - t5;
-        float t1t5pow = t1t2t4t5 + (Mathf.Pow(t3 - t6, 2) / (t1 - t4));
-        float t1t3t4t6 = t1 + t3 - t4 - t6;
+        double t1t2t4t5 = t1 + t2 - t4 - t5;
+        double t1t5pow = t1t2t4t5 + (Mathf.Pow((float)(t3 - t6), 2) / (t1 - t4));
+        double t1t3t4t6 = t1 + t3 - t4 - t6;
 
-        float powDiv = 1 + ((Mathf.Pow(t5 - t2, 2) * t1t2t4t5) / ((t1 - t4) * (t1t5pow * t1t3t4t6)));
+        double powDiv = 1 + ((Mathf.Pow((float)(t5 - t2), 2) * t1t2t4t5) / ((t1 - t4) * (t1t5pow * t1t3t4t6)));
 
-        float Azfe = (Yz - Xz) / (t1t3t4t6 * powDiv);
-        float zfe = ((((t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) * (t2 - t5)) / ((t1 - t4) * (t1t5pow) * t1t3t4t6 * powDiv)) + Azfe;
+        double Azfe = (Yz - Xz) / (t1t3t4t6 * powDiv);
+        double zfe = ((((t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) * (t2 - t5)) / ((t1 - t4) * (t1t5pow) * t1t3t4t6 * powDiv)) + Azfe;
 
 
-        float xfe = ((t5 - t2) * t1t2t4t5 * zfe + (t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) / ((t1 - t4) * (t1t5pow));
-        float yfe = ((t6 - t3) * xfe - Xy + Yy) / (t1t2t4t5);
+        double xfe = ((t5 - t2) * t1t2t4t5 * zfe + (t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) / ((t1 - t4) * (t1t5pow));
+        double yfe = ((t6 - t3) * xfe - Xy + Yy) / (t1t2t4t5);
 
 
         // X -> 1er pts dans unity
         // Y -> 2e pts dans unity
 
-        float xE = Xx + t1 * xfe + t2 * zfe - t3 * yfe;
-        float yE = Xy + t1 * yfe + t2 * yfe + t3 * xfe;
-        float zE = Xz + t1 * zfe - t2 * xfe + t3 * zfe;
+        double xE = Xx + t1 * xfe + t2 * zfe - t3 * yfe;
+        double yE = Xy + t1 * yfe + t2 * yfe + t3 * xfe;
+        double zE = Xz + t1 * zfe - t2 * xfe + t3 * zfe;
 
-        Vector3 posEmetteur = new Vector3(xE, yE, zE);
+        Vector3 posEmetteur = new Vector3((float)xE, (float)yE, (float)zE);
 
         // 3 vecteurs composant le repère du capteur polhemus
-        Vector3 FE = new Vector3(xfe, yfe, zfe); // orientation sur l'axe X
-        Vector3 VE = new Vector3(-yfe, xfe, zfe); // orientation sur l'axe Y
-        Vector3 UE = new Vector3(zfe, yfe, -xfe); // orientation sur l'axe Z
+        Vector3 FE = new Vector3((float)xfe, (float)yfe, (float)zfe); // orientation sur l'axe X
+        // Gaffe UE ET VE inversé pour test
+        Vector3 UE = new Vector3((float)-yfe, (float)xfe, (float)zfe); // orientation sur l'axe Y
+        Vector3 VE = new Vector3((float)zfe, (float)yfe, (float)-xfe); // orientation sur l'axe Z
 
 
         Vector3 axisX = new Vector3(1, 0, 0);
@@ -183,8 +183,8 @@ public class CalibrageClicker : MonoBehaviour {
         // Angle Y autour de l'axe X
         // Angle Z autour de l'axe Y
         float angleX = Vector3.Angle(axisX, FE);
-        float angleY = Vector3.Angle(axisY, VE);
-        float angleZ = Vector3.Angle(axisZ, UE);
+        float angleY = Vector3.Angle(axisY, UE);
+        float angleZ = Vector3.Angle(axisZ, VE);
 
         Debug.Log("Pos emetteur: " + posEmetteur);
 
@@ -198,9 +198,9 @@ public class CalibrageClicker : MonoBehaviour {
 
 
         // AngleX -> Rotation autour de l'axe X et donc c'est l'angle Y qu'on determine au dessus
-        updatePosOrient.orientation.x = angleY;
+        updatePosOrient.orientation.x = angleX;
         // Angle Y -> Rotation autour de l'axe Y et donc c'est l'angle X determiné au dessus ( ou l'angle Z, les 2 étant normalement égaux)
-        updatePosOrient.orientation.y = angleX;
+        updatePosOrient.orientation.y = angleY;
         updatePosOrient.orientation.z = angleZ; // utile uniquement pour le debug, la rotation sur Z n'est pas appliqué lors de la transformation
         updatePosOrient.decallageByCalibragePos = posEmetteur;
 
@@ -211,7 +211,7 @@ public class CalibrageClicker : MonoBehaviour {
         updateDecallage.RemoveAnchor();
 
         axisViewer.transform.position = posEmetteur * 0.01f;
-        axisViewer.transform.rotation = new Quaternion(0, angleX, angleY, angleZ);
+        axisViewer.transform.rotation = Quaternion.Euler(angleX, angleY, angleZ);
 
         updateDecallage.SetAnchor();
 
