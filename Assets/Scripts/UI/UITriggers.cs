@@ -1,9 +1,4 @@
-﻿using HoloToolkit.Examples.InteractiveElements;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UITriggers : MonoBehaviour {
 
