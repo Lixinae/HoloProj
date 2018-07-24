@@ -1,12 +1,7 @@
-﻿using HoloToolkit.Examples.InteractiveElements;
-using HoloToolkit.Unity;
+﻿using HoloToolkit.Unity;
 using HoloToolkit.Unity.InputModule;
-using HoloToolkit.Unity.SpatialMapping;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.WSA;
 
 public class TransformFromUserInput : XboxControllerHandlerBase {
 

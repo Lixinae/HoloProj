@@ -1,10 +1,7 @@
 ﻿
 using UnityEngine;
-using System.Collections;
 using System.Net.Sockets;
 using System;
-using System.Text;
-using System.Net;
 using System.Threading;
 using System.IO;
 using HoloToolkit.Unity;

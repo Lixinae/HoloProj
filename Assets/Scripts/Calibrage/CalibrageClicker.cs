@@ -1,8 +1,4 @@
-﻿using HoloToolkit.Unity.InputModule;
-using HoloToolkit.Unity.Receivers;
-using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CalibrageClicker : MonoBehaviour {
 

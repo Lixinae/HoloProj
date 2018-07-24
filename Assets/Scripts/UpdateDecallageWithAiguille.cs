@@ -1,10 +1,6 @@
 ﻿using HoloToolkit.Unity;
 using HoloToolkit.Unity.InputModule;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.WSA;
 
 public class UpdateDecallageWithAiguille : MonoBehaviour {
 
