@@ -20,10 +20,6 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     private Vector3 initialRotation;
     private Vector3 initialPosition;
     private Vector3 initialScale;
-    private GazeManager gaze;
-    //private TapToPlace tapToPlace;
-
-    //private Vector3 newRotation;
     private Vector3 newPosition;
     private Vector3 newScale;
 
@@ -35,10 +31,8 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
 
     public Boolean devBuild = true; // TODO !!!! Changer à false à la fin du dev , decallage du a l'input de la camera dans unity
 
-    //private GameObject spatialMapping;
     private bool locked = true;
 
-    //public Boolean isLocked = false;
     // Use this for initialization
     void Start() {
         if (Camera == null) {
@@ -50,10 +44,6 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         initialPosition = transform.position;
         initialRotation = Vector3.zero;
         initialScale = transform.localScale;
-        gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
-        //spatialMapping = GameObject.Find("SpatialMapping");
-
-        // Pas besoin de faire un World Manager . AttacheAnchor, le tap to place le fait déjà
     }
 
     public override void OnSourceLost(SourceStateEventData eventData) {
@@ -82,26 +72,12 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         else {
             EndBuildKeyMap();
         }
-        // Si on ne deplace pas l'objet avec le regard
-        // Si on vise l'objet avec le regard
-        // Si on a appuie sur la touche "l"
-        // Place un anchor à la position de l'objet
-        //if (!tapToPlace.IsBeingPlaced) { // Todo -> peut etre des bug du au mouvement avec le regard, mais 
-        /*if (gaze.HitObject == gameObject) {
-            Debug.Log("Bla bla");
-            if (Input.GetKeyDown("l")) {
-                Debug.Log(gameObject.name + ": Locked");
-                LockTransform();
-            }
-        }*/
-        //}
-
 
     }
 
     private void EndBuildKeyMap() {
         // Position de l'objet
-        if (!Input.GetKey(KeyCode.LeftShift)) {
+        if (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) { 
             if (Input.GetKey("z")) {
                 newPosition.y += 1 * movementSpeedMultiplier;
             }
@@ -157,7 +133,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     }
 
     private void DevBuildKeyMap() {
-        if (!Input.GetKey(KeyCode.LeftShift)) {
+        if (!(Input.GetKey(KeyCode.LeftShift ) || Input.GetKey(KeyCode.RightShift))) {
             // Position de l'objet
             if (Input.GetKey("t")) {
                 newPosition.y += 1 * movementSpeedMultiplier;
@@ -222,7 +198,8 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         transform.localScale = initialScale;
     }
 
-    // Todo -> tester et voir pour regler soucis des controle avec le deplacement de la camera
+
+    // todo -> eventuellement rajouter dans un autre fichier le controle de l'axisviewer si on appuie sur une touche
     public override void OnXboxInputUpdate(XboxControllerEventData eventData) {
         if (!UseJoystick) {
             Debug.Log("Joystick use not enabled");
@@ -273,7 +250,6 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         }
     }
 
-    // Logique que ça marche pas -> le game object est l'enfant, pas le parent, donc forcément le fait de detacher anchor ne fait rien.... 
     public void LockTransform() {
         if (locked) {
             if (WorldAnchorManager.Instance != null) {
@@ -292,25 +268,6 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
                 }
             }
         }
-
-        /*if (gameObject.GetComponent<WorldAnchor>() != null) {
-            if (!spatialMapping.activeInHierarchy) {
-                // On reactive le spatial mapping pour pouvoir remettre les anchor
-                spatialMapping.SetActive(true);
-                // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
-                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
-                WorldAnchorManager.Instance.AttachAnchor(gameObject);
-                spatialMapping.SetActive(false);
-            }
-            else {
-                // On met à jour le world anchor en supprimant le nouveau et en en replaçant un nouveau
-                WorldAnchorManager.Instance.RemoveAnchor(gameObject);
-                WorldAnchorManager.Instance.AttachAnchor(gameObject);
-            }
-        }
-        else {
-            WorldAnchorManager.Instance.AttachAnchor(gameObject);
-        }*/
 
     }
 }
