@@ -11,8 +11,8 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
     private Vector3 previousPosition;
     private Vector3 actualPosition;
-    private GazeManager gaze;
-    private GameObject spatialMapping;
+    //private GazeManager gaze;
+    //private GameObject spatialMapping;
 
     private bool locked = false;
     private Vector3 prevDecallage = new Vector3(0, 0, 0);
@@ -26,8 +26,8 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
             Aiguille = GameObject.Find("Aiguille");
             updatePosOrient = Aiguille.GetComponent<UpdatePosOrient>();
         }
-        gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
-        spatialMapping = GameObject.Find("SpatialMapping");
+        //gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
+        //spatialMapping = GameObject.Find("SpatialMapping");
         if (!locked) {
             if (WorldAnchorManager.Instance != null) {
                 locked = true;

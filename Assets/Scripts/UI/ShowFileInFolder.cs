@@ -14,7 +14,7 @@ using Windows.ApplicationModel;
 public class ShowFileInFolder {
 
     private List<String> fileGLtfList;
-    private bool copyOnce = false;
+    //private bool copyOnce = false;
 
     public ShowFileInFolder() {
         fileGLtfList = new List<string>();
@@ -49,10 +49,13 @@ public class ShowFileInFolder {
     }
 
     private void GetAllFileNames() {
-#if UNITY_EDITOR
+        // Remettre UNITY_EDITOR ici une fois corrigé
         String path = Application.streamingAssetsPath + "/3DModels";
         string[] allfiles = Directory.GetFiles(path, "*.gltf", SearchOption.AllDirectories);
         CleanAndAddToList(allfiles);
+
+#if UNITY_EDITOR
+
 #else
         // Copier le dossier "path" vers le current.LocalFolder
 
@@ -85,7 +88,11 @@ public class ShowFileInFolder {
         // Voir si pas moyen de repliquer le code au dessus plutot que l'espèce de purge en dessous
 
         // todo -> erreurs pour le moment
-        Task task = new Task(
+
+        ///
+        /// 
+        /// TODO enlever le commentaire 
+        /*Task task = new Task(
             () => {
                 String path = Application.streamingAssetsPath + "\\3DModels";
                 Debug.Log("Started async task");
@@ -119,45 +126,52 @@ public class ShowFileInFolder {
                 CleanAndAddToList(allfilesTest2);
                 Debug.Log("Finished async task");
                 DebugHelper.Instance.AddDebugText("Finished async task", 5);
-                /*
-                DebugHelper.Instance.AddDebugText("LocalFolder : " + localFolder.DisplayName, 3);
-                Debug.Log("LocalFolder : " + localFolder.DisplayName);
-                StorageFolderQueryResult queryResultFolder3D = localFolder.CreateFolderQuery(CommonFolderQuery.DefaultQuery);
-                IReadOnlyList<StorageFolder> folderList = await queryResultFolder3D.GetFoldersAsync();
-                // On recupère la liste des dossier de local folder
-                // Si un dossier porte le nom de "3DModels" on scanne son contenu et on construit la liste des fichiers
-                // 
+                */
 
-                List<string> allfiles = new List<string>();
 
-                // Correspond a string[] allfiles = Directory.GetFiles(path, "*.gltf", SearchOption.AllDirectories); dans unity
-                foreach (StorageFolder folder3D in folderList) {
-                    DebugHelper.Instance.AddDebugText("No unity editor Path = " + folder3D.DisplayName, 1);
-                    if (folder3D.DisplayName == "3DModels") {
-                        StorageFolderQueryResult queryResult = folder3D.CreateFolderQuery(CommonFolderQuery.DefaultQuery);
-                        IReadOnlyList<StorageFolder> subfolderList = await queryResult.GetFoldersAsync();
-                        foreach (StorageFolder folder in subfolderList) {
-                            IReadOnlyList<StorageFile> fileList = await folder.GetFilesAsync();
-                            foreach (StorageFile file in fileList) {
-                                // Print the name of the file.
-                                if (file.Name.EndsWith("*.gltf")) {
-                                    string fileName = localFolder.Name + "/" + folder3D.Name + "/" + folder.Name + "/" + file.Name;
-                                    Debug.Log("FileName : " + fileName);
-                                    DebugHelper.Instance.AddDebugText("FileName : "+ fileName, 1);
-                                    allfiles.Add(fileName);
-                                }
-                            }
+        /*
+        DebugHelper.Instance.AddDebugText("LocalFolder : " + localFolder.DisplayName, 3);
+        Debug.Log("LocalFolder : " + localFolder.DisplayName);
+        StorageFolderQueryResult queryResultFolder3D = localFolder.CreateFolderQuery(CommonFolderQuery.DefaultQuery);
+        IReadOnlyList<StorageFolder> folderList = await queryResultFolder3D.GetFoldersAsync();
+        // On recupère la liste des dossier de local folder
+        // Si un dossier porte le nom de "3DModels" on scanne son contenu et on construit la liste des fichiers
+        // 
+
+        List<string> allfiles = new List<string>();
+
+        // Correspond a string[] allfiles = Directory.GetFiles(path, "*.gltf", SearchOption.AllDirectories); dans unity
+        foreach (StorageFolder folder3D in folderList) {
+            DebugHelper.Instance.AddDebugText("No unity editor Path = " + folder3D.DisplayName, 1);
+            if (folder3D.DisplayName == "3DModels") {
+                StorageFolderQueryResult queryResult = folder3D.CreateFolderQuery(CommonFolderQuery.DefaultQuery);
+                IReadOnlyList<StorageFolder> subfolderList = await queryResult.GetFoldersAsync();
+                foreach (StorageFolder folder in subfolderList) {
+                    IReadOnlyList<StorageFile> fileList = await folder.GetFilesAsync();
+                    foreach (StorageFile file in fileList) {
+                        // Print the name of the file.
+                        if (file.Name.EndsWith("*.gltf")) {
+                            string fileName = localFolder.Name + "/" + folder3D.Name + "/" + folder.Name + "/" + file.Name;
+                            Debug.Log("FileName : " + fileName);
+                            DebugHelper.Instance.AddDebugText("FileName : "+ fileName, 1);
+                            allfiles.Add(fileName);
                         }
                     }
-                    else {
-                        continue;
-                    }
                 }
-                CleanAndAddToList(allfiles.ToArray());*/
-            });
+            }
+            else {
+                continue;
+            }
+        }
+        CleanAndAddToList(allfiles.ToArray());*/
+        ///
+        /// 
+        /// TODO enlever le commentaire 
+        //}); 
         //task.Start();
         //task.Wait();
-        task.RunSynchronously();
+
+        //task.RunSynchronously();
 
 #endif
     }

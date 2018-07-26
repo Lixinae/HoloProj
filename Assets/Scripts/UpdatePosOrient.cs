@@ -31,13 +31,13 @@ public class UpdatePosOrient : MonoBehaviour {
     public Vector3 orientation = new Vector3(0, 0, 0);
 
 
-    private Vector3 decallageByGaze = new Vector3(0, 0, 0);
+    //private Vector3 decallageByGaze = new Vector3(0, 0, 0);
 
     //private MoveByGaze moveByGaze = null;
     //private DeactivateMoveByGaze deactivateMoveByGaze = null;
 
-    private bool decallageByGazeDone = false;
-    private bool selectedOnce = false;
+    //private bool decallageByGazeDone = false;
+    //private bool selectedOnce = false;
 
     //public double rapport = 1;
     // Use this for initialization
