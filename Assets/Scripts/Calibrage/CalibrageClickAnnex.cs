@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using HoloToolkit.Unity.InputModule;
+﻿using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
 public class CalibrageClickAnnex : MonoBehaviour, IInputClickHandler {
-
 
     public bool posSet = false;
     private UpdatePosOrient updatePosOrient = null;
     private AudioSource audio_source = null;
     public Vector3 posCapteur = new Vector3(0, 0, 0);
     // Use this for initialization
-    void Start () {
+    void Start() {
         updatePosOrient = GameObject.Find("Aiguille").GetComponent<UpdatePosOrient>();
         audio_source = GetComponent<AudioSource>();
     }
@@ -27,7 +24,7 @@ public class CalibrageClickAnnex : MonoBehaviour, IInputClickHandler {
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update() {
+
+    }
 }

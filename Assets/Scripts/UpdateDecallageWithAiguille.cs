@@ -1,5 +1,4 @@
 ﻿using HoloToolkit.Unity;
-using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
 public class UpdateDecallageWithAiguille : MonoBehaviour {
@@ -11,8 +10,8 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
     private Vector3 previousPosition;
     private Vector3 actualPosition;
-    private GazeManager gaze;
-    private GameObject spatialMapping;
+    //private GazeManager gaze;
+    //private GameObject spatialMapping;
 
     private bool locked = false;
     private Vector3 prevDecallage = new Vector3(0, 0, 0);
@@ -26,8 +25,8 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
             Aiguille = GameObject.Find("Aiguille");
             updatePosOrient = Aiguille.GetComponent<UpdatePosOrient>();
         }
-        gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
-        spatialMapping = GameObject.Find("SpatialMapping");
+        //gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
+        //spatialMapping = GameObject.Find("SpatialMapping");
         if (!locked) {
             if (WorldAnchorManager.Instance != null) {
                 locked = true;
@@ -65,14 +64,14 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
             }
         }*/
 
-       
+
         // Pour eviter les déplacement infini
-        if(updatePosOrient.totalDecallage != prevDecallage) {
+        if (updatePosOrient.totalDecallage != prevDecallage) {
             prevDecallage = updatePosOrient.totalDecallage;
             transform.position = posBase + updatePosOrient.totalDecallage * 0.01f; // On divise par 10 pour adapter a la fenetre
         }
-        
-        if(updatePosOrient.orientation != prevOrientation) {
+
+        if (updatePosOrient.orientation != prevOrientation) {
             prevOrientation = updatePosOrient.orientation;
             Quaternion quaternion = Quaternion.Euler(orientBase.x + updatePosOrient.orientation.x, orientBase.y + updatePosOrient.orientation.y, 0);
             transform.rotation = quaternion;

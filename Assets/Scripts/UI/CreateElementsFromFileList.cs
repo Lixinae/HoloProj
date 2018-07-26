@@ -87,7 +87,7 @@ public class CreateElementsFromFileList : MonoBehaviour {
     }
 
     void CreateEventAndDeleteOthers(string filename) {
-        DebugHelper.Instance.AddDebugText("filename :" +filename, 3);
+        DebugHelper.Instance.AddDebugText("filename :" + filename, 3);
         DeleteElementsFromGameObject(gltf);
         CreateElementAndAttachToGameObject(gltf, filename);
     }

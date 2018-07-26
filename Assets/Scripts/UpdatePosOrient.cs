@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class UpdatePosOrient : MonoBehaviour {
 
@@ -31,13 +27,13 @@ public class UpdatePosOrient : MonoBehaviour {
     public Vector3 orientation = new Vector3(0, 0, 0);
 
 
-    private Vector3 decallageByGaze = new Vector3(0, 0, 0);
+    //private Vector3 decallageByGaze = new Vector3(0, 0, 0);
 
     //private MoveByGaze moveByGaze = null;
     //private DeactivateMoveByGaze deactivateMoveByGaze = null;
 
-    private bool decallageByGazeDone = false;
-    private bool selectedOnce = false;
+    //private bool decallageByGazeDone = false;
+    //private bool selectedOnce = false;
 
     //public double rapport = 1;
     // Use this for initialization
@@ -52,6 +48,7 @@ public class UpdatePosOrient : MonoBehaviour {
         //if (deactivateMoveByGaze == null) {
         //    deactivateMoveByGaze = new DeactivateMoveByGaze();
         //}
+
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
         if (plStream != null) {
@@ -148,7 +145,7 @@ public class UpdatePosOrient : MonoBehaviour {
         // Il faut le deverouiller avant !
         totalDecallage = decallageByCalibragePos + decallageClavier;
 
-        
+
         string text = string.Format(
                     "{0}\n" +
                     "Rotation sur X: {1:0.000}°\n" +

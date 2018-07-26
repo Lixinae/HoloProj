@@ -165,7 +165,7 @@ public class UITriggers : MonoBehaviour {
     public void DisplayExitConfirm() {
         exitConfirmMenu.SetActive(true);
     }
- 
+
     /// <summary>
     /// Affiche l'ip configurator et cache le menu de départ
     /// </summary>
@@ -212,13 +212,13 @@ public class UITriggers : MonoBehaviour {
 
 
         //IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
-        
+
         string host = ipConfiguratorTriggers.GetIpAdress();
         string port = ipConfiguratorTriggers.GetPort();
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
 
         // TODO remettre une fois calibration fini
-        calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
+        //calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
         // Demarrage du plStream après avoir réglé l'ip
     }
 

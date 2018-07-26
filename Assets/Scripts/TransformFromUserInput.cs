@@ -77,7 +77,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
 
     private void EndBuildKeyMap() {
         // Position de l'objet
-        if (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) { 
+        if (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
             if (Input.GetKey("z")) {
                 newPosition.y += 1 * movementSpeedMultiplier;
             }
@@ -133,7 +133,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     }
 
     private void DevBuildKeyMap() {
-        if (!(Input.GetKey(KeyCode.LeftShift ) || Input.GetKey(KeyCode.RightShift))) {
+        if (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
             // Position de l'objet
             if (Input.GetKey("t")) {
                 newPosition.y += 1 * movementSpeedMultiplier;

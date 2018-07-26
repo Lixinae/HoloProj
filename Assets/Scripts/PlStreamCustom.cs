@@ -18,7 +18,7 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
     // Ajout pour le client tcp UWP
     /////////////////////////////////////////////////////////////////////////////
 #if !UNITY_EDITOR
-private bool _useUWP = true;
+    private bool _useUWP = true;
     private Windows.Networking.Sockets.StreamSocket socket;
     private Task exchangeTask;
     private Stream stream;
@@ -79,7 +79,7 @@ private bool _useUWP = true;
     /// </summary>
     /// <param name="host"> Hote sur lequel se connecter </param>
     /// <param name="port"> Port de connection à la machine </param>
-    public void StartPlStreamCustom(string host,string port) {
+    public void StartPlStreamCustom(string host, string port) {
         Debug.Log("host : " + host + ":" + port);
         DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 8);
         Connect(host, port);

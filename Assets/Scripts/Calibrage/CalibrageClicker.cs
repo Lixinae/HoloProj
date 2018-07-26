@@ -171,6 +171,7 @@ public class CalibrageClicker : MonoBehaviour {
         Vector3 VE = new Vector3((float)zfe, (float)yfe, (float)-xfe); // orientation sur l'axe Z
 
 
+
         Vector3 axisX = new Vector3(1, 0, 0);
         Vector3 axisY = new Vector3(0, 1, 0);
         Vector3 axisZ = new Vector3(0, 0, 1);
