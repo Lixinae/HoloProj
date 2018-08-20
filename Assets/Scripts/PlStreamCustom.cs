@@ -86,17 +86,14 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
     }
 
     // 
-    public void StartPlStreamCustom() {
+    /*public void StartPlStreamCustom() {
 
 #if !UNITY_EDITOR
         string info = null;
         info = ReadHostFromFileAsync().Result;
-
 #else
         string info = null;
         info = File.ReadAllText(Application.streamingAssetsPath+"/ip.txt");
-        
-
 #endif
         while (info == null) ;
         this.host = info.Split(':')[0];
@@ -106,14 +103,15 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
         Connect(host, port);
     }
 
-
 #if!UNITY_EDITOR
     private async Task<string> ReadHostFromFileAsync() {
         Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
         return await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
     }
-#endif
+#endif*/
+
+
     /// <summary>
     /// Fonction permettant la connection entre l'appareil de 3D et le programme
     /// Lance ConnectUWP si l'ont est sur l'hololens

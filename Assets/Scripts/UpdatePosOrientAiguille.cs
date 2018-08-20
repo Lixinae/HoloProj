@@ -351,7 +351,7 @@ public class UpdatePosOrientAiguille : XboxControllerHandlerBase {
         signe = -signe;
     }
 
-    
+    /*
     public override void OnXboxInputUpdate(XboxControllerEventData eventData) {
         if (!UseJoystick) {
             Debug.Log("Joystick use not enabled");
@@ -400,5 +400,5 @@ public class UpdatePosOrientAiguille : XboxControllerHandlerBase {
         if (XboxControllerMapping.GetButton_Up(resetButton, eventData)) {
             ResetObjet();
         }
-    }
+    }*/
 }
