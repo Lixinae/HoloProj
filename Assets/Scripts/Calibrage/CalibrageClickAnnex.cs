@@ -4,12 +4,12 @@ using UnityEngine;
 public class CalibrageClickAnnex : MonoBehaviour, IInputClickHandler {
 
     public bool posSet = false;
-    private UpdatePosOrient updatePosOrient = null;
+    private UpdatePosOrientAiguille updatePosOrient = null;
     private AudioSource audio_source = null;
     public Vector3 posCapteur = new Vector3(0, 0, 0);
     // Use this for initialization
     void Start() {
-        updatePosOrient = GameObject.Find("Aiguille").GetComponent<UpdatePosOrient>();
+        updatePosOrient = GameObject.Find("Aiguille").GetComponent<UpdatePosOrientAiguille>();
         audio_source = GetComponent<AudioSource>();
     }
 

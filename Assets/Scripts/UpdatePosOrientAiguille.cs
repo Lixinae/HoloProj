@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using HoloToolkit.Unity.InputModule;
 
-public class UpdatePosOrient : MonoBehaviour {
+public class UpdatePosOrientAiguille : XboxControllerHandlerBase {
 
 
     private PlStreamCustom plStream = null;
@@ -15,6 +16,9 @@ public class UpdatePosOrient : MonoBehaviour {
     [SerializeField]
     private Vector3 decallageClavier = new Vector3(0, 0, 0);
 
+    [SerializeField]
+    private Vector3 decallageController = new Vector3(0, 0, 0);
+
     public Vector3 decallageByCalibragePos = new Vector3(0, 0, 0);
     public Vector3 totalDecallage = new Vector3(0, 0, 0);
 
@@ -26,7 +30,9 @@ public class UpdatePosOrient : MonoBehaviour {
 
     public Vector3 orientation = new Vector3(0, 0, 0);
 
+    public bool IsActiveOnController = false;
 
+    private TransformFromUserInput TransformFromUserInput = null;
     //private Vector3 decallageByGaze = new Vector3(0, 0, 0);
 
     //private MoveByGaze moveByGaze = null;
@@ -48,7 +54,9 @@ public class UpdatePosOrient : MonoBehaviour {
         //if (deactivateMoveByGaze == null) {
         //    deactivateMoveByGaze = new DeactivateMoveByGaze();
         //}
+        if(TransformFromUserInput == null) {
 
+        }
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
         if (plStream != null) {
@@ -73,6 +81,7 @@ public class UpdatePosOrient : MonoBehaviour {
     void Update() {
         // Touches pour le calibrage
         KeyBoardControlsInput();
+        
         // Si l'on desactive l'option du decallage
         /*if (decallageByGazeStart == false) {
         //    decallageByGazeDone = true;
@@ -143,7 +152,7 @@ public class UpdatePosOrient : MonoBehaviour {
 
         // Si l'axis viewer est verrouillé, les valeurs de decallage bougeront mais lui restera fixe
         // Il faut le deverouiller avant !
-        totalDecallage = decallageByCalibragePos + decallageClavier;
+        totalDecallage = decallageByCalibragePos + decallageClavier + decallageController;
 
 
         string text = string.Format(
@@ -228,16 +237,21 @@ public class UpdatePosOrient : MonoBehaviour {
 
     private Vector3 ApplyDecallage(Vector3 unity_position) {
         unity_position = DecallageClavier(unity_position);
+
         //unity_position += decallageByGaze * signe * 100;
 
         return unity_position;
     }
 
+    /// <summary>
+    /// Controle du clavier
+    /// 
+    /// </summary>
     private void KeyBoardControlsInput() {
-        float vitesseTranslation = 0.02f;
+        float vitesseTranslation = 0.05f;
         float vitesseRotation = 0.1f;
         if (devBuid) {
-            if (Input.GetKey(KeyCode.LeftShift)) {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
                 // Decallage sur X
                 if (Input.GetKey("h")) {
                     decallageClavier.x += vitesseTranslation;
@@ -253,10 +267,10 @@ public class UpdatePosOrient : MonoBehaviour {
                     decallageClavier.y -= vitesseTranslation;
                 }
                 // Decallage sur Z
-                if (Input.GetKey("x")) {
+                if (Input.GetKey("w")) {
                     decallageClavier.z += vitesseTranslation;
                 }
-                if (Input.GetKey("w")) {
+                if (Input.GetKey("x")) {
                     decallageClavier.z -= vitesseTranslation;
                 }
 
@@ -279,7 +293,7 @@ public class UpdatePosOrient : MonoBehaviour {
             }
         }
         else {
-            if (Input.GetKey(KeyCode.LeftShift)) {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
                 // Decallage sur X
                 if (Input.GetKey("d")) {
                     decallageClavier.x += vitesseTranslation;
@@ -335,5 +349,56 @@ public class UpdatePosOrient : MonoBehaviour {
 
     public void invertCoef() {
         signe = -signe;
+    }
+
+    
+    public override void OnXboxInputUpdate(XboxControllerEventData eventData) {
+        if (!UseJoystick) {
+            Debug.Log("Joystick use not enabled");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(GamePadName)) {
+            Debug.LogFormat("Joystick {0} with id: \"{1}\" Connected", eventData.GamePadName, eventData.SourceId);
+        }
+
+        base.OnXboxInputUpdate(eventData);
+        //if (isLocked) {
+        //Debug.Log("Transform is locked");
+        // return;
+        //}
+        decallageController = Vector3.zero;
+        //newScale = transform.localScale;
+
+        // position
+        decallageController.x += eventData.XboxLeftStickHorizontalAxis * movementSpeedMultiplier;
+        decallageController.y += eventData.XboxLeftStickVerticalAxis * movementSpeedMultiplier;
+        decallageController.z += eventData.XboxSharedTriggerAxis * movementSpeedMultiplier;
+        //transform.position += newPosition;
+
+        // Axe X
+        transform.RotateAround(transform.position, Vector3.right, eventData.XboxRightStickVerticalAxis * rotationSpeedMultiplier);
+
+        // Axe Y
+        transform.RotateAround(transform.position, Vector3.up, eventData.XboxRightStickHorizontalAxis * rotationSpeedMultiplier);
+
+
+        // scale
+        if (eventData.XboxLeftBumper_Down) {
+            newScale.x -= 1 * scaleSpeedMultiplier;
+            newScale.y -= 1 * scaleSpeedMultiplier;
+            newScale.z -= 1 * scaleSpeedMultiplier;
+        }
+        if (eventData.XboxRightBumper_Down) {
+            newScale.x += 1 * scaleSpeedMultiplier;
+            newScale.y += 1 * scaleSpeedMultiplier;
+            newScale.z += 1 * scaleSpeedMultiplier;
+        }
+
+        transform.localScale = newScale;
+
+        if (XboxControllerMapping.GetButton_Up(resetButton, eventData)) {
+            ResetObjet();
+        }
     }
 }

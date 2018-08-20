@@ -6,16 +6,18 @@ using UnityEngine;
 public class TransformFromUserInput : XboxControllerHandlerBase {
 
     [SerializeField]
-    private float movementSpeedMultiplier = 0.25f;
+    private float movementSpeedMultiplier = 0.05f;
 
     [SerializeField]
-    private float rotationSpeedMultiplier = 0.25f;
+    private float rotationSpeedMultiplier = 0.1f;
 
     [SerializeField]
-    private float scaleSpeedMultiplier = 0.25f;
+    private float scaleSpeedMultiplier = 0.1f;
 
     [SerializeField]
     private XboxControllerMappingTypes resetButton = XboxControllerMappingTypes.XboxY;
+
+    public bool IsActiveOnController = true;
 
     private Vector3 initialRotation;
     private Vector3 initialPosition;
@@ -138,15 +140,18 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
             if (Input.GetKey("t")) {
                 newPosition.y += 1 * movementSpeedMultiplier;
             }
-            if (Input.GetKey("f")) {
-                newPosition.x -= 1 * movementSpeedMultiplier;
-            }
             if (Input.GetKey("g")) {
                 newPosition.y -= 1 * movementSpeedMultiplier;
             }
+
             if (Input.GetKey("h")) {
                 newPosition.x += 1 * movementSpeedMultiplier;
             }
+            if (Input.GetKey("f")) {
+                newPosition.x -= 1 * movementSpeedMultiplier;
+            }
+
+
             if (Input.GetKey("w")) {
                 newPosition.z += 1 * movementSpeedMultiplier;
             }
@@ -211,6 +216,16 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         }
 
         base.OnXboxInputUpdate(eventData);
+
+        // Si on appuie sur le bouton start, on passe a l'aiguille
+        if (eventData.XboxMenu_Pressed) {
+            IsActiveOnController = !IsActiveOnController;
+        }
+
+        if (!IsActiveOnController) {
+            return;
+        }
+
         //if (isLocked) {
         //Debug.Log("Transform is locked");
         // return;

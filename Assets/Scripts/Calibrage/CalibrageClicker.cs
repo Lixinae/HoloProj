@@ -2,7 +2,7 @@
 
 public class CalibrageClicker : MonoBehaviour {
 
-    private UpdatePosOrient updatePosOrient = null;
+    private UpdatePosOrientAiguille updatePosOrient = null;
 
     private GameObject cube1 = null;
     private GameObject cube2 = null;
@@ -40,7 +40,7 @@ public class CalibrageClicker : MonoBehaviour {
             }
         }
 
-        updatePosOrient = GameObject.Find("Aiguille").GetComponent<UpdatePosOrient>();
+        updatePosOrient = GameObject.Find("Aiguille").GetComponent<UpdatePosOrientAiguille>();
 
         float coef = (1f / (0.1f * 0.25f)); // On adapte avec les scales utilisé dans les éléments
         PosCube1 = cube1.transform.position * coef; // *40 ramène a un scale de 1

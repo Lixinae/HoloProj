@@ -6,7 +6,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
 
     private GameObject Aiguille = null;
 
-    private UpdatePosOrient updatePosOrient;
+    private UpdatePosOrientAiguille updatePosOrient;
 
     private Vector3 previousPosition;
     private Vector3 actualPosition;
@@ -23,7 +23,7 @@ public class UpdateDecallageWithAiguille : MonoBehaviour {
     void Start() {
         if (Aiguille == null) {
             Aiguille = GameObject.Find("Aiguille");
-            updatePosOrient = Aiguille.GetComponent<UpdatePosOrient>();
+            updatePosOrient = Aiguille.GetComponent<UpdatePosOrientAiguille>();
         }
         //gaze = GameObject.Find("InputManager").GetComponent<GazeManager>();
         //spatialMapping = GameObject.Find("SpatialMapping");

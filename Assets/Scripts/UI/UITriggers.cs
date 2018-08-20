@@ -144,7 +144,7 @@ public class UITriggers : MonoBehaviour {
     /// Permet d'inverser les axes sur le capteur de position 3D
     /// </summary>
     public void InvertAxesValues() {
-        UpdatePosOrient updPO = aiguille.GetComponent<UpdatePosOrient>();
+        UpdatePosOrientAiguille updPO = aiguille.GetComponent<UpdatePosOrientAiguille>();
         updPO.invertCoef();
     }
 
