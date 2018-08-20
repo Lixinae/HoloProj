@@ -235,7 +235,6 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
             // create temp_active to mark slots
             bool[] temp_active = new bool[max_slots];
 
-            // using hdr + pos + qtrn frame configuration for now
             while (!stopListening) {
                 byte[] receiveBytes = new Byte[40];
                 int length;

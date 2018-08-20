@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class UITriggers : MonoBehaviour {
 
@@ -20,9 +21,12 @@ public class UITriggers : MonoBehaviour {
     public GameObject ipConfigurator = null;
     public GameObject ipButton = null;
     public GameObject startAppButton = null;
+    public GameObject startFileTransferServiceButton = null;
 
     public GameObject calibrationCubes = null;
     private GameObject axisViewer = null;
+    private bool fileTransferStarted = false;
+
     // Use this for initialization
     void Awake() {
         if (menuFull == null) {
@@ -66,6 +70,10 @@ public class UITriggers : MonoBehaviour {
         if (startAppButton == null) {
             startAppButton = GameObject.Find("StartAppButton");
         }
+        if(startFileTransferServiceButton == null) {
+            startFileTransferServiceButton = GameObject.Find("StartFileTransferServiceButton");
+        }
+
         if (calibrationCubes == null) {
             calibrationCubes = GameObject.Find("CalibrationCubes");
         }
@@ -203,15 +211,19 @@ public class UITriggers : MonoBehaviour {
     /// </summary>
     public void StartApp() {
         IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
+        AudioSource audio = startAppButton.GetComponent<AudioSource>();
         if (!ipConfiguratorTriggers.IsLoaded()) {
+            audio.Play();
             Debug.Log("Ip config not loaded !!!");
+            return;
+        }
+        if (!fileTransferStarted) {
+            audio.Play();
+            Debug.Log("File transfer not started");
             return;
         }
 
         HideStartMenu();
-
-
-        //IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
 
         string host = ipConfiguratorTriggers.GetIpAdress();
         string port = ipConfiguratorTriggers.GetPort();
@@ -220,6 +232,28 @@ public class UITriggers : MonoBehaviour {
         // TODO remettre une fois calibration fini
         //calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
         // Demarrage du plStream après avoir réglé l'ip
+    }
+
+    public void StartFileTransferService() {
+        IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
+        AudioSource audio = startAppButton.GetComponent<AudioSource>();
+        if (!ipConfiguratorTriggers.IsLoaded()) {
+            audio.Play();
+            Debug.Log("Ip config not loaded !!!");
+            return;
+        }
+        string host = ipConfiguratorTriggers.GetIpAdress();
+        string port = ipConfiguratorTriggers.GetPort();
+        ReceiveAndWriteFile.Instance.StartService(host, port);
+        HideStartFileTransfertServiceButton();
+
+        fileTransferStarted = true;
+
+    }
+
+    private void HideStartFileTransfertServiceButton() {
+        startFileTransferServiceButton.SetActive(false);
+        throw new NotImplementedException();
     }
 
     /// <summary>
