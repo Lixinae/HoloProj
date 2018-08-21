@@ -14,7 +14,8 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 
     private byte[] Data = null;
 
-    private string host = "192.168.137.1"; // Attention l'adresse peut changer selon la machine et le port du dongle wifi
+    // Valeurs par défaut
+    private string host = "192.168.137.1"; 
     private string port = "5125";
 
 #if !UNITY_EDITOR
@@ -35,11 +36,6 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 return Application.persistentDataPath;
 #endif
         }
-    }
-
-    // Use this for initialization
-    void Start() {
-
     }
 
     public void StartService(string host, string port) {
@@ -139,6 +135,9 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 
                 index = 0;
 
+                // Soucis pour le moment -> 1 seul dossier et donc 1 objet 3D sur le casque à la fois.
+
+
                 // Reconstruction des données reçu , moche mais ça devrais marcher
                 // Possible car les fichiers sont petits, la solution serait mauvaise pour des fichiers de plus grosse taille
                 foreach (var dataL in allFileDataList) {
@@ -166,6 +165,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                     string folderName = "3DObject";
                     string path = Path.Combine(FolderDataName + folderName, fileName + fileExtension);
 
+                    // sauvegarde du fichier
                     SaveFile(folderName, fileName, fileExtension, endData);
 
                     // Ecriture du fichier sur le casque dans le dossier voulu
