@@ -15,7 +15,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     private byte[] Data = null;
 
     // Valeurs par défaut
-    private string host = "192.168.137.1"; 
+    private string host = "192.168.137.1";
     private string port = "5125";
 
 #if !UNITY_EDITOR
@@ -26,7 +26,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 #endif
     private bool stopListening = false;
     /// <summary>
-    /// Read-only property which returns the folder path where mesh files are stored.
+    /// Read-only property which returns the folder path where files are stored.
     /// </summary>
     public string FolderDataName {
         get {
@@ -69,15 +69,6 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
         }
 #endif
     }
-/*
-    private byte[] GetAllData() {
-        byte[] data = null;
-#if !UNITY_EDITOR
-        exchangeTask = Task.Run(() => Read_Data());
-#endif
-        return data;
-    }
-    */
 
 #if !UNITY_EDITOR
     private void Read_Data() {
@@ -261,7 +252,6 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 exchangeTask = null;
             }
 #endif
-
         }
         catch (Exception e) {
             Debug.Log(e);
