@@ -162,6 +162,9 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 
                 // Soucis pour le moment -> 1 seul dossier et donc 1 objet 3D sur le casque à la fois.
 
+                // Problème avec ordre de reception des données !!!!
+                // Voir comment corriger ça
+
 
                 // Reconstruction des données reçu , moche mais ça devrais marcher
                 // Possible car les fichiers sont petits, la solution serait mauvaise pour des fichiers de plus grosse taille

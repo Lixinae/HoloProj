@@ -70,6 +70,28 @@ while True:
     if(len(full_file_paths) == 0):
         print("Erreur, aucun fichier gltf ou bin dans ce dossier, veuillez choisir un autre dossier")
     #print(full_file_paths)
+    '''
+# Tester ce format la
+    while True:
+        for file in full_file_paths:
+            print (file)
+            # Envoie du fichier
+            with open(file,"r") as f:
+                try :
+                    #print(f.read(1024))
+                    data = f.read(1024).encode()
+                    if data:
+                        #print("blabla")
+                        client.send(data) # Envoie des données au client connecté
+                        print("Data size :"+str(len(data)) + " sent to "+str(client))
+                    else :
+                        print("Error in data flow, no more data to send")
+                        break
+                    except:
+                        break;
+            data = "NewFile".encode()
+            client.send(data) # Envoie l'information qu'un nouveau fichier arrive
+    '''        
     for file in full_file_paths:
         print (file)
       # Envoie du fichier
