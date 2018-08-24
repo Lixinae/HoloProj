@@ -20,15 +20,15 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
 #if !UNITY_EDITOR
     private bool _useUWP = true;
     private Windows.Networking.Sockets.StreamSocket socket;
-    private Task exchangeTask;
-    private Stream stream;
+    private Task exchangeTask = null;
+    private Stream stream = null;
 #endif
 
 #if UNITY_EDITOR
     private bool _useUWP = false;
     private TcpClient tcpClient; // PC ajout
-    private NetworkStream stream;
-    private Thread conThread;
+    private NetworkStream stream = null;
+    private Thread conThread = null;
 #endif
     /////////////////////////////////////////////////////////////////////////////
 
@@ -311,6 +311,10 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
             // signal shutdown
             stopListening = true;
 #if UNITY_EDITOR
+            if(conThread == null || stream == null){
+                Debug.Log("PlStreamCustom not started, nothing to close");
+                return;
+            }
             // attempt to join for 500ms
             if (!conThread.Join(500)) {
                 // force shutdown
@@ -328,6 +332,9 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
                 stream.Close();
                 socket = null;
                 exchangeTask = null;
+            }
+            else {
+                Debug.Log("PlStreamCustom not started, nothing to close");
             }
 
 #endif

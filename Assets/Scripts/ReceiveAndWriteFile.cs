@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
 using HoloToolkit.Unity;
+using System.Net.Sockets;
+using System.Threading;
 
 #if !UNITY_EDITOR
 using System.Threading.Tasks;
@@ -14,32 +15,45 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 
     private byte[] Data = null;
 
+    private bool stopListening = false;
     // Valeurs par défaut
     private string host = "192.168.137.1";
     private string port = "5125";
 
 #if !UNITY_EDITOR
+    private bool _useUWP = true;
     private Windows.Networking.Sockets.StreamSocket socket;
     private Task exchangeTask;
     private Stream stream;
+#endif
 
+#if UNITY_EDITOR
+    private bool _useUWP = false;
+    private TcpClient tcpClient; // PC ajout
+    private NetworkStream stream;
+    private Thread conThread;
 #endif
-    private bool stopListening = false;
-    /// <summary>
-    /// Read-only property which returns the folder path where files are stored.
-    /// </summary>
-    public string FolderDataName {
-        get {
-#if !UNITY_EDITOR
-            return ApplicationData.Current.RoamingFolder.Path;
-#else
-                return Application.persistentDataPath;
-#endif
+    /*
+        /// <summary>
+        /// Read-only property which returns the folder path where files are stored.
+        /// </summary>
+        public string FolderDataName {
+            get {
+    #if !UNITY_EDITOR
+                return ApplicationData.Current.RoamingFolder.Path;
+    #else
+                    return Application.persistentDataPath;
+    #endif
+            }
         }
-    }
-
+        */
     public void StartService(string host, string port) {
-        ConnectUWP(host, port);
+        if (_useUWP) {
+            ConnectUWP(host, port);
+        }
+        else {
+            ConnectUnity(host, port);
+        }
     }
 
 #if UNITY_EDITOR
@@ -57,11 +71,9 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
             await socket.ConnectAsync(serverHost, port);
 
             stream = socket.InputStream.AsStreamForRead();
-            //Initialize();
 #if !UNITY_EDITOR
             exchangeTask = Task.Run(() => Read_Data());
 #endif
-
             Debug.Log("Connected!");
         }
         catch (Exception e) {
@@ -70,11 +82,30 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 #endif
     }
 
+    private void ConnectUnity(string host, string port) {
 #if !UNITY_EDITOR
+        Debug.Log("Unity TCP client used in UWP!");
+#else
+        try {
+            tcpClient = new System.Net.Sockets.TcpClient(host, Int32.Parse(port));
+            stream = tcpClient.GetStream();
+            Debug.Log("Connected!");
+            conThread = new Thread(new ThreadStart(Read_Data));
+            // start the read thread
+            conThread.Start();
+        }
+        catch (Exception e) {
+            Debug.Log(e.ToString());
+        }
+#endif
+    }
+
+
     private void Read_Data() {
         stopListening = false;
         try {
             while (!stopListening) {
+                //Debug.Log("No stop listening");
                 byte[] receiveBytes = new Byte[1024];
                 int length;
                 int index = 0;
@@ -107,10 +138,13 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 
                 List<List<Byte[]>> allFileDataList = new List<List<byte[]>>();
                 List<Byte[]> dataList = new List<byte[]>();
+                // Bugs persistent
+
                 // Sans l'écriture dans un fichier directement
                 while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
                     // Nouveau fichier en cours d'envoie
                     // On ajouter donc
+                    Debug.Log("Received data size :" + length);
                     if (length == 7) { // Correspond à la taille de la chaine "NewFile"
                         allFileDataList.Add(dataList);
                         // On remet à 0 la datalist
@@ -123,7 +157,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                     dataList.Add(data);
                 }
 
-
+                //Debug.Log("Received all data, processing");
                 index = 0;
 
                 // Soucis pour le moment -> 1 seul dossier et donc 1 objet 3D sur le casque à la fois.
@@ -152,13 +186,29 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                     }
                     else if (index == 1) {
                         fileExtension = ".gltf";
+                        // string receivedString = System.Text.Encoding.UTF8.GetString(endData)
+                        //Debug.Log(receivedString);
                     }
-                    string folderName = "3DObject";
-                    string path = Path.Combine(FolderDataName + folderName, fileName + fileExtension);
+                    string folderName = "\\3DObject\\";
+                    //string path = Path.Combine(FolderDataName + folderName, fileName + fileExtension);
 
                     // sauvegarde du fichier
+#if !UNITY_EDITOR
                     SaveFile(folderName, fileName, fileExtension, endData);
+#endif
 
+#if UNITY_EDITOR
+                    
+                    string folderFullName = ".\\testFolder" + folderName;
+                    if(!Directory.Exists(folderFullName)){
+                        Directory.CreateDirectory(folderFullName);
+                    }
+                    Debug.Log(String.Format("Saving file: {0}", Path.Combine(folderFullName, fileName + fileExtension)));
+                    using (var fs = File.Create(folderFullName + fileName + fileExtension)) {
+                        fs.Write(endData, 0, endData.Length);
+                        fs.Flush();
+                    }
+#endif
                     // Ecriture du fichier sur le casque dans le dossier voulu
                     /*using (FileStream fileStream = File.Create(path)) {
                         // On écrit tout d'un coup
@@ -174,9 +224,8 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
             Debug.Log("[polhemus] PlStream terminated in PlStream::read_liberty()");
             Console.WriteLine("[polhemus] PlStream terminated in PlStream::read_liberty().");
         }
-        throw new NotImplementedException();
     }
-#endif
+
     /// <summary>
     /// Sauvegarde le fichier avec l'extension voulu dans le dossier correspondant
     /// </summary>
@@ -185,6 +234,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     /// <param name="fileExtension"> Extension du fichier voulu </param>
     /// <param name="dataToWrite"> Données à écrire dans le fichier </param>
     /// <returns></returns>
+#if !UNITY_EDITOR
     public string SaveFile(string folderName, string fileName, string fileExtension, byte[] dataToWrite) {
         if (string.IsNullOrEmpty(folderName)) {
             throw new ArgumentException("Must specify a valid folderName.");
@@ -197,8 +247,8 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
         }
 
         // Create the file.
-        string folderFullName = FolderDataName + folderName;
-        Debug.Log(String.Format("Saving file: {0}", Path.Combine(folderName, fileName + fileExtension)));
+        string folderFullName = ApplicationData.Current.RoamingFolder.Path + folderName;
+        Debug.Log(String.Format("Saving file: {0}", Path.Combine(folderFullName, fileName + fileExtension)));
 
         using (Stream stream = OpenFileForWrite(folderName, fileName + fileExtension)) {
             stream.Write(dataToWrite, 0, dataToWrite.Length);
@@ -207,9 +257,9 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 
         Debug.Log("File saved.");
 
-        return Path.Combine(folderName, fileName + fileExtension);
+        return Path.Combine(folderFullName, fileName + fileExtension);
     }
-
+#endif
     /// <summary>
     /// Opens the specified file for writing.
     /// </summary>
@@ -224,6 +274,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
         Task task = new Task(
                         async () => {
                             StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(folderName);
+                            // Peut etre devoir creer le dossier avant l'ouverture du fichier
                             StorageFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
                             stream = await file.OpenStreamForWriteAsync();
                         });

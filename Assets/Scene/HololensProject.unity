@@ -289,9 +289,50 @@ Transform:
   - {fileID: 2054825773}
   - {fileID: 3602250}
   - {fileID: 1854788693}
+  - {fileID: 69088078}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &69088077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 69088078}
+  - component: {fileID: 69088079}
+  m_Layer: 0
+  m_Name: FileTransfertServiceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &69088078
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 69088077}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 68187480}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &69088079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 69088077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb68e4e7416d9146828db56ba2b335b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &88291034
 Prefab:
   m_ObjectHideFlags: 0
@@ -745,7 +786,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1014084259645978, guid: afd739531cd8efb46b8c5a2e3bc25038, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114909317606437964, guid: afd739531cd8efb46b8c5a2e3bc25038,
         type: 2}
@@ -2354,7 +2395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &982136908
 Transform:
   m_ObjectHideFlags: 0
@@ -3288,7 +3329,7 @@ Prefab:
       objectReference: {fileID: 423456784}
     - target: {fileID: 1389821630610836, guid: 5cab701ec01b7e6409ad9bd166bc0d8e, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114167649157167728, guid: 5cab701ec01b7e6409ad9bd166bc0d8e,
         type: 2}

@@ -31,12 +31,13 @@ def askFolder():
       if not os.path.isdir(folder):
           print("Ceci n'est pas un dossier valide, veuillez entrer un chemin valide")
     return folder
-
-#folder = askfolder()
-#full_file_paths = get_filepaths(folder)
-#print(full_file_paths)
-#full_file_paths =  [x for x in full_file_paths if ((("bin" in x) or ("gltf" in x)) and ("meta" not in x))]
-#print(full_file_paths)
+'''
+folder = askFolder()
+full_file_paths = get_filepaths(folder)
+print(full_file_paths)
+full_file_paths =  [x for x in full_file_paths if ((("bin" in x) or ("gltf" in x)) and ("meta" not in x))]
+print(full_file_paths)
+'''
 
 # Socket TCP créé pour se connecter dessus
 socketTCP = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -46,6 +47,13 @@ port = 5125
 socketTCP.bind((host,port))
 socketTCP.listen(5)
 
+'''
+for file in full_file_paths:
+    print (file)
+      # Envoie du fichier
+    with open(file,"rb") as f:
+        print(len(f.read(1024)))
+'''            
 print("Starting transfer server on ("+host+","+str(port)+")")
 while True:
   print("Waiting connect")
@@ -54,28 +62,33 @@ while True:
   try :
     print ("{} connected".format( address ))
     # On ne demande le nom du dossier que si le client est connecté
-    folder = askfolder()
+    folder = askFolder()
 
     full_file_paths = get_filepaths(folder)
     # On ne garde que les fichiers voulu pour le transfert
     full_file_paths =  [x for x in full_file_paths if x.endswith(".bin") or x.endswith(".gltf")]
     if(len(full_file_paths) == 0):
         print("Erreur, aucun fichier gltf ou bin dans ce dossier, veuillez choisir un autre dossier")
+    #print(full_file_paths)
     for file in full_file_paths:
+        print (file)
       # Envoie du fichier
-      with open(file,"r") as f:
-        while True:
-          try :
-            data = f.read(1024)
-            if data:
-              client.send(data) # Envoie des données au client connecté
-            else :
-              print("Error in data flow")
-              break
-          except:
-            break;
-      data = "NewFile"
-      client.send(data) # Envoie l'information qu'un nouveau fichier arrive
+        with open(file,"r") as f:
+            while True:
+              try :
+                #print(f.read(1024))
+                data = f.read(1024).encode()
+                if data:
+                  #print("blabla")
+                  client.send(data) # Envoie des données au client connecté
+                  print("Data size :"+str(len(data)) + " sent to "+str(client))
+                else :
+                  print("Error in data flow, no more data to send")
+                  break
+              except:
+                break;
+        data = "NewFile".encode()
+        client.send(data) # Envoie l'information qu'un nouveau fichier arrive
   finally :
     # En cas de deconnection on ferme l'accès au client
     print ("{} disconnected".format( address ))

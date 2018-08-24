@@ -71,7 +71,7 @@ public class UITriggers : MonoBehaviour {
             startAppButton = GameObject.Find("StartAppButton");
         }
         if(startFileTransferServiceButton == null) {
-            startFileTransferServiceButton = GameObject.Find("StartFileTransferServiceButton");
+            startFileTransferServiceButton = GameObject.Find("StartFileTransferService");
         }
 
         if (calibrationCubes == null) {
@@ -181,6 +181,7 @@ public class UITriggers : MonoBehaviour {
         ipButton.SetActive(false);
         ipConfigurator.SetActive(true);
         startAppButton.SetActive(false);
+        HideStartFileTransfertServiceButton();
     }
 
     /// <summary>
@@ -190,6 +191,7 @@ public class UITriggers : MonoBehaviour {
         ipButton.SetActive(true);
         ipConfigurator.SetActive(false);
         startAppButton.SetActive(true);
+        startFileTransferServiceButton.SetActive(true);
     }
 
     /// <summary>
@@ -245,15 +247,17 @@ public class UITriggers : MonoBehaviour {
         string host = ipConfiguratorTriggers.GetIpAdress();
         string port = ipConfiguratorTriggers.GetPort();
         ReceiveAndWriteFile.Instance.StartService(host, port);
-        HideStartFileTransfertServiceButton();
+        //HideStartFileTransfertServiceButton();
 
         fileTransferStarted = true;
 
     }
 
+    /// <summary>
+    /// Cache le bouton pour démarrer le service de transfert de fichier
+    /// </summary>
     private void HideStartFileTransfertServiceButton() {
         startFileTransferServiceButton.SetActive(false);
-        throw new NotImplementedException();
     }
 
     /// <summary>
