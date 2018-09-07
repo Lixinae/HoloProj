@@ -236,8 +236,10 @@ public class UITriggers : MonoBehaviour {
         //calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
         // Demarrage du plStream après avoir réglé l'ip
     }
-
-    public void FireFileTransferService() {
+    /// <summary>
+    /// Demarre le service de transfert de fichier
+    /// </summary>
+    public void StartFileTransferService() {
         IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
         AudioSource audio = startAppButton.GetComponent<AudioSource>();
         if (!ipConfiguratorTriggers.IsLoaded()) {
@@ -247,13 +249,18 @@ public class UITriggers : MonoBehaviour {
         }
         string host = ipConfiguratorTriggers.GetIpAdress();
         string port = ipConfiguratorTriggers.GetPort();
-        ReceiveAndWriteFile.Instance.ConnectAndGetFile(host, port);
+        ReceiveAndWriteFile.Instance.SetupHostAndPort(host, port);
         //HideStartFileTransfertServiceButton();
 
         fileTransferStarted = true;
 
     }
-
+    /// <summary>
+    /// Permet de demander au serveur un dossier à mettre sur le casque
+    /// </summary>
+    public void FireFileTransferServiceUpdate() {
+        ReceiveAndWriteFile.Instance.ConnectAndGetFile();
+    }
     /// <summary>
     /// Cache le bouton pour démarrer le service de transfert de fichier
     /// </summary>

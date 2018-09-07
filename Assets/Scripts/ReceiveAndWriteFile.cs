@@ -50,6 +50,15 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
         }
     }
 
+    public void ConnectAndGetFile() {
+        if (_useUWP) {
+            ConnectUWP(host, port);
+        }
+        else {
+            ConnectUnity(host, port);
+        }
+    }
+
 #if UNITY_EDITOR
     private void ConnectUWP(string host, string port)
 #else
@@ -130,7 +139,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                     else if (index == 1) {
                         fileName = "scene.gltf";
                     }
-                    string path = Path.Combine(FolderDataName, fileName);
+                    string path = Path.Combine("FolderDataName", fileName); // todo cjhange
                     using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write)) {// File.Create(path)) {
                                                                                                              // On écrit bloc par bloc
                         fileStream.Write(data, currentOffset, data.Length);
@@ -220,7 +229,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                         fileStream.Write(endData, 0, endData.Length);
                     }
                     index++;*/
-                }
+                
 
             }
         }
