@@ -219,6 +219,7 @@ public class UITriggers : MonoBehaviour {
             Debug.Log("Ip config not loaded !!!");
             return;
         }
+
         if (!fileTransferStarted) {
             audio.Play();
             Debug.Log("File transfer not started");
@@ -236,7 +237,7 @@ public class UITriggers : MonoBehaviour {
         // Demarrage du plStream après avoir réglé l'ip
     }
 
-    public void StartFileTransferService() {
+    public void FireFileTransferService() {
         IpConfiguratorTriggers ipConfiguratorTriggers = ipConfigurator.GetComponent<IpConfiguratorTriggers>();
         AudioSource audio = startAppButton.GetComponent<AudioSource>();
         if (!ipConfiguratorTriggers.IsLoaded()) {
@@ -246,7 +247,7 @@ public class UITriggers : MonoBehaviour {
         }
         string host = ipConfiguratorTriggers.GetIpAdress();
         string port = ipConfiguratorTriggers.GetPort();
-        ReceiveAndWriteFile.Instance.StartService(host, port);
+        ReceiveAndWriteFile.Instance.ConnectAndGetFile(host, port);
         //HideStartFileTransfertServiceButton();
 
         fileTransferStarted = true;

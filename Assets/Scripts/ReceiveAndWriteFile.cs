@@ -33,21 +33,15 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     private NetworkStream stream;
     private Thread conThread;
 #endif
-    /*
-        /// <summary>
-        /// Read-only property which returns the folder path where files are stored.
-        /// </summary>
-        public string FolderDataName {
-            get {
-    #if !UNITY_EDITOR
-                return ApplicationData.Current.RoamingFolder.Path;
-    #else
-                    return Application.persistentDataPath;
-    #endif
-            }
-        }
-        */
-    public void StartService(string host, string port) {
+
+    public void SetupHostAndPort(string host, string port) {
+        this.host = host;
+        this.port = port;
+    }
+
+    // TODO Rajouter un bouton pour demander l'actualisation
+
+    public void ConnectAndGetFile(string host, string port) {
         if (_useUWP) {
             ConnectUWP(host, port);
         }
@@ -101,6 +95,13 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     }
 
 
+    private void Read_DataUpdated() {
+
+    }
+
+    /// <summary>
+    /// Lis les données en entrée
+    /// </summary>
     private void Read_Data() {
         stopListening = false;
         try {
@@ -109,7 +110,8 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 byte[] receiveBytes = new Byte[1024];
                 int length;
                 int index = 0;
-                /*
+
+                
                 int currentOffset = 0;
                 // Avec écriture dans le fichier directement
                 while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
@@ -134,8 +136,8 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                         fileStream.Write(data, currentOffset, data.Length);
                         currentOffset += data.Length;
                     }
-                }*/
-
+                }
+                /*
                 List<List<Byte[]>> allFileDataList = new List<List<byte[]>>();
                 List<Byte[]> dataList = new List<byte[]>();
                 // Bugs persistent
@@ -162,7 +164,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 
                 // Soucis pour le moment -> 1 seul dossier et donc 1 objet 3D sur le casque à la fois.
 
-                // Problème avec ordre de reception des données !!!!
+                // Todo Problème avec ordre de reception des données !!!!
                 // Voir comment corriger ça
 
 
@@ -213,11 +215,11 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                     }
 #endif
                     // Ecriture du fichier sur le casque dans le dossier voulu
-                    /*using (FileStream fileStream = File.Create(path)) {
+                    using (FileStream fileStream = File.Create(path)) {
                         // On écrit tout d'un coup
                         fileStream.Write(endData, 0, endData.Length);
-                    }*/
-                    index++;
+                    }
+                    index++;*/
                 }
 
             }

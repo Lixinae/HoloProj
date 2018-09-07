@@ -218,14 +218,14 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         base.OnXboxInputUpdate(eventData);
 
         // Si on appuie sur le bouton start, on passe a l'aiguille
-        if (eventData.XboxMenu_Pressed) {
+        /*if (eventData.XboxMenu_Pressed) {
             IsActiveOnController = !IsActiveOnController;
         }
 
         if (!IsActiveOnController) {
             return;
         }
-
+        */
         //if (isLocked) {
         //Debug.Log("Transform is locked");
         // return;
