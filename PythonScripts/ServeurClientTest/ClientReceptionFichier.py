@@ -32,9 +32,9 @@ try:
         amount_expected = bytes_to_int(data)
         print(amount_expected)
         if index == 0:
-            file ="test.bin"
+            file ="scene.bin"
         elif index == 1:
-            file = "test.gltf"
+            file = "scene.gltf"
         with open(file,"wb") as f:
             while amount_received < amount_expected:
                 data = sock.recv(512)

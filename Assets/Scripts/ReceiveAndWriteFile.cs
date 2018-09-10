@@ -39,8 +39,6 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
         this.port = port;
     }
 
-    // TODO Rajouter un bouton pour demander l'actualisation
-
     public void ConnectAndGetFile(string host, string port) {
         if (_useUWP) {
             ConnectUWP(host, port);
@@ -114,37 +112,68 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     private void Read_Data() {
         stopListening = false;
         try {
+			/*
+			        amount_received = 0
+					data = sock.recv(16)
+					if not data:
+						break
+					#print(len(data))
+					amount_expected = bytes_to_int(data)
+					#print(amount_expected)
+					if index == 0:
+						file ="scene.bin"
+					elif index == 1:
+						file = "scene.gltf"
+					with open(file,"wb") as f:
+						while amount_received < amount_expected:
+							data = sock.recv(512)
+							if data:
+								amount_received += len(data)
+								#print(amount_received)
+								f.write(data)
+							else:
+								break
+							#print ('received "%s"' % data)
+						print("Received full file")
+						print("Expected = "+ str(amount_expected))
+						print("Recieved = "+ str(amount_received))
+						print("Size = " + str(os.path.getsize(file)))
+					index+=1
+			*/
+			
             while (!stopListening) {
                 //Debug.Log("No stop listening");
-                byte[] receiveBytes = new Byte[1024];
+                byte[] sizeBytes = new Byte[16];
                 int length;
                 int index = 0;
-
-                
-                int currentOffset = 0;
-                // Avec écriture dans le fichier directement
-                while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
-                    // Nouveau fichier en cours d'envoie
-                    // On ajouter donc
-                    if (length == 7) { // Correspond à la taille de la chaine "NewFile"
-                        continue;
-                    }
-                    var data = new Byte[length];
-                    Array.Copy(receiveBytes, 0, data, 0, length);
-                    string fileName = "";
+				int fileSize = 0;
+				length = stream.Read(sizeBytes, 0, sizeBytes.Length)
+				if(length != 0){
+					fileSize = BitConverter.ToInt32(sizebytes, 0);
+				}
+                string fileName = "scene";
+				string fileExtension = "";
                     // On sais que le 1er fichier reçu sera toujours le fichier bin et que le second sera toujours le fichier gltf
-                    if (index == 0) {
-                        fileName = "scene.bin";
-                    }
-                    else if (index == 1) {
-                        fileName = "scene.gltf";
-                    }
-                    string path = Path.Combine("FolderDataName", fileName); // todo cjhange
-                    using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write)) {// File.Create(path)) {
-                                                                                                             // On écrit bloc par bloc
-                        fileStream.Write(data, currentOffset, data.Length);
-                        currentOffset += data.Length;
-                    }
+                if (index == 0) {
+					fileExtension = ".bin";
+                }
+                else if (index == 1) {
+                    fileExtension = ".gltf";
+                }
+				
+				// Todo tester la methode
+                int currentOffset = 0;
+				byte[] receiveBytes = new Byte[512];
+				string path = Path.Combine(FolderDataName + folderName, fileName + fileExtension);
+				using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write)) {
+					
+					while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
+					// On aura toujours la taille exact de la data avec cette methode
+						var data = new Byte[length];
+						Array.Copy(receiveBytes, 0, data, 0, length);
+						fileStream.Write(data, currentOffset, data.Length);
+						currentOffset += data.Length;
+					}
                 }
                 /*
                 List<List<Byte[]>> allFileDataList = new List<List<byte[]>>();
