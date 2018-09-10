@@ -175,6 +175,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 						currentOffset += data.Length;
 					}
                 }
+				index+=1;
                 /*
                 List<List<Byte[]>> allFileDataList = new List<List<byte[]>>();
                 List<Byte[]> dataList = new List<byte[]>();
