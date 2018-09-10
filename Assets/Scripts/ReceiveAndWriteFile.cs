@@ -153,7 +153,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 				}
                 string fileName = "scene";
 				string fileExtension = "";
-                    // On sais que le 1er fichier reçu sera toujours le fichier bin et que le second sera toujours le fichier gltf
+                // On sais que le 1er fichier reçu sera toujours le fichier bin et que le second sera toujours le fichier gltf
                 if (index == 0) {
 					fileExtension = ".bin";
                 }
@@ -164,7 +164,10 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 				// Todo tester la methode
                 int currentOffset = 0;
 				byte[] receiveBytes = new Byte[512];
-				string path = Path.Combine(FolderDataName + folderName, fileName + fileExtension);
+				string folderDataName = "" ; // Todo
+				string folderName = "/3DObject";
+				
+				string path = Path.Combine(folderDataName + folderName, fileName + fileExtension);
 				using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write)) {
 					
 					while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
@@ -175,92 +178,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 						currentOffset += data.Length;
 					}
                 }
-				index+=1;
-                /*
-                List<List<Byte[]>> allFileDataList = new List<List<byte[]>>();
-                List<Byte[]> dataList = new List<byte[]>();
-                // Bugs persistent
-
-                // Sans l'écriture dans un fichier directement
-                while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
-                    // Nouveau fichier en cours d'envoie
-                    // On ajouter donc
-                    Debug.Log("Received data size :" + length);
-                    if (length == 7) { // Correspond à la taille de la chaine "NewFile"
-                        allFileDataList.Add(dataList);
-                        // On remet à 0 la datalist
-                        dataList = new List<byte[]>();
-                        continue;
-                    }
-                    var data = new Byte[length];
-                    Array.Copy(receiveBytes, 0, data, 0, length);
-
-                    dataList.Add(data);
-                }
-
-                //Debug.Log("Received all data, processing");
-                index = 0;
-
-                // Soucis pour le moment -> 1 seul dossier et donc 1 objet 3D sur le casque à la fois.
-
-                // Todo Problème avec ordre de reception des données !!!!
-                // Voir comment corriger ça
-
-
-                // Reconstruction des données reçu , moche mais ça devrais marcher
-                // Possible car les fichiers sont petits, la solution serait mauvaise pour des fichiers de plus grosse taille
-                foreach (var dataL in allFileDataList) {
-                    // Calcul de la taille total de chaque fichier
-                    int totalSize = 0;
-                    foreach (var data in dataL) {
-                        totalSize += data.Length;
-                    }
-                    byte[] endData = new byte[totalSize];
-                    int previousLength = 0;
-                    // Copy vers le buffer endData
-                    foreach (var data in dataL) {
-                        Array.Copy(data, 0, endData, previousLength, length);
-                        previousLength += data.Length;
-                    }
-                    string fileName = "scene";
-                    string fileExtension = "";
-                    // On sais que le 1er fichier reçu sera toujours le fichier bin et que le second sera toujours le fichier gltf
-                    if (index == 0) {
-                        fileExtension = ".bin";
-                    }
-                    else if (index == 1) {
-                        fileExtension = ".gltf";
-                        // string receivedString = System.Text.Encoding.UTF8.GetString(endData)
-                        //Debug.Log(receivedString);
-                    }
-                    string folderName = "\\3DObject\\";
-                    //string path = Path.Combine(FolderDataName + folderName, fileName + fileExtension);
-
-                    // sauvegarde du fichier
-#if !UNITY_EDITOR
-                    SaveFile(folderName, fileName, fileExtension, endData);
-#endif
-
-#if UNITY_EDITOR
-                    
-                    string folderFullName = ".\\testFolder" + folderName;
-                    if(!Directory.Exists(folderFullName)){
-                        Directory.CreateDirectory(folderFullName);
-                    }
-                    Debug.Log(String.Format("Saving file: {0}", Path.Combine(folderFullName, fileName + fileExtension)));
-                    using (var fs = File.Create(folderFullName + fileName + fileExtension)) {
-                        fs.Write(endData, 0, endData.Length);
-                        fs.Flush();
-                    }
-#endif
-                    // Ecriture du fichier sur le casque dans le dossier voulu
-                    using (FileStream fileStream = File.Create(path)) {
-                        // On écrit tout d'un coup
-                        fileStream.Write(endData, 0, endData.Length);
-                    }
-                    index++;*/
-                
-
+				index++;
             }
         }
         catch (Exception e) {

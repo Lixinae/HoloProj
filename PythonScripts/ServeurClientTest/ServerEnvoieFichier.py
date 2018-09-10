@@ -38,7 +38,10 @@ def int_to_bytes(x):
 def bytes_to_int(xbytes):
     return int.from_bytes(xbytes, 'big')
 ### -----------------------------------------------------
-  
+
+def sendFile(file,client):
+
+### -----------------------------------------------------  
 # Socket TCP créé pour se connecter dessus
 socketTCP = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = ""
@@ -75,7 +78,6 @@ while True:
               try :
                 data = f.read(512)
                 if data:
-                  #print("blabla")
                   client.send(data) # Envoie des données au client connecté
                   #print("Data size :"+str(len(data)) + " sent to "+str(client))
                 else :

@@ -2,8 +2,6 @@
 import socket
 import os
 
-import socket
-
 ### -----------------------------------------------------
 
 def int_to_bytes(x):
@@ -11,7 +9,7 @@ def int_to_bytes(x):
 ### -----------------------------------------------------
 def bytes_to_int(xbytes):
     return int.from_bytes(xbytes, 'big')
-
+### -----------------------------------------------------
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -20,7 +18,6 @@ server_address = ('localhost', 5125)
 print ('connecting to %s port %s' % server_address)
 sock.connect(server_address)
 
-# Manque 16 1er bytes du fichier gltf
 try:
     index = 0
     while True:
@@ -28,9 +25,9 @@ try:
         data = sock.recv(16)
         if not data:
             break
-        print(len(data))
+        #print(len(data))
         amount_expected = bytes_to_int(data)
-        print(amount_expected)
+        #print(amount_expected)
         if index == 0:
             file ="scene.bin"
         elif index == 1:
