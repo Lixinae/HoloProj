@@ -240,6 +240,11 @@ public class IpConfiguratorTriggers : MonoBehaviour {
             }
         }
         output = entry.Substring(count);
+        // Si == 0 -> Que des 0 dans la chaine et donc il faut en garder au moins 1
+        if(output.Length == 0) {
+            output = "0";
+        }
+
         return output;
     }
 
