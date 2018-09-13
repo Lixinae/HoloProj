@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 65163504285906386}
   - component: {fileID: 65156694577740626}
   m_Layer: 0
-  m_Name: AxisViewer
+  m_Name: AxisViewer_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

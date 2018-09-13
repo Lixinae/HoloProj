@@ -100,11 +100,10 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         string info = null;
 #if !UNITY_EDITOR
         try {
-
             info = ReadHostFromFileAsync().Result;
         }
-        catch (FileNotFoundException fnfe) {
-            Debug.Log(fnfe);
+        catch (Exception e) {
+            Debug.Log(e);
             error = true;
         }
 #else
