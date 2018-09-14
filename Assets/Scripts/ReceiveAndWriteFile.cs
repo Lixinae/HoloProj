@@ -147,9 +147,9 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 int length;
                 int index = 0;
 				int fileSize = 0;
-				length = stream.Read(sizeBytes, 0, sizeBytes.Length)
+                length = stream.Read(sizeBytes, 0, sizeBytes.Length);
 				if(length != 0){
-					fileSize = BitConverter.ToInt32(sizebytes, 0);
+					fileSize = BitConverter.ToInt32(sizeBytes, 0);
 				}
                 string fileName = "scene";
 				string fileExtension = "";

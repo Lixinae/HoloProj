@@ -40,6 +40,7 @@ def bytes_to_int(xbytes):
 ### -----------------------------------------------------
 
 def sendFile(file,client):
+    return 1
 
 ### -----------------------------------------------------  
 # Socket TCP créé pour se connecter dessus
