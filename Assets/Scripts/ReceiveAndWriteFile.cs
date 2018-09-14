@@ -168,6 +168,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 				string folderName = "/3DObject";
 				
 				string path = Path.Combine(folderDataName + folderName, fileName + fileExtension);
+				// OpenFileForWrite(string folderName, string fileName) 
 				using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write)) {
 					
 					while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
