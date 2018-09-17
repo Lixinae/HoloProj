@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
+using Windows.Storage;
 
 public class IpConfiguratorTriggers : MonoBehaviour {
 
@@ -110,8 +111,8 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         try {
             info = File.ReadAllText(Application.streamingAssetsPath + "/ip.txt");
         }
-        catch (FileNotFoundException fnfe) {
-            Debug.Log(fnfe);
+        catch (Exception e) {
+            Debug.Log(e);
             error = true;
         }
 #endif
@@ -253,8 +254,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     public void SaveIpConfig() {
 #if !UNITY_EDITOR
         Task task = new Task(async () => {
-            Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile sampleFile = await storageFolder.CreateFileAsync("ip.txt", CreationCollisionOption.ReplaceExisting);
+            
 
             string part1 = Part1_button.GetComponent<LabelTheme>().Default;
             string part2 = Part2_button.GetComponent<LabelTheme>().Default;
@@ -277,7 +279,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
             IpAdress = hostTrimed;
             Port = portTrimed;
 
-            await Windows.Storage.FileIO.WriteTextAsync(sampleFile, toWrite);
+            await FileIO.WriteTextAsync(sampleFile, toWrite);
         });
         task.Start();
         task.Wait();

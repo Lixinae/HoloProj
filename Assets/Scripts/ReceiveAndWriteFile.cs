@@ -102,6 +102,10 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     }
 
 
+    public Boolean CheckIfSameAdress(string ip,string port) {
+        return (ip.CompareTo(this.host) == 0) && (port.CompareTo(this.port) == 0);
+    }
+
     private void Read_DataUpdated() {
 
     }
@@ -164,10 +168,24 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 				// Todo tester la methode
                 int currentOffset = 0;
 				byte[] receiveBytes = new Byte[512];
-				string folderDataName = "" ; // Todo
-				string folderName = "/3DObject";
 				
-				string path = Path.Combine(folderDataName + folderName, fileName + fileExtension);
+				string folderName = "/3DObject";
+
+#if !UNITY_EDITOR
+                string folderDataName = ApplicationData.Current.RoamingFolder.Path + folderName; ; // Todo changer l'emplacement
+                string path = Path.Combine(folderDataName + folderName);
+                using (Stream fileStream = OpenFileForWrite(path, fileName + fileExtension)) {
+                    while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
+                        // On aura toujours la taille exact de la data avec cette methode
+                        var data = new Byte[length];
+                        Array.Copy(receiveBytes, 0, data, 0, length);
+                        fileStream.Write(data, currentOffset, data.Length);
+                        currentOffset += data.Length;
+                    }
+                }
+#else
+                string folderDataName = "./" ; // Todo changer l'emplacement
+                string path = Path.Combine(folderDataName + folderName, fileName + fileExtension);
 				using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write)) {
 					
 					while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
@@ -179,6 +197,8 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 					}
                 }
 				index++;
+#endif
+
             }
         }
         catch (Exception e) {
