@@ -225,11 +225,17 @@ public class UITriggers : MonoBehaviour {
             Debug.Log("File transfer not started");
             return;
         }
+        string host = ipConfiguratorTriggers.GetIpAdress();
+        string port = ipConfiguratorTriggers.GetPort();
+        if (ReceiveAndWriteFile.Instance.CheckIfSameAdress(host, port)) {
+            audio.Play();
+            Debug.Log("Adress must be different");
+            return;
+        }
 
         HideStartMenu();
 
-        string host = ipConfiguratorTriggers.GetIpAdress();
-        string port = ipConfiguratorTriggers.GetPort();
+
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
 
         // TODO remettre une fois calibration fini
