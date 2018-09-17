@@ -102,7 +102,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     }
 
 
-    public Boolean CheckIfSameAdress(string ip,string port) {
+    public Boolean CheckIfSameAdress(string ip, string port) {
         return (ip.CompareTo(this.host) == 0) && (port.CompareTo(this.port) == 0);
     }
 
@@ -116,7 +116,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     private void Read_Data() {
         stopListening = false;
         try {
-			/*
+            /*
 			        amount_received = 0
 					data = sock.recv(16)
 					if not data:
@@ -144,32 +144,32 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
 						print("Size = " + str(os.path.getsize(file)))
 					index+=1
 			*/
-			
+
             while (!stopListening) {
                 //Debug.Log("No stop listening");
                 byte[] sizeBytes = new Byte[16];
                 int length;
                 int index = 0;
-				int fileSize = 0;
+                int fileSize = 0;
                 length = stream.Read(sizeBytes, 0, sizeBytes.Length);
-				if(length != 0){
-					fileSize = BitConverter.ToInt32(sizeBytes, 0);
-				}
+                if (length != 0) {
+                    fileSize = BitConverter.ToInt32(sizeBytes, 0);
+                }
                 string fileName = "scene";
-				string fileExtension = "";
+                string fileExtension = "";
                 // On sais que le 1er fichier reçu sera toujours le fichier bin et que le second sera toujours le fichier gltf
                 if (index == 0) {
-					fileExtension = ".bin";
+                    fileExtension = ".bin";
                 }
                 else if (index == 1) {
                     fileExtension = ".gltf";
                 }
-				
-				// Todo tester la methode
+
+                // Todo tester la methode
                 int currentOffset = 0;
-				byte[] receiveBytes = new Byte[512];
-				
-				string folderName = "/3DObject";
+                byte[] receiveBytes = new Byte[512];
+
+                string folderName = "/3DObject";
 
 #if !UNITY_EDITOR
                 string folderDataName = ApplicationData.Current.RoamingFolder.Path + folderName; ; // Todo changer l'emplacement

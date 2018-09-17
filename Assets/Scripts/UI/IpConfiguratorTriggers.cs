@@ -3,7 +3,10 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
+#if !UNITY_EDITOR
 using Windows.Storage;
+#endif
+
 
 public class IpConfiguratorTriggers : MonoBehaviour {
 
@@ -99,23 +102,18 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     private void LoadIpConfig() {
         bool error = false;
         string info = null;
+
+        try {
 #if !UNITY_EDITOR
-        try {
             info = ReadHostFromFileAsync().Result;
-        }
-        catch (Exception e) {
-            Debug.Log(e);
-            error = true;
-        }
 #else
-        try {
             info = File.ReadAllText(Application.streamingAssetsPath + "/ip.txt");
+#endif
         }
         catch (Exception e) {
             Debug.Log(e);
             error = true;
         }
-#endif
         string host;
         string port;
         // Si on a pas pu lire le fichier , on met des valeurs par defaut
@@ -200,9 +198,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private async Task<string> ReadHostFromFileAsync() {
-        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
-        return await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
+        StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+        StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
+        return await FileIO.ReadTextAsync(sampleFile);
     }
 
 #endif
@@ -223,7 +221,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         return TrimValFromLeftZero(Port);
     }
 
-    // Supprime les zero a gauche
+    /// <summary>
+    /// Supprime les zero a gauche dans la chaine, en en laissant au moins 1 si jamais il n'y a que des 0
+    /// </summary>
     private string TrimValFromLeftZero(string entry) {
         string output;
         int x = 0;
@@ -241,7 +241,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         }
         output = entry.Substring(count);
         // Si == 0 -> Que des 0 dans la chaine et donc il faut en garder au moins 1
-        if(output.Length == 0) {
+        if (output.Length == 0) {
             output = "0";
         }
 
@@ -256,7 +256,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         Task task = new Task(async () => {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             StorageFile sampleFile = await storageFolder.CreateFileAsync("ip.txt", CreationCollisionOption.ReplaceExisting);
-            
+
 
             string part1 = Part1_button.GetComponent<LabelTheme>().Default;
             string part2 = Part2_button.GetComponent<LabelTheme>().Default;
@@ -294,7 +294,6 @@ public class IpConfiguratorTriggers : MonoBehaviour {
                 part4);
         string port = Port_button.GetComponent<LabelTheme>().Default;
         string toWrite = string.Concat(host, ":", port);
-
 
         string hostTrimed = string.Concat(TrimValFromLeftZero(part1), ".",
                     TrimValFromLeftZero(part2), ".",
@@ -344,7 +343,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         BottomButtons_port.SetActive(!active);
     }
 
-    // Parse le caractère et retire 1 à la valeur numérique
+    /// <summary>
+    /// Parse le caractère et retire 1 à la valeur numérique
+    /// </summary>
     private int ParseTextMoins(char text) {
         int x = 0;
         int.TryParse(text.ToString(), out x);
@@ -354,8 +355,9 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         }
         return x;
     }
-
-    // Parse le caractère et ajoute 1 à la valeur numérique
+    /// <summary>
+    /// Parse le caractère et ajoute 1 à la valeur numérique
+    /// </summary>
     private int ParseTextPlus(char text) {
         int x = 0;
         int.TryParse(text.ToString(), out x);
@@ -522,7 +524,6 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     /// <summary>
     /// Partie 4
     /// </summary>
-
 
     public void UpCentaine4() {
         LabelTheme theme = Part4_button.GetComponent<LabelTheme>();
