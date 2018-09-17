@@ -29,7 +29,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     public GameObject UI = null;
 
     public Boolean UseKeyboard = true;
-    public Boolean UseJoystick = false;
+    public Boolean UseJoystick = true;
 
     public Boolean devBuild = true; // TODO !!!! Changer à false à la fin du dev , decallage du a l'input de la camera dans unity
 
