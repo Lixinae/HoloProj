@@ -142,9 +142,14 @@ public class CalibrageClicker : MonoBehaviour {
         double Yz = PosCube2.z;
 
         double t1t2t4t5 = t1 + t2 - t4 - t5;
-        double t1t5pow = t1t2t4t5 + (Mathf.Pow((float)(t3 - t6), 2) / (t1 - t4));
+        
         double t1t3t4t6 = t1 + t3 - t4 - t6;
 
+		
+		double zfe =;
+		double yfe =;
+		double xfe =;
+		/*double t1t5pow = t1t2t4t5 + (Mathf.Pow((float)(t3 - t6), 2) / (t1 - t4));
         double powDiv = 1 + ((Mathf.Pow((float)(t5 - t2), 2) * t1t2t4t5) / ((t1 - t4) * (t1t5pow * t1t3t4t6)));
 
         double Azfe = (Yz - Xz) / (t1t3t4t6 * powDiv);
@@ -153,7 +158,7 @@ public class CalibrageClicker : MonoBehaviour {
 
         double xfe = ((t5 - t2) * t1t2t4t5 * zfe + (t3 - t6) * (Yy - Xy) + (Yx - Xx) * t1t2t4t5) / ((t1 - t4) * (t1t5pow));
         double yfe = ((t6 - t3) * xfe - Xy + Yy) / (t1t2t4t5);
-
+		*/
 
         // X -> 1er pts dans unity
         // Y -> 2e pts dans unity
