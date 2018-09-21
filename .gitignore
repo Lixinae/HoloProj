@@ -74,3 +74,6 @@ obj/*
 #Visual studio files
 .vs/*
 *.asset
+
+#Polhemus folder
+Polhemus/*
