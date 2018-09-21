@@ -239,7 +239,7 @@ public class UITriggers : MonoBehaviour {
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
 
         // TODO remettre une fois calibration fini
-        //calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
+        calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
         // Demarrage du plStream après avoir réglé l'ip
     }
     /// <summary>

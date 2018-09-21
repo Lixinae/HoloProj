@@ -142,14 +142,27 @@ public class CalibrageClicker : MonoBehaviour {
         double Yz = PosCube2.z;
 
         double t1t2t4t5 = t1 + t2 - t4 - t5;
-        
+
         double t1t3t4t6 = t1 + t3 - t4 - t6;
 
-		
-		double zfe =;
-		double yfe =;
-		double xfe =;
-		/*double t1t5pow = t1t2t4t5 + (Mathf.Pow((float)(t3 - t6), 2) / (t1 - t4));
+        double t1t4 = t1 - t4;
+        double t3t6 = t3 - t6;
+        double t6t3 = t6 - t3;
+        double t5t2 = t5 - t2;
+        double t2t5 = t2 - t5;
+
+        double YzXz = Yz - Xz;
+        double YxXx = Yx - Xx;
+        double YyXy = Yy - Xy;
+
+        double t1t4Pow = Mathf.Pow((float)t1t4, 2);
+        double t3t6Pow = Mathf.Pow((float)t3t6, 2);
+
+        double zfe = (YzXz + ((t1t4 * YxXx) * (t1t2t4t5 - t3t6Pow) + t1t4 * (t3t6 * YyXy * t1t4 + t3t6Pow * YxXx)) / (t1t4Pow * (t1t2t4t5 - t3t6Pow)) /
+            (t1t3t4t6 - (t2t5 * (t1t4Pow * t1t2t4t5 * t5t2 - t3t6Pow * t1t4 * t5t2 + t1t4 * t3t6Pow * t5t2)) / (t1t4Pow * (t1t2t4t5 - t3t6Pow))));
+        double yfe = (YyXy * t1t4 + t6t3 * (YxXx + t5t2 * zfe)) / (t1t4 * t1t2t4t5 - t3t6Pow);
+        double xfe = (YxXx + t5t2 * zfe + t3t6 * yfe) / t1t4;
+        /*double t1t5pow = t1t2t4t5 + (Mathf.Pow((float)(t3 - t6), 2) / (t1 - t4));
         double powDiv = 1 + ((Mathf.Pow((float)(t5 - t2), 2) * t1t2t4t5) / ((t1 - t4) * (t1t5pow * t1t3t4t6)));
 
         double Azfe = (Yz - Xz) / (t1t3t4t6 * powDiv);

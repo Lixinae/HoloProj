@@ -52,7 +52,7 @@ public class ShowFileInFolder {
 #if UNITY_EDITOR
         String path = Application.streamingAssetsPath + "/3DModels";
 #else
-        String path = ApplicationData.Current.RoamingFolder.Path;
+        String path = ApplicationData.Current.RoamingFolder.Path + "/3DModels";
 #endif
         string[] allfiles = Directory.GetFiles(path, "*.gltf", SearchOption.AllDirectories);
         CleanAndAddToList(allfiles);
