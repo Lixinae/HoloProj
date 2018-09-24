@@ -22,10 +22,12 @@ public class UITriggers : MonoBehaviour {
     public GameObject ipButton = null;
     public GameObject startAppButton = null;
     public GameObject startFileTransferServiceButton = null;
+    public GameObject useCalibrationAutoButton = null;
 
     public GameObject calibrationCubes = null;
     private GameObject axisViewer = null;
     private bool fileTransferStarted = false;
+    private bool enableAutomaticCalibration = false;
 
     // Use this for initialization
     void Awake() {
@@ -70,7 +72,7 @@ public class UITriggers : MonoBehaviour {
         if (startAppButton == null) {
             startAppButton = GameObject.Find("StartAppButton");
         }
-        if(startFileTransferServiceButton == null) {
+        if (startFileTransferServiceButton == null) {
             startFileTransferServiceButton = GameObject.Find("StartFileTransferService");
         }
 
@@ -81,6 +83,11 @@ public class UITriggers : MonoBehaviour {
         if (axisViewer == null) {
             axisViewer = GameObject.Find("AxisViewer");
         }
+
+        if (useCalibrationAutoButton == null) {
+            useCalibrationAutoButton = GameObject.Find("UseCalibrationAutoButton");
+        }
+
         calibrationCubes.SetActive(false);
         menuFull.SetActive(isMenuShowing);
         //modelsMenu.SetActive(false);
@@ -178,20 +185,16 @@ public class UITriggers : MonoBehaviour {
     /// Affiche l'ip configurator et cache le menu de départ
     /// </summary>
     public void ShowIpConfigurator() {
-        ipButton.SetActive(false);
+        HideStartMenu();
         ipConfigurator.SetActive(true);
-        startAppButton.SetActive(false);
-        HideStartFileTransfertServiceButton();
     }
 
     /// <summary>
     /// Cache l'ip configurator et affiche le menu de départ
     /// </summary>
     public void CancelIpConfig() {
-        ipButton.SetActive(true);
+        ShowStartMenu();
         ipConfigurator.SetActive(false);
-        startAppButton.SetActive(true);
-        startFileTransferServiceButton.SetActive(true);
     }
 
     /// <summary>
@@ -206,6 +209,13 @@ public class UITriggers : MonoBehaviour {
     /// </summary>
     public void HideStartMenu() {
         startMenu.SetActive(false);
+    }
+
+    /// <summary>
+    /// Affiche le menu de demarrage
+    /// </summary>
+    public void ShowStartMenu() {
+        startMenu.SetActive(true);
     }
 
     /// <summary>
@@ -238,9 +248,10 @@ public class UITriggers : MonoBehaviour {
 
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
 
-        // TODO remettre une fois calibration fini
-        calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
-        // Demarrage du plStream après avoir réglé l'ip
+        if (enableAutomaticCalibration) {
+            calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
+        }
+
     }
     /// <summary>
     /// Demarre le service de transfert de fichier
@@ -256,29 +267,26 @@ public class UITriggers : MonoBehaviour {
         string host = ipConfiguratorTriggers.GetIpAdress();
         string port = ipConfiguratorTriggers.GetPort();
         ReceiveAndWriteFile.Instance.SetupHostAndPort(host, port);
-        //HideStartFileTransfertServiceButton();
-
         fileTransferStarted = true;
 
     }
+
     /// <summary>
     /// Permet de demander au serveur un dossier à mettre sur le casque
     /// </summary>
     public void FireFileTransferServiceUpdate() {
         ReceiveAndWriteFile.Instance.ConnectAndGetFile();
     }
-    /// <summary>
-    /// Cache le bouton pour démarrer le service de transfert de fichier
-    /// </summary>
-    private void HideStartFileTransfertServiceButton() {
-        startFileTransferServiceButton.SetActive(false);
+
+    public void EnableAutomaticCalibration() {
+        enableAutomaticCalibration = !enableAutomaticCalibration;
+        Debug.Log("enableAutomaticCalibration:" + enableAutomaticCalibration);
     }
 
     /// <summary>
     /// Cache la scène
     /// </summary>
     private void HideScene() {
-        //sceneItems.SetActive(false);
         axisViewer.SetActive(false);
         gltf.SetActive(false);
     }
@@ -287,7 +295,6 @@ public class UITriggers : MonoBehaviour {
     /// Montre la scène
     /// </summary>
     private void ShowScene() {
-        //sceneItems.SetActive(true);
         axisViewer.SetActive(true);
         gltf.SetActive(true);
     }
