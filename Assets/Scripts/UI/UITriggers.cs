@@ -249,9 +249,15 @@ public class UITriggers : MonoBehaviour {
         PlStreamCustom.Instance.StartPlStreamCustom(host, port);
 
         if (enableAutomaticCalibration) {
+            gltf.SetActive(false);
+            axisViewer.SetActive(false);
             calibrationCubes.SetActive(true); // -> Les autres éléments sont affiché après le calibrage
         }
-
+        else {
+            // Si on n'utilise pas le calibrage automatique, on 
+            gltf.SetActive(true);
+            axisViewer.SetActive(true);
+        }
     }
     /// <summary>
     /// Demarre le service de transfert de fichier

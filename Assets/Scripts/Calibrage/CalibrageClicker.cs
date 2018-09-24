@@ -55,7 +55,7 @@ public class CalibrageClicker : MonoBehaviour {
         if (axisViewer == null) {
             axisViewer = GameObject.Find("AxisViewer");
         }
-        HideScene();
+        //HideScene();
         //ObjectToShow.SetActive(false);
     }
 
@@ -105,13 +105,11 @@ public class CalibrageClicker : MonoBehaviour {
     }
 
     private void HideScene() {
-        //sceneItems.SetActive(false);
         axisViewer.SetActive(false);
         gltf.SetActive(false);
     }
 
     private void ShowScene() {
-        //sceneItems.SetActive(true);
         axisViewer.SetActive(true);
         gltf.SetActive(true);
     }
@@ -180,6 +178,8 @@ public class CalibrageClicker : MonoBehaviour {
         double yE = Xy + t1 * yfe + t2 * yfe + t3 * xfe;
         double zE = Xz + t1 * zfe - t2 * xfe + t3 * zfe;
 
+
+
         Vector3 posEmetteur = new Vector3((float)xE, (float)yE, (float)zE);
 
         // 3 vecteurs composant le repère du capteur polhemus
@@ -211,12 +211,28 @@ public class CalibrageClicker : MonoBehaviour {
         Debug.Log("angleY:" + angleY);
         Debug.Log("angleZ:" + angleZ);
 
-
         // AngleX -> Rotation autour de l'axe X et donc c'est l'angle Y qu'on determine au dessus
-        updatePosOrient.orientation.x = angleX;
+        if (double.IsNaN(angleX)) {
+            updatePosOrient.orientation.x = 0;
+        }
+        else {
+            updatePosOrient.orientation.x = angleX;
+        }
         // Angle Y -> Rotation autour de l'axe Y et donc c'est l'angle X determiné au dessus ( ou l'angle Z, les 2 étant normalement égaux)
-        updatePosOrient.orientation.y = angleY;
-        updatePosOrient.orientation.z = angleZ; // utile uniquement pour le debug, la rotation sur Z n'est pas appliqué lors de la transformation
+        if (double.IsNaN(angleY)) {
+            updatePosOrient.orientation.y = 0;
+        }
+        else {
+            updatePosOrient.orientation.y = angleY;
+        }
+        // utile uniquement pour le debug, la rotation sur Z n'est pas appliqué lors de la transformation
+        if (double.IsNaN(angleZ)) {
+            updatePosOrient.orientation.z = 0;
+        }
+        else {
+            updatePosOrient.orientation.z = angleZ;
+        }
+
         updatePosOrient.decallageByCalibragePos = posEmetteur;
 
         axisViewer.SetActive(true);
