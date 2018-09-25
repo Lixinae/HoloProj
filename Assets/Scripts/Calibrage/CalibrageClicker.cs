@@ -179,8 +179,23 @@ public class CalibrageClicker : MonoBehaviour {
         double zE = Xz + t1 * zfe - t2 * xfe + t3 * zfe;
 
 
-
+        if (double.IsNaN(xE) || double.IsNaN(yE) || double.IsNaN(zE)) {
+            xE = 0;
+            yE = 0;
+            zE = 0;
+        }
         Vector3 posEmetteur = new Vector3((float)xE, (float)yE, (float)zE);
+
+        if (double.IsNaN(xfe)) {
+            xfe = 1;
+        }
+        if (double.IsNaN(yE)) {
+            yfe = 0;
+        }
+        if (double.IsNaN(zE)) {
+            zfe = 0;
+        }
+
 
         // 3 vecteurs composant le repère du capteur polhemus
         Vector3 FE = new Vector3((float)xfe, (float)yfe, (float)zfe); // orientation sur l'axe X
