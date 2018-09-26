@@ -1870,7 +1870,7 @@ MonoBehaviour:
   Camera: {fileID: 0}
   UI: {fileID: 0}
   UseKeyboard: 1
-  UseJoystick: 0
+  UseJoystick: 1
   devBuild: 1
 --- !u!114 &970070107
 MonoBehaviour:
