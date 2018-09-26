@@ -19,6 +19,11 @@ UnityExport @ port (voir message au lancement)</li>
 <li>Executer "ServerEnvoieFichier" dans "Python Scripts" (aucun argument)</li>
 </ol>
 </li>
+<li>
+<ol start="3">
+<li>Lancer IP Config puis Service transfert fichier, puis IP config a nouveau (en changeant l'ip), puis StartApp</li>
+</ol>
+</li>
 </ul>
 <h2>I) Assets:</h2>
 <h3>1) HoloToolkit :</h3>
@@ -46,9 +51,6 @@ UnityExport @ port (voir message au lancement)</li>
 <h4>a) Autres</h4>
 <pre><code>Contient tous les scripts non trié
 </code></pre>
-<h5>AsyncSample -&gt; Inutile</h5>
-<pre><code>Un exemple d'utilisation de tache Async(Asynchrone)
-</code></pre>
 <h5>CheckForPlacebyTapOnChildreen :</h5>
 <pre><code>Verifie que les enfants de l'objet sur lequel ce script est attaché ont bien le script "PlaceByTap" attaché sur eux
 </code></pre>
@@ -57,9 +59,6 @@ UnityExport @ port (voir message au lancement)</li>
 </code></pre>
 <h5>DebugHelper :</h5>
 <pre><code>Sert à debug : affiche du texte sur la zone de debug, (touche 'p')
-</code></pre>
-<h5>KeepObjectFacingCamera -&gt; Obsolète et inutilisé</h5>
-<pre><code>Permet de garder l'objet en face de la caméra, mais le script "billboard" fourni dans le holotoolkit fait la même chose en plus complet
 </code></pre>
 <h5>PlStreamCustom :</h5>
 <pre><code>Réécriture et amélioration du script "PlStream" fourni par polhemus pour qu'il soit plus adapté au projet
@@ -85,16 +84,10 @@ UnityExport @ port (voir message au lancement)</li>
 <h6>2) CalibrageClicker :</h6>
 <pre><code>Contient les formules pour le calibrage
 </code></pre>
-<h6>3) MathCalcul -&gt; Obsolète</h6>
-<pre><code>Des test sur les calculs d'angle / distance entre points
-</code></pre>
 <h4>c) DragByGaze -&gt; Obsolète</h4>
 <pre><code>Il y a un script fourni par microsoft qui fait ce que le dossier contient et qui est plus clair et plus simple
 </code></pre>
-<h4>d) FileBrowser -&gt; Inutile</h4>
-<pre><code>Ne fonctionne pas pour une application hololens a cause des restrictions du casque
-</code></pre>
-<h4>e) UI</h4>
+<h4>d) UI</h4>
 <pre><code>Contient les script liés à l'UI
 </code></pre>
 <h5>CreateElementsFromFileList :</h5>
@@ -108,6 +101,9 @@ UnityExport @ port (voir message au lancement)</li>
 </code></pre>
 <h5>UITriggers :</h5>
 <pre><code>Contient tous les déclencheurs de l'interface utilisateur, tout les code utilisé par les boutons ou autres sont ici
+</code></pre>
+<h3>9) Sounds :</h3>
+<pre><code>Contient les sons ajouté en plus de ceux du holotoolkit dans le projet 
 </code></pre>
 <p>D:\UnityProjects\HololensProject\Assets\StreamingAssets
 \3DModels  : inutilisé mais utile pour des tests (on est sûr que les données seront là)

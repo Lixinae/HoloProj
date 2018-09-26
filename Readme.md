@@ -11,7 +11,7 @@ Le dossier "Polhemus" est le dossier de sources de Polhemus qui permet de recomp
     est celle du point d'accès wifi sur lequel se connect l'hololens. Pour changer l'adresse IP :
     UnityExport @ port (voir message au lancement)
 * 2) Executer "ServerEnvoieFichier" dans "Python Scripts" (aucun argument)
-
+* 3) Lancer IP Config puis Service transfert fichier, puis IP config a nouveau (en changeant l'ip), puis StartApp
 ## I) Assets: 
 
 ### 1) HoloToolkit : 
@@ -39,9 +39,6 @@ Le dossier "Polhemus" est le dossier de sources de Polhemus qui permet de recomp
 #### a) Autres
 	Contient tous les scripts non trié
 
-##### AsyncSample -> Inutile
-	Un exemple d'utilisation de tache Async(Asynchrone)
-    
 ##### CheckForPlacebyTapOnChildreen :
 	Verifie que les enfants de l'objet sur lequel ce script est attaché ont bien le script "PlaceByTap" attaché sur eux
     
@@ -50,9 +47,6 @@ Le dossier "Polhemus" est le dossier de sources de Polhemus qui permet de recomp
     
 ##### DebugHelper :
 	Sert à debug : affiche du texte sur la zone de debug, (touche 'p')
-    
-##### KeepObjectFacingCamera -> Obsolète et inutilisé
-	Permet de garder l'objet en face de la caméra, mais le script "billboard" fourni dans le holotoolkit fait la même chose en plus complet
     
 ##### PlStreamCustom :
 	Réécriture et amélioration du script "PlStream" fourni par polhemus pour qu'il soit plus adapté au projet
@@ -78,16 +72,10 @@ Le dossier "Polhemus" est le dossier de sources de Polhemus qui permet de recomp
 ###### 2) CalibrageClicker :
 	Contient les formules pour le calibrage
 
-###### 3) MathCalcul -> Obsolète
-	Des test sur les calculs d'angle / distance entre points
-    
 #### c) DragByGaze -> Obsolète
 	Il y a un script fourni par microsoft qui fait ce que le dossier contient et qui est plus clair et plus simple
 
-#### d) FileBrowser -> Inutile
-	Ne fonctionne pas pour une application hololens a cause des restrictions du casque
-
-#### e) UI
+#### d) UI
 	Contient les script liés à l'UI
 
 ##### CreateElementsFromFileList :
@@ -102,6 +90,8 @@ Le dossier "Polhemus" est le dossier de sources de Polhemus qui permet de recomp
 ##### UITriggers :
 	Contient tous les déclencheurs de l'interface utilisateur, tout les code utilisé par les boutons ou autres sont ici
 
+### 9) Sounds :
+	Contient les sons ajouté en plus de ceux du holotoolkit dans le projet 
 
 D:\UnityProjects\HololensProject\Assets\StreamingAssets
 \3DModels  : inutilisé mais utile pour des tests (on est sûr que les données seront là)
