@@ -70,7 +70,7 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
 
     // Use this for initialization
     void Start() {
-        //Connect(host, port);
+
     }
 
 
@@ -84,33 +84,6 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
         DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 8);
         Connect(host, port);
     }
-
-    // 
-    /*public void StartPlStreamCustom() {
-
-#if !UNITY_EDITOR
-        string info = null;
-        info = ReadHostFromFileAsync().Result;
-#else
-        string info = null;
-        info = File.ReadAllText(Application.streamingAssetsPath+"/ip.txt");
-#endif
-        while (info == null) ;
-        this.host = info.Split(':')[0];
-        this.port = info.Split(':')[1];
-        Debug.Log("host : " + host + ":" + port);
-        DebugHelper.Instance.AddDebugText("host : " + host + ":" + port, 7);
-        Connect(host, port);
-    }
-
-#if!UNITY_EDITOR
-    private async Task<string> ReadHostFromFileAsync() {
-        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        Windows.Storage.StorageFile sampleFile = await storageFolder.GetFileAsync("ip.txt");
-        return await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
-    }
-#endif*/
-
 
     /// <summary>
     /// Fonction permettant la connection entre l'appareil de 3D et le programme
@@ -173,8 +146,6 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
                 default:
                     throw new Exception("[polhemus] Unknown Tracker selected in PlStream::Awake().");
             }
-
-
         }
         catch (Exception e) {
             Debug.Log(e);
@@ -220,7 +191,6 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
         catch (Exception e) {
             Debug.Log(e.ToString());
         }
-       
 #else
         Debug.Log("Can't use Unity TCP client in UWP!");
 #endif

@@ -169,10 +169,16 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 int currentOffset = 0;
                 byte[] receiveBytes = new Byte[512];
 
-                string folderName = "/3DObject/";
-
+                string folderName = "/3DModels/";
+                string folderDataName = "";
 #if !UNITY_EDITOR
-                string folderDataName = Application.persistentDataPath + folderName; ; // Todo changer l'emplacement
+                folderDataName = ApplicationData.Current.LocalFolder.Path + folderName;
+#else
+                folderDataName = Application.streamingAssetsPath + folderName; 
+#endif
+                if (!Directory.Exists(folderDataName)) {
+                    Directory.CreateDirectory(folderDataName);
+                }
                 string path = Path.Combine(folderDataName + folderName);
                 using (Stream fileStream = OpenFileForWrite(path, fileName + fileExtension)) {
                     while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
@@ -183,22 +189,6 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                         currentOffset += data.Length;
                     }
                 }
-#else
-                string folderDataName = Application.persistentDataPath + folderName; 
-                string path = Path.Combine(folderDataName + folderName, fileName + fileExtension);
-				using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write)) {
-					
-					while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
-					// On aura toujours la taille exact de la data avec cette methode
-						var data = new Byte[length];
-						Array.Copy(receiveBytes, 0, data, 0, length);
-						fileStream.Write(data, currentOffset, data.Length);
-						currentOffset += data.Length;
-					}
-                }
-				index++;
-#endif
-
             }
         }
         catch (Exception e) {
@@ -209,40 +199,6 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     }
 
     /// <summary>
-    /// Sauvegarde le fichier avec l'extension voulu dans le dossier correspondant
-    /// </summary>
-    /// <param name="folderName"> Nom du dossier où stocker le fichier </param> 
-    /// <param name="fileName"> Nom du fichier à stocker</param>
-    /// <param name="fileExtension"> Extension du fichier voulu </param>
-    /// <param name="dataToWrite"> Données à écrire dans le fichier </param>
-    /// <returns></returns>
-#if !UNITY_EDITOR
-    public string SaveFile(string folderName, string fileName, string fileExtension, byte[] dataToWrite) {
-        if (string.IsNullOrEmpty(folderName)) {
-            throw new ArgumentException("Must specify a valid folderName.");
-        }
-        if (string.IsNullOrEmpty(fileExtension)) {
-            throw new ArgumentException("Must specify a valid fileExtension.");
-        }
-        if (string.IsNullOrEmpty(fileName)) {
-            throw new ArgumentException("Must specify a valid fileName.");
-        }
-
-        // Create the file.
-        string folderFullName = ApplicationData.Current.RoamingFolder.Path + folderName;
-        Debug.Log(String.Format("Saving file: {0}", Path.Combine(folderFullName, fileName + fileExtension)));
-
-        using (Stream stream = OpenFileForWrite(folderName, fileName + fileExtension)) {
-            stream.Write(dataToWrite, 0, dataToWrite.Length);
-            stream.Flush();
-        }
-
-        Debug.Log("File saved.");
-
-        return Path.Combine(folderFullName, fileName + fileExtension);
-    }
-#endif
-    /// <summary>
     /// Opens the specified file for writing.
     /// </summary>
     /// <param name="folderName">The name of the folder containing the file.</param>
@@ -251,7 +207,6 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
     /// <remarks>If the specified file already exists, it will be overwritten.</remarks>
     private static Stream OpenFileForWrite(string folderName, string fileName) {
         Stream stream = null;
-
 #if !UNITY_EDITOR
         Task task = new Task(
                         async () => {
