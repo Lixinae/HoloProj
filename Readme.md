@@ -3,6 +3,9 @@
 Les dossiers Assets, PLStream et PythonScripts sont stocké sur le github
 Le dossier "Polhemus" est le dossier de sources de Polhemus qui permet de recompiler le fichier "UnityExport.exe" 
 
+Il y a un fichier "logs" sur le casque ici :
+	"User Files \ LocalAppData \ HololensProject_1.0.10.0_x86__pzq3xp76mxafg \ TempState \ UnityPlayer.log"
+
 * Version unity : 2018.1.1.f1 personal
 * Version visual studio : Community 2017 - 15.7.4
 
