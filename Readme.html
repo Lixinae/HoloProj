@@ -1,0 +1,134 @@
+<h1>Readme</h1>
+<p>Les dossiers Assets, PLStream et PythonScripts sont stocké sur le github
+Le dossier "Polhemus" est le dossier de sources de Polhemus qui permet de recompiler le fichier "UnityExport.exe"</p>
+<ul>
+<li>Version unity : 2018.1.1.f1 personal</li>
+<li>Version visual studio : Community 2017 - 15.7.4</li>
+</ul>
+<h5>Pour le bon fonctionnement appli :</h5>
+<ul>
+<li>
+<ol>
+<li>Executer "UnityExport.exe" dans le dossier "PlStream" : sans argument &lt;=&gt; ouvre port sur 192.168.137.1 : 5124 cette @IP
+est celle du point d'accès wifi sur lequel se connect l'hololens. Pour changer l'adresse IP :
+UnityExport @ port (voir message au lancement)</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>Executer "ServerEnvoieFichier" dans "Python Scripts" (aucun argument)</li>
+</ol>
+</li>
+</ul>
+<h2>I) Assets:</h2>
+<h3>1) HoloToolkit :</h3>
+<pre><code>Pas touché.
+</code></pre>
+<h3>2) HoloToolkit-Examples :</h3>
+<pre><code>Pas touché.
+</code></pre>
+<h3>3) Materials :</h3>
+<pre><code>les materiaux pour les objets de la boite (green glassred etc).
+</code></pre>
+<h3>4) Prefabs :</h3>
+<pre><code>Objets fabriqués pour la scène.
+</code></pre>
+<h3>5) Ressources :</h3>
+<pre><code>Contient des prefabs necessaires à la copie sur le casque, ce sont les objets instanciés dynamiquement dans l'appli par unity, et pas "inclus" au départ au lancement.
+</code></pre>
+<h3>6) Streaming Assets :</h3>
+<pre><code>Comme les ressources.
+</code></pre>
+<h3>7) Scene:</h3>
+<pre><code>La scene, fabriqué avec unity 
+</code></pre>
+<h3>8) Scripts :</h3>
+<h4>a) Autres</h4>
+<pre><code>Contient tous les scripts non trié
+</code></pre>
+<h5>AsyncSample -&gt; Inutile</h5>
+<pre><code>Un exemple d'utilisation de tache Async(Asynchrone)
+</code></pre>
+<h5>CheckForPlacebyTapOnChildreen :</h5>
+<pre><code>Verifie que les enfants de l'objet sur lequel ce script est attaché ont bien le script "PlaceByTap" attaché sur eux
+</code></pre>
+<h5>GLTFComponentPerso :</h5>
+<pre><code>Copie modifié du fichier "GLTFComponent" fourni par "Khronos", le groupe à l'origine du format GLTF, Blender etc...
+</code></pre>
+<h5>DebugHelper :</h5>
+<pre><code>Sert à debug : affiche du texte sur la zone de debug, (touche 'p')
+</code></pre>
+<h5>KeepObjectFacingCamera -&gt; Obsolète et inutilisé</h5>
+<pre><code>Permet de garder l'objet en face de la caméra, mais le script "billboard" fourni dans le holotoolkit fait la même chose en plus complet
+</code></pre>
+<h5>PlStreamCustom :</h5>
+<pre><code>Réécriture et amélioration du script "PlStream" fourni par polhemus pour qu'il soit plus adapté au projet
+</code></pre>
+<h5>ReceiveAndWriteFile :</h5>
+<pre><code>Reception du fichier gltf envoyé via le serveur et écriture sur le hololens dans le dossier dédié
+</code></pre>
+<h5>TransformFromUserInput :</h5>
+<pre><code>Permet de déplacer / orienté / reduire - augmenter la taille de l'objet 3D (la boite, modèle 3D chargé etc....)
+</code></pre>
+<h5>UpdateDecallageWithAiguille:</h5>
+<pre><code>Met à jour le décallage de l'axis viewer par rapport à celui de l'aiguille -&gt; les 2 sont parfaitement synchronisé
+</code></pre>
+<h5>UpdatePosOrientAiguille :</h5>
+<pre><code>Utilise le PLStreamCustom pour recupérer les informations de déplacement du capteur et les appliqués à l'aiguille
+</code></pre>
+<h4>b) Calibrage :</h4>
+<pre><code>Contient les fichiers scripts necessaire au calibrage
+</code></pre>
+<h6>1) CalibrageClickAnnex :</h6>
+<pre><code>Permet d'indiquer que l'on a bien cliquer sur l'élément pour le calibrage
+</code></pre>
+<h6>2) CalibrageClicker :</h6>
+<pre><code>Contient les formules pour le calibrage
+</code></pre>
+<h6>3) MathCalcul -&gt; Obsolète</h6>
+<pre><code>Des test sur les calculs d'angle / distance entre points
+</code></pre>
+<h4>c) DragByGaze -&gt; Obsolète</h4>
+<pre><code>Il y a un script fourni par microsoft qui fait ce que le dossier contient et qui est plus clair et plus simple
+</code></pre>
+<h4>d) FileBrowser -&gt; Inutile</h4>
+<pre><code>Ne fonctionne pas pour une application hololens a cause des restrictions du casque
+</code></pre>
+<h4>e) UI</h4>
+<pre><code>Contient les script liés à l'UI
+</code></pre>
+<h5>CreateElementsFromFileList :</h5>
+<pre><code>Permet de créer des boutons à partir de la liste des fichiers de "ShowFileInFolder"
+</code></pre>
+<h5>IpConfiguratorTriggers :</h5>
+<pre><code>Contient tous les déclencheurs de l'IpConfigurator, tout les code utilisé par les boutons ou autres sont ici
+</code></pre>
+<h5>ShowFileInFolder :</h5>
+<pre><code>Permet de récupèrer les liste des dossiers / fichiers d'un dossier voulu
+</code></pre>
+<h5>UITriggers :</h5>
+<pre><code>Contient tous les déclencheurs de l'interface utilisateur, tout les code utilisé par les boutons ou autres sont ici
+</code></pre>
+<p>D:\UnityProjects\HololensProject\Assets\StreamingAssets
+\3DModels  : inutilisé mais utile pour des tests (on est sûr que les données seront là)
+\shaders INDISPENSABLES</p>
+<h2>II) PLStream:</h2>
+<pre><code>Dossier contenant les fichiers scripts du Polhemus (fournit par Polhemus), pas modifié mais utilisé comme exemple pour PlstreamCustom
+</code></pre>
+<h5>UnityExport.exe</h5>
+<pre><code>Fichier très important -&gt; permet l'envoie de donnée du capteur polhemus à l'application : a été recompilé pour correspondre aux besoins du projet :
+Les sources sont disponible dans le dossier "Polhemus"
+</code></pre>
+<h2>III) PythonScripts :</h2>
+<p>Dossier contenant les scripts python</p>
+<h4>Blender -&gt; Inutilisé</h4>
+<pre><code>Fichiers scripts de test pour blender
+</code></pre>
+<h4>Forwards -&gt; Obsolète</h4>
+<pre><code>Fichiers permettant le forward des données du capteur polhemus (avant le changement) 
+</code></pre>
+<h4>ServeurClientTest -&gt; A titre de test et verification uniquement</h4>
+<pre><code>Fichiers de test pour un client / serveur d'envoie de fichier en python
+</code></pre>
+<h5>ServerEnvoieFichier.py</h5>
+<pre><code>Serveur d'envoie de fichier pour l'application</code></pre>

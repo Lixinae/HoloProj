@@ -169,10 +169,10 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 int currentOffset = 0;
                 byte[] receiveBytes = new Byte[512];
 
-                string folderName = "/3DObject";
+                string folderName = "/3DObject/";
 
 #if !UNITY_EDITOR
-                string folderDataName = ApplicationData.Current.RoamingFolder.Path + folderName; ; // Todo changer l'emplacement
+                string folderDataName = Application.persistentDataPath + folderName; ; // Todo changer l'emplacement
                 string path = Path.Combine(folderDataName + folderName);
                 using (Stream fileStream = OpenFileForWrite(path, fileName + fileExtension)) {
                     while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
@@ -184,7 +184,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                     }
                 }
 #else
-                string folderDataName = "./" ; // Todo changer l'emplacement
+                string folderDataName = Application.persistentDataPath + folderName; 
                 string path = Path.Combine(folderDataName + folderName, fileName + fileExtension);
 				using (FileStream fileStream = new FileStream(path, FileMode.Append, FileAccess.Write)) {
 					

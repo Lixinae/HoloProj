@@ -165,6 +165,7 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
                     isActive = true;
                     conThread.Start();
 #else
+                    // Partie hololens
                     isActive = true;
                     exchangeTask = Task.Run(() => Read_liberty());
 #endif
@@ -191,7 +192,7 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
 #endif
     {
 #if UNITY_EDITOR
-        Debug.Log("UWP TCP client used in Unity!");
+        Debug.Log("Can't use UWP TCP client in Unity!");
 #else
         try {
             socket = new Windows.Networking.Sockets.StreamSocket();
@@ -209,9 +210,7 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
     }
 
     private void ConnectUnity(string host, string port) {
-#if !UNITY_EDITOR
-        Debug.Log("Unity TCP client used in UWP!");
-#else
+#if UNITY_EDITOR
         try {
             tcpClient = new System.Net.Sockets.TcpClient(host, Int32.Parse(port));
             stream = tcpClient.GetStream();
@@ -221,6 +220,9 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
         catch (Exception e) {
             Debug.Log(e.ToString());
         }
+       
+#else
+        Debug.Log("Can't use Unity TCP client in UWP!");
 #endif
     }
 
@@ -298,8 +300,6 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
             tcpClient.Close();
             tcpClient = null;
 #endif
-            //udpClient.Close();
-            //udpClient = null;
         }
     }
 
@@ -336,9 +336,7 @@ public class PlStreamCustom : Singleton<PlStreamCustom> {
             else {
                 Debug.Log("PlStreamCustom not started, nothing to close");
             }
-
 #endif
-
         }
         catch (Exception e) {
             Debug.Log(e);

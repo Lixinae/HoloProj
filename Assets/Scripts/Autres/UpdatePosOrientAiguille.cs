@@ -105,6 +105,7 @@ public class UpdatePosOrientAiguille : XboxControllerHandlerBase {
         //if (decallageByGazeDone) {
         if (plStream != null) {
             if (plStream.isActive) {
+                // Sensor 1 -> active[0]
                 if (plStream.active[0]) {
 
                     // Le positionnement au regard ne touche pas l'orientation

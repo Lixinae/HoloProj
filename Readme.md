@@ -1,8 +1,16 @@
-# Racine du projet
+# Readme
 
 Les dossiers Assets, PLStream et PythonScripts sont stocké sur le github
 Le dossier "Polhemus" est le dossier de sources de Polhemus qui permet de recompiler le fichier "UnityExport.exe" 
-"uwp" est le dossier ou tout est compilé 
+
+* Version unity : 2018.1.1.f1 personal
+* Version visual studio : Community 2017 - 15.7.4
+
+##### Pour le bon fonctionnement appli : 
+* 1) Executer "UnityExport.exe" dans le dossier "PlStream" : sans argument <=> ouvre port sur 192.168.137.1 : 5124 cette @IP
+    est celle du point d'accès wifi sur lequel se connect l'hololens. Pour changer l'adresse IP :
+    UnityExport @ port (voir message au lancement)
+* 2) Executer "ServerEnvoieFichier" dans "Python Scripts" (aucun argument)
 
 ## I) Assets: 
 

@@ -34,6 +34,8 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     public string Port = null;
 
     private bool Loaded = false;
+    private AudioSource audio = null;
+
     // Use this for initialization
     void Awake() {
         if (IpConfigurator == null) {
@@ -92,6 +94,10 @@ public class IpConfiguratorTriggers : MonoBehaviour {
             BottomButtons_port = GameObject.Find("BottomButtons_port");
         }
 
+        if(audio == null) {
+            audio = this.GetComponent<AudioSource>();
+        }
+
         LoadIpConfig();
     }
 
@@ -102,34 +108,42 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     private void LoadIpConfig() {
         bool error = false;
         string info = null;
-
+        Loaded = true;
         try {
 #if !UNITY_EDITOR
-            info = ReadHostFromFileAsync().Result;
+            //info = ReadHostFromFileAsync().Result;
+            info = ReadTextFromFile();
 #else
-            info = File.ReadAllText(Application.streamingAssetsPath + "/ip.txt");
+            info = File.ReadAllText(Application.streamingAssetsPath + "/" + "ip.txt");
 #endif
         }
         catch (Exception e) {
+            // todo Ajouter son pour check si ça marche
+            audio.Play();
             Debug.Log(e);
             error = true;
         }
         string host;
         string port;
-        // Si on a pas pu lire le fichier , on met des valeurs par defaut
+        // S'il y a une erreur lors de la lecture, on met des valeurs par defaut
         if (error) {
             host = "192.168.137.1";
             port = "5124";
         }
         else {
-            host = info.Split(':')[0];
-            port = info.Split(':')[1];
+            if(info.Length > 0) {
+                host = info.Split(':')[0];
+                port = info.Split(':')[1];
+            }
+            else {
+                host = "192.168.137.1";
+                port = "5124";
+            }
         }
-        //while (info == null) ;
         IpAdress = host;
         Port = port;
         WriteLabelThemesOnButtons(host, port);
-        Loaded = true;
+        //Loaded = true;
     }
 
     /// <summary>
@@ -191,7 +205,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         LabelTheme portTheme = Port_button.GetComponent<LabelTheme>();
         portTheme.Default = FillMissingZeroPort(port);
     }
-
+    /*
 #if !UNITY_EDITOR
     /// <summary>
     /// Lis l'adresse IP dans un fichier en utilisant une methode async
@@ -204,6 +218,22 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     }
 
 #endif
+*/
+
+    /// <summary>
+    /// Lis le text du fichier ip.txt qui est stocké à l'endroit Application.persistentDataPath
+    /// </summary>
+    /// <returns> String du texte </returns>
+    private string ReadTextFromFile() {
+        try {
+            string path = Path.Combine(Application.persistentDataPath, "/", "ip.txt");
+            return File.ReadAllText(path);
+        }
+        catch(Exception e) {
+            Debug.Log(e);
+            return "";
+        }
+    }
 
     public string GetIpAdress() {
         string part1 = Part1_button.GetComponent<LabelTheme>().Default;
@@ -253,36 +283,46 @@ public class IpConfiguratorTriggers : MonoBehaviour {
     /// </summary>
     public void SaveIpConfig() {
 #if !UNITY_EDITOR
-        Task task = new Task(async () => {
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            StorageFile sampleFile = await storageFolder.CreateFileAsync("ip.txt", CreationCollisionOption.ReplaceExisting);
+        //Task task = new Task(() => {
+        //StorageFolder storageFolder = ApplicationData.Current.RoamingFolder;
+        //StorageFile file = await storageFolder.CreateFileAsync("ip.txt", CreationCollisionOption.ReplaceExisting);
+
+        string part1 = Part1_button.GetComponent<LabelTheme>().Default;
+        string part2 = Part2_button.GetComponent<LabelTheme>().Default;
+        string part3 = Part3_button.GetComponent<LabelTheme>().Default;
+        string part4 = Part4_button.GetComponent<LabelTheme>().Default;
+        string host = string.Concat(part1, ".",
+                part2, ".",
+                part3, ".",
+                part4);
+        string port = Port_button.GetComponent<LabelTheme>().Default;
+        string toWrite = string.Concat(host, ":", port);
+
+        //  Nettoie la chaine pour l'utilisation en tant qu'adresse
+        /*string hostTrimed = string.Concat(TrimValFromLeftZero(part1), ".",
+                TrimValFromLeftZero(part2), ".",
+                TrimValFromLeftZero(part3), ".",
+                TrimValFromLeftZero(part4));
+                */
+        string hostTrimed = GetIpAdress();
+
+        string portTrimed = TrimValFromLeftZero(Port_button.GetComponent<LabelTheme>().Default);
+
+        IpAdress = hostTrimed;
+        Port = portTrimed;
 
 
-            string part1 = Part1_button.GetComponent<LabelTheme>().Default;
-            string part2 = Part2_button.GetComponent<LabelTheme>().Default;
-            string part3 = Part3_button.GetComponent<LabelTheme>().Default;
-            string part4 = Part4_button.GetComponent<LabelTheme>().Default;
-            string host = string.Concat(part1, ".",
-                    part2, ".",
-                    part3, ".",
-                    part4);
-            string port = Port_button.GetComponent<LabelTheme>().Default;
-            string toWrite = string.Concat(host, ":", port);
+        // Solution -> https://stackoverflow.com/questions/44014883/creating-txt-file-on-hololens#44212180
+        string path = Path.Combine(Application.persistentDataPath, "/" , "ip.txt");
+        using (TextWriter writer = File.CreateText(path)) {
+            writer.Write(toWrite);
+            // Write text here
+        }
 
-
-            string hostTrimed = string.Concat(TrimValFromLeftZero(part1), ".",
-                    TrimValFromLeftZero(part2), ".",
-                    TrimValFromLeftZero(part3), ".",
-                    TrimValFromLeftZero(part4));
-            string portTrimed = TrimValFromLeftZero(Port_button.GetComponent<LabelTheme>().Default);
-
-            IpAdress = hostTrimed;
-            Port = portTrimed;
-
-            await FileIO.WriteTextAsync(sampleFile, toWrite);
-        });
-        task.Start();
-        task.Wait();
+        //await FileIO.WriteTextAsync(file, toWrite);
+        //});
+        //task.Start();
+        //task.Wait();
 #else
         string part1= Part1_button.GetComponent<LabelTheme>().Default;
         string part2= Part2_button.GetComponent<LabelTheme>().Default;
@@ -295,14 +335,20 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         string port = Port_button.GetComponent<LabelTheme>().Default;
         string toWrite = string.Concat(host, ":", port);
 
-        string hostTrimed = string.Concat(TrimValFromLeftZero(part1), ".",
+        /*string hostTrimed = string.Concat(TrimValFromLeftZero(part1), ".",
                     TrimValFromLeftZero(part2), ".",
                     TrimValFromLeftZero(part3), ".",
                     TrimValFromLeftZero(part4));
+        */
+        string hostTrimed = GetIpAdress();
         string portTrimed = TrimValFromLeftZero(Port_button.GetComponent<LabelTheme>().Default);       
         IpAdress = hostTrimed;
         Port = portTrimed;
-        File.WriteAllText(Application.streamingAssetsPath + "/ip.txt",toWrite);
+        string path = Path.Combine(Application.streamingAssetsPath, "/" , "ip.txt");
+        using (TextWriter writer = File.CreateText(path)) {
+            writer.Write(toWrite);
+            // Write text here
+        }
 #endif
 
 
