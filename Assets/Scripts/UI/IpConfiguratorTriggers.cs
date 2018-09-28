@@ -98,16 +98,16 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         if (audio == null) {
             audio = this.GetComponent<AudioSource>();
         }
+        Loaded = true;
 #if !UNITY_EDITOR
-        //path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "/", "ip.txt");
+        //path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "ip.txt");
         //path = Path.Combine(KnownFolders.DocumentsLibrary.Path, "/", "ip.txt");
-        path = ApplicationData.Current.LocalFolder.Path;
+        path = ApplicationData.Current.LocalFolder.Path + "/" + "ip.txt"; // -> Access denied
         Debug.Log("LocalCache = "+ApplicationData.Current.LocalCacheFolder.Path);
         Debug.Log("LocalFolder = "+ApplicationData.Current.LocalFolder.Path);
         Debug.Log("LocalSetting = "+ApplicationData.Current.LocalSettings.Name);
         Debug.Log("RoamingFolder = "+ApplicationData.Current.RoamingFolder.Path);
         Debug.Log("RoamingSettings = "+ApplicationData.Current.RoamingSettings.Name);
-        Debug.Log("LocalShare = "+ApplicationData.Current.SharedLocalFolder.Path);
 #else
         path = Application.streamingAssetsPath + "/" + "ip.txt";
 #endif   

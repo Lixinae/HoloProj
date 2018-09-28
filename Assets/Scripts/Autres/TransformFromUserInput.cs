@@ -12,7 +12,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     private float rotationSpeedMultiplier = 0.1f;
 
     [SerializeField]
-    private float scaleSpeedMultiplier = 0.01f;
+    private float scaleSpeedMultiplier = 0.001f;
 
     [SerializeField]
     private XboxControllerMappingTypes resetButton = XboxControllerMappingTypes.XboxY;
@@ -120,6 +120,15 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
             newScale.x -= 1 * scaleSpeedMultiplier;
             newScale.y -= 1 * scaleSpeedMultiplier;
             newScale.z -= 1 * scaleSpeedMultiplier;
+            if (newScale.x <= 0) {
+                newScale.x = 0.01f;
+            }
+            if (newScale.y <= 0) {
+                newScale.y = 0.01f;
+            }
+            if (newScale.z <= 0) {
+                newScale.z = 0.01f;
+            }
         }
         if (Input.GetKey("g")) {
             newScale.x += 1 * scaleSpeedMultiplier;
@@ -182,6 +191,15 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
                 newScale.x -= 1 * scaleSpeedMultiplier;
                 newScale.y -= 1 * scaleSpeedMultiplier;
                 newScale.z -= 1 * scaleSpeedMultiplier;
+                if(newScale.x <= 0) {
+                    newScale.x = 0.001f;
+                }
+                if (newScale.y <= 0) {
+                    newScale.y = 0.001f;
+                }
+                if (newScale.z <= 0) {
+                    newScale.z = 0.001f;
+                }
             }
             if (Input.GetKey("k")) {
                 newScale.x += 1 * scaleSpeedMultiplier;

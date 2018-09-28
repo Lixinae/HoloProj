@@ -26,6 +26,7 @@ public class CheckForPlaceByTapOnChildren : MonoBehaviour {
                     child.gameObject.AddComponent<TapToPlace>();
                 }
             }
+            tapToPlace = GetComponentInChildren<TapToPlace>();
             tapToPlace.AllowMeshVisualizationControl = false;
             tapToPlace.DefaultGazeDistance = 1f;
         }
