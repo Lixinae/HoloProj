@@ -69,6 +69,8 @@ Library/*/*
 
 #Compiled folder
 uwp/*
+uwp_2/*
+ModeleBlender/*
 obj/*
 
 #Visual studio files
