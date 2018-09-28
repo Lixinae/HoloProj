@@ -169,7 +169,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 int currentOffset = 0;
                 byte[] receiveBytes = new Byte[512];
 
-                string folderName = "/3DModels/";
+                string folderName = "/3DModels";
                 string folderDataName = "";
 #if !UNITY_EDITOR
                 folderDataName = ApplicationData.Current.LocalFolder.Path + folderName;
@@ -181,8 +181,7 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 if (!Directory.Exists(folderDataName)) {
                     Directory.CreateDirectory(folderDataName);
                 }
-                string path = Path.Combine(folderDataName + folderName);
-                using (Stream fileStream = OpenFileForWrite(path, fileName + fileExtension)) {
+                using (Stream fileStream = OpenFileForWrite(folderDataName, fileName + fileExtension)) {
                     while ((length = stream.Read(receiveBytes, 0, receiveBytes.Length)) != 0) {
                         // On aura toujours la taille exact de la data avec cette methode
                         var data = new Byte[length];

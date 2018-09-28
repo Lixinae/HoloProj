@@ -28,7 +28,7 @@ public class ShowFileInFolder {
 
         // Cette ligne n'est vraiment que pour la démo !
         // On ne l'utilisera pas
-        string path = Application.streamingAssetsPath + "/3DModels/"; // UNIQUEMENT POUR UTILISER LE DOSSIER streaming assets et donc pas le transfert de fichier
+        string path = Application.streamingAssetsPath + "/" + "3DModels"; // UNIQUEMENT POUR UTILISER LE DOSSIER streaming assets et donc pas le transfert de fichier
 
 #endif
         // Si le dossier n'existe pas, on le crée pour éviter les erreurs
