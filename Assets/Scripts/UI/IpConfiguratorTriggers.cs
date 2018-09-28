@@ -99,10 +99,19 @@ public class IpConfiguratorTriggers : MonoBehaviour {
             audio = this.GetComponent<AudioSource>();
         }
 #if !UNITY_EDITOR
-        path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "/", "ip.txt");
+        //path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "/", "ip.txt");
+        //path = Path.Combine(KnownFolders.DocumentsLibrary.Path, "/", "ip.txt");
+        path = ApplicationData.Current.LocalFolder.Path;
+        Debug.Log("LocalCache = "+ApplicationData.Current.LocalCacheFolder.Path);
+        Debug.Log("LocalFolder = "+ApplicationData.Current.LocalFolder.Path);
+        Debug.Log("LocalSetting = "+ApplicationData.Current.LocalSettings.Name);
+        Debug.Log("RoamingFolder = "+ApplicationData.Current.RoamingFolder.Path);
+        Debug.Log("RoamingSettings = "+ApplicationData.Current.RoamingSettings.Name);
+        Debug.Log("LocalShare = "+ApplicationData.Current.SharedLocalFolder.Path);
 #else
         path = Application.streamingAssetsPath + "/" + "ip.txt";
-#endif
+#endif   
+        Debug.Log("Path = " + path);
         LoadIpConfig();
     }
 
@@ -119,7 +128,7 @@ public class IpConfiguratorTriggers : MonoBehaviour {
         }
         catch (Exception e) {
             // todo Ajouter son pour check si ça marche
-            audio.Play();
+            //audio.Play();
             Debug.Log(e);
             error = true;
         }

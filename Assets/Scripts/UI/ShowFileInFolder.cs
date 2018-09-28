@@ -21,9 +21,15 @@ public class ShowFileInFolder {
 
     private void GetAllFileNames() {
 #if UNITY_EDITOR
-        String path = Application.streamingAssetsPath + "/3DModels/";
+        string path = Application.streamingAssetsPath + "/3DModels/";
 #else
-        String path = ApplicationData.Current.LocalFolder.Path + "/3DModels/";
+        //string path = ApplicationData.Current.LocalFolder.Path + "/3DModels/";
+        //string path = KnownFolders.VideosLibrary.Path + "/3DModels/";
+
+        // Cette ligne n'est vraiment que pour la démo !
+        // On ne l'utilisera pas
+        string path = Application.streamingAssetsPath + "/3DModels/"; // UNIQUEMENT POUR UTILISER LE DOSSIER streaming assets et donc pas le transfert de fichier
+
 #endif
         // Si le dossier n'existe pas, on le crée pour éviter les erreurs
         if (!Directory.Exists(path)) {

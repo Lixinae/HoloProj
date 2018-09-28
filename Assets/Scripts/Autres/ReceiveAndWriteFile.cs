@@ -173,6 +173,8 @@ public class ReceiveAndWriteFile : Singleton<ReceiveAndWriteFile> {
                 string folderDataName = "";
 #if !UNITY_EDITOR
                 folderDataName = ApplicationData.Current.LocalFolder.Path + folderName;
+                //folderDataName = Application.persistentDataPath + folderName;
+                //folderDataName = KnownFolders.VideosLibrary.Path + folderName;
 #else
                 folderDataName = Application.streamingAssetsPath + folderName; 
 #endif

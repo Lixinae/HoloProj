@@ -12,7 +12,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     private float rotationSpeedMultiplier = 0.1f;
 
     [SerializeField]
-    private float scaleSpeedMultiplier = 0.1f;
+    private float scaleSpeedMultiplier = 0.01f;
 
     [SerializeField]
     private XboxControllerMappingTypes resetButton = XboxControllerMappingTypes.XboxY;
@@ -31,7 +31,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     public Boolean UseKeyboard = true;
     public Boolean UseJoystick = true;
 
-    public Boolean devBuild = true; // TODO !!!! Changer à false à la fin du dev , decallage du a l'input de la camera dans unity
+    public Boolean devBuild = false; // TODO !!!! Changer à false à la fin du dev , decallage du a l'input de la camera dans unity
 
     private bool locked = true;
 
@@ -49,7 +49,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
     }
 
     public override void OnSourceLost(SourceStateEventData eventData) {
-        //Debug.LogFormat("Joystick {0} with id: \"{1}\" Disconnected", GamePadName, eventData.SourceId);
+        Debug.LogFormat("Joystick {0} with id: \"{1}\" Disconnected", GamePadName, eventData.SourceId);
         base.OnSourceLost(eventData);
         //debugText.text = "No Controller Connected";
     }
@@ -205,10 +205,10 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
 
 
     // todo -> eventuellement rajouter dans un autre fichier le controle de l'axisviewer si on appuie sur une touche
-    public override void OnXboxInputUpdate(XboxControllerEventData eventData) {
+    public override void OnXboxInputUpdate(XboxControllerEventData eventData) { 
         if (!UseJoystick) {
             Debug.Log("Joystick use not enabled");
-            return;
+            //return;
         }
 
         if (string.IsNullOrEmpty(GamePadName)) {
@@ -217,19 +217,12 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
 
         base.OnXboxInputUpdate(eventData);
 
-        // Si on appuie sur le bouton start, on passe a l'aiguille
-        /*if (eventData.XboxMenu_Pressed) {
-            IsActiveOnController = !IsActiveOnController;
+        // Si on appuie sur start -> affiche ou cache le menu
+        if (eventData.XboxMenu_Pressed) {
+            Debug.Log("Menu is pressed");
+            UITriggers.Instance.ShowHideMenu();
         }
-
-        if (!IsActiveOnController) {
-            return;
-        }
-        */
-        //if (isLocked) {
-        //Debug.Log("Transform is locked");
-        // return;
-        //}
+        
         newPosition = Vector3.zero;
         newScale = transform.localScale;
 
@@ -248,11 +241,13 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
 
         // scale
         if (eventData.XboxLeftBumper_Down) {
+            Debug.Log("Left bumper down");
             newScale.x -= 1 * scaleSpeedMultiplier;
             newScale.y -= 1 * scaleSpeedMultiplier;
             newScale.z -= 1 * scaleSpeedMultiplier;
         }
         if (eventData.XboxRightBumper_Down) {
+            Debug.Log("Right bumper down");
             newScale.x += 1 * scaleSpeedMultiplier;
             newScale.y += 1 * scaleSpeedMultiplier;
             newScale.z += 1 * scaleSpeedMultiplier;
@@ -261,6 +256,7 @@ public class TransformFromUserInput : XboxControllerHandlerBase {
         transform.localScale = newScale;
 
         if (XboxControllerMapping.GetButton_Up(resetButton, eventData)) {
+            Debug.Log("Reset button up");
             ResetObjet();
         }
     }

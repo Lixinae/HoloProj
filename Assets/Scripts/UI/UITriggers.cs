@@ -1,7 +1,8 @@
-﻿using System;
+﻿using HoloToolkit.Unity;
+using System;
 using UnityEngine;
 
-public class UITriggers : MonoBehaviour {
+public class UITriggers : Singleton<UITriggers> {
 
     public GameObject menuFull = null;
     public GameObject modelsMenu = null;
@@ -30,7 +31,7 @@ public class UITriggers : MonoBehaviour {
     private bool enableAutomaticCalibration = false;
 
     // Use this for initialization
-    void Awake() {
+    new void Awake() {
         if (menuFull == null) {
             menuFull = GameObject.Find("MenuItems");
         }
@@ -101,15 +102,8 @@ public class UITriggers : MonoBehaviour {
     void Update() {
         // Eventuellement se servir du pad xbox pour afficher / cacher le menu, via le bouton start ou autre
         if (Input.GetKeyDown("escape")) {
-            isMenuShowing = !isMenuShowing;
-            menuFull.SetActive(isMenuShowing);
-            if (isMenuShowing && ipConfigurator.activeInHierarchy) {
-                wasIpConfiguratorShowing = true;
-                HideIpConfigurator();
-            }
-            else if (!isMenuShowing && wasIpConfiguratorShowing) {
-                ShowIpConfigurator();
-            }
+            ShowHideMenu();
+
         }
         // Affiche le texte de debug
         if (Input.GetKeyDown("p")) {
@@ -121,6 +115,18 @@ public class UITriggers : MonoBehaviour {
         if (Input.GetKeyDown("n")) {
             isCursorVisualShowing = !isCursorVisualShowing;
             cursorVisual.SetActive(isCursorVisualShowing);
+        }
+    }
+
+    public void ShowHideMenu() {
+        isMenuShowing = !isMenuShowing;
+        menuFull.SetActive(isMenuShowing);
+        if (isMenuShowing && ipConfigurator.activeInHierarchy) {
+            wasIpConfiguratorShowing = true;
+            HideIpConfigurator();
+        }
+        else if (!isMenuShowing && wasIpConfiguratorShowing) {
+            ShowIpConfigurator();
         }
     }
 
