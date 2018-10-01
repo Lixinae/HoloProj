@@ -380,10 +380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0008b1fa8b634f148bb9938aa6c9a3a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeTest: {fileID: 0}
-  cube2Test: {fileID: 0}
-  p1Test: {fileID: 0}
-  p2Test: {fileID: 0}
 --- !u!114 &208828857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1247,7 +1243,7 @@ MonoBehaviour:
   HorizontalNavigationAxis: 1
   movementSpeedMultiplier: 0.01
   rotationSpeedMultiplier: 0.1
-  scaleSpeedMultiplier: 0.01
+  scaleSpeedMultiplier: 0.001
   resetButton: 13
   IsActiveOnController: 1
   Camera: {fileID: 0}
